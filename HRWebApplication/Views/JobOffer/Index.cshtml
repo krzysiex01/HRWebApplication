@@ -1,0 +1,12 @@
+﻿@model List<JobOfferViewModel>
+@{
+    ViewData["Title"] = "Job Offers";
+}
+
+<h1>Available job offers</h1>
+<ul>
+    @foreach (JobOfferViewModel jobOffer in Model)
+    {
+        <li>@Html.ActionLink(jobOffer.Title, "Details", new { id = jobOffer.Id })</li>
+    }
+</ul>
