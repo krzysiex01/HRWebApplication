@@ -3,11 +3,20 @@
     ViewData["Title"] = "Details";
 }
 
-<h2>@Model.Title</h2>
+<h3>@Model.Title</h3>
 
-<h3>Description</h3>
+<h5>Overview</h5>
+<p>@Model.Overview</p>
+<h5>Salary</h5>
+<p>@Model.SalaryFrom - @Model.SalaryTo @Model.Currency</p>
+<h5>Specialization</h5>
+<p>@Model.Specialization</p>
+<h5>Location</h5>
+<p>@Model.Location</p>
+<h5>Added on</h5>
+<p>@Model.AddedOn.ToShortDateString()</p>
+<h5>Description</h5>
 <p>@Model.Description</p>
-
 
 </br>
 @Html.ActionLink("Go back to Job Offers", "Index", "JobOffer")

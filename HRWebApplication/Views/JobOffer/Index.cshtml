@@ -4,9 +4,22 @@
 }
 
 <h1>Available job offers</h1>
-<ul>
+<div class="card-deck">
+
     @foreach (JobOfferViewModel jobOffer in Model)
     {
-        <li>@Html.ActionLink(jobOffer.Title, "Details", new { id = jobOffer.Id })</li>
+        <div class="card bg-light mb-3" style="max-width: 18rem;">
+            <div class="card-header">@Html.ActionLink(jobOffer.Title, "Details", new { id = jobOffer.Id })</div>
+            <div class="card-body">
+                <h5 class="card-title">@jobOffer.SalaryFrom - @jobOffer.SalaryTo @jobOffer.Currency</h5>
+                <p class="card-text">@jobOffer.Overview</p>
+            </div>
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item">Location: @jobOffer.Location</li>
+                <li class="list-group-item">Specialization: @jobOffer.Specialization</li>
+            </ul>
+            <div class="card-footer text-center"><small>Added on @jobOffer.AddedOn.ToShortDateString()</small></div>
+        </div>
     }
-</ul>
+</div>
+
