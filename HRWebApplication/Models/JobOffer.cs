@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace HRWebApplication.Models
 {
-    public class JobOfferViewModel
+    public class JobOffer
     {
         public int Id { get; set; }
         public string Title { get; set; }
@@ -19,5 +19,6 @@ namespace HRWebApplication.Models
         public DateTime AddedOn { get; set; }
         public string Specialization { get; set; }
         public List<string> Requirements { get; set; }
+        public List<JobApplication> JobApplications { get; set; } = new List<JobApplication>();
     }
 }
