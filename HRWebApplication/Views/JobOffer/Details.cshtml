@@ -18,5 +18,13 @@
 <h5>Description</h5>
 <p>@Model.Description</p>
 
-</br>
-@Html.ActionLink("Go back to Job Offers", "Index", "JobOffer")
+<div>
+    @Html.ActionLink("Apply", "Edit", "JobOffer", new { Model.Id }, new { @class = "btn btn-primary" })
+    @Html.ActionLink("Edit", "Edit", "JobOffer", new { Model.Id }, new { @class = "btn btn-primary" })
+    @using (Html.BeginForm("Delete", "JobOffer", new { Model.Id }, FormMethod.Post, null, null))
+    {
+        @Html.AntiForgeryToken()
+        <button type="submit" class="btn btn-danger">Delete</button>
+    }
+    @Html.ActionLink("Go back to Job Offers", "Index", "JobOffer", null, new { @class = "btn btn-primary" })
+</div>

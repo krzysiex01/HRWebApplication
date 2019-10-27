@@ -10,6 +10,8 @@ namespace HRWebApplication.Models
     {
         public int Id { get; set; }
         public string Title { get; set; }
+        public virtual Company Company { get; set; }
+        public virtual int CompanyId { get; set; }
         public string Description { get; set; }
         public string Overview { get; set; }
         public int SalaryFrom { get; set; }
@@ -17,8 +19,9 @@ namespace HRWebApplication.Models
         public Currency Currency { get; set; }
         public string Location { get; set; }
         public DateTime AddedOn { get; set; }
+        public DateTime? ValidUntil { get; set; }
         public string Specialization { get; set; }
-        public List<string> Requirements { get; set; }
+
         public List<JobApplication> JobApplications { get; set; } = new List<JobApplication>();
     }
 }

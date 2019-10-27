@@ -8042,11 +8042,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Lenovo\\source\\repos\\HR App\\HRWebApplication\\HRWebApplication.csproj",
+      "projectUniqueName": "C:\\Users\\Lenovo\\source\\repos\\HR App\\HR App\\HRWebApplication\\HRWebApplication.csproj",
       "projectName": "HRWebApplication",
-      "projectPath": "C:\\Users\\Lenovo\\source\\repos\\HR App\\HRWebApplication\\HRWebApplication.csproj",
+      "projectPath": "C:\\Users\\Lenovo\\source\\repos\\HR App\\HR App\\HRWebApplication\\HRWebApplication.csproj",
       "packagesPath": "C:\\Users\\Lenovo\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Lenovo\\source\\repos\\HR App\\HRWebApplication\\obj\\",
+      "outputPath": "C:\\Users\\Lenovo\\source\\repos\\HR App\\HR App\\HRWebApplication\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Microsoft\\Xamarin\\NuGet\\",
