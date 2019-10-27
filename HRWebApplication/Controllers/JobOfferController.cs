@@ -4,50 +4,72 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using HRWebApplication.Models;
+using HRWebApplication.EntityFramework;
+using Microsoft.EntityFrameworkCore;
 
 namespace HRWebApplication.Controllers
 {
     [Route("[controller]/[action]")]
     public class JobOfferController : Controller
     {
-        private static List<JobOffer> jobOffer = new List<JobOffer>
-            {
-                new Models.JobOffer() { Id = 1, Title= "Plumber", Overview="Looking for experienced plumber.", Specialization = "Plumber", Location = "Paris",
-                    SalaryFrom = 1000, SalaryTo = 3000, Currency = Currency.EUR, AddedOn = DateTime.Now},
-                new Models.JobOffer() { Id = 2, Title= "Advanced Plumber",Overview = "Looking for Mario.", Specialization = "Plumber", Location = "Warsaw",
-                    SalaryFrom = 1000, SalaryTo = 3000, Currency = Currency.PLN, AddedOn = DateTime.Now},
-                new Models.JobOffer() { Id = 3, Title= "Senior Plumber",Overview = "Looking for senior plumber.", Specialization = "Plumber", Location = "London",
-                    SalaryFrom = 1000, SalaryTo = 3000, Currency = Currency.GBP, AddedOn = DateTime.Now},
-                new Models.JobOffer() { Id = 4, Title= "Senior Plumber",Overview = "Looking for senior plumber.", Specialization = "Plumber", Location = "London",
-                    SalaryFrom = 1000, SalaryTo = 3000, Currency = Currency.GBP, AddedOn = DateTime.Now},
-                new Models.JobOffer() { Id = 5, Title= "Senior Plumber",Overview = "Looking for senior plumber.", Specialization = "Plumber", Location = "London",
-                    SalaryFrom = 1000, SalaryTo = 3000, Currency = Currency.GBP, AddedOn = DateTime.Now},
-                new Models.JobOffer() { Id = 6, Title= "Senior Plumber",Overview = "Looking for senior plumber.", Specialization = "Plumber", Location = "London",
-                    SalaryFrom = 1000, SalaryTo = 3000, Currency = Currency.GBP, AddedOn = DateTime.Now},
-                new Models.JobOffer() { Id = 7, Title= "Senior Plumber",Overview = "Looking for senior plumber.", Specialization = "Plumber", Location = "London",
-                    SalaryFrom = 1000, SalaryTo = 3000, Currency = Currency.GBP, AddedOn = DateTime.Now},
-            };
-
-        public IActionResult Index()
+        private readonly DataContext _context;
+        public JobOfferController(DataContext context)
         {
-            return View(jobOffer);
+            _context = context;
         }
 
-        public IActionResult Details(int id)
+        [HttpGet]
+        public async Task<IActionResult> Index([FromQuery(Name = "search")] string searchString)
         {
-            var offer = jobOffer.FirstOrDefault(o => o.Id == id);
+            if (string.IsNullOrEmpty(searchString))
+                return View(await _context.JobOffers.Include(x => x.Company).ToListAsync());
+
+            List<JobOffer> searchResult = await _context.JobOffers.Include(x => x.Company).Where(o => o.Title.Contains(searchString)).ToListAsync();
+            return View(searchResult);
+        }
+        public async Task<IActionResult> Edit(int? id)
+        {
+            if (id == null)
+            {
+                return BadRequest($"id shouldn't not be null");
+            }
+            var offer = await _context.JobOffers.FirstOrDefaultAsync(x => x.Id == id.Value);
+            
+            if (offer == null)
+            {
+                return NotFound($"offer not found in DB");
+            }
+
             return View(offer);
         }
 
         [HttpPost]
-        public IActionResult Delete(int? id)
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> Edit(JobOffer model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View();
+            }
+
+            var offer = await _context.JobOffers.FirstOrDefaultAsync(x => x.Id == model.Id);
+            offer.Title = model.Title;
+            //TODO: Enable changing other fileds
+            _context.Update(offer);
+            await _context.SaveChangesAsync();
+            return RedirectToAction("Details", new { id = model.Id });
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> Delete(int? id)
         {
             if (id == null)
             {
                 return BadRequest($"id should not be null");
             }
 
-            jobOffer.RemoveAll((jobOffer) => id == jobOffer.Id);
+            _context.JobOffers.Remove(new JobOffer() { Id = id.Value });
+            await _context.SaveChangesAsync();
             return RedirectToAction("Index");
         }
 
@@ -71,9 +93,10 @@ namespace HRWebApplication.Controllers
                 return View(model);
             }
 
-            JobOffer jo = new JobOffer
+            JobOffer jobOffer = new JobOffer
             {
                 CompanyId = model.CompanyId,
+                Overview = model.Overview,
                 Description = model.Description,
                 Title = model.Title,
                 Location = model.Location,
@@ -83,9 +106,15 @@ namespace HRWebApplication.Controllers
                 AddedOn = DateTime.Now
             };
 
-            await _context.JobOfers.AddAsync(jo);
+            await _context.JobOffers.AddAsync(jobOffer);
             await _context.SaveChangesAsync();
             return RedirectToAction("Index");
+        }
+
+        public async Task<IActionResult> Details(int id)
+        {
+            var offer = await _context.JobOffers.FirstOrDefaultAsync(x => x.Id == id);
+            return View(offer);
         }
     }
 }

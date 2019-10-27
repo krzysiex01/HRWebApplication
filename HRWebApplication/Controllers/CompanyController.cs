@@ -2,19 +2,25 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using HRWebApplication.EntityFramework;
 using HRWebApplication.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace HRWebApplication.Controllers
 {
     [Route("[controller]/[action]")]
     public class CompanyController : Controller
     {
-        private List<Company> companies = new List<Company>() { new Company() { Name = "Szajsung", Id = 22 } };
-
-        public IActionResult Index()
+        private readonly DataContext _context;
+        public CompanyController(DataContext context)
         {
-            return View(companies);
+            _context = context;
+        }
+
+        public async Task<IActionResult> Index()
+        {
+            return View(await _context.Companies.ToListAsync());
         }
     }
 }

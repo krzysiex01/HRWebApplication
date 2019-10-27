@@ -256,3 +256,4 @@ C:\Users\Lenovo\source\repos\HR App\HR App\HRWebApplication\obj\Debug\netcoreapp
 C:\Users\Lenovo\source\repos\HR App\HR App\HRWebApplication\obj\Debug\netcoreapp3.0\HRWebApplication.pdb
 C:\Users\Lenovo\source\repos\HR App\HR App\HRWebApplication\obj\Debug\netcoreapp3.0\Razor\Views\Company\Index.cshtml.g.cs
 C:\Users\Lenovo\source\repos\HR App\HR App\HRWebApplication\obj\Debug\netcoreapp3.0\Razor\Views\JobOffer\Edit.cshtml.g.cs
+C:\Users\Lenovo\source\repos\HR App\HR App\HRWebApplication\obj\Debug\netcoreapp3.0\Razor\Views\JobOffer\Create.cshtml.g.cs
