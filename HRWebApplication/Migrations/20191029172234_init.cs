@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace HRWebApplication.Migrations
 {
-    public partial class InitialMigration : Migration
+    public partial class init : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -13,7 +13,7 @@ namespace HRWebApplication.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(nullable: true)
+                    Name = table.Column<string>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -21,28 +21,28 @@ namespace HRWebApplication.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "JobOfers",
+                name: "JobOffers",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Title = table.Column<string>(nullable: true),
+                    Title = table.Column<string>(nullable: false),
                     CompanyId = table.Column<int>(nullable: false),
-                    Description = table.Column<string>(nullable: true),
-                    Overview = table.Column<string>(nullable: true),
+                    Description = table.Column<string>(nullable: false),
+                    Overview = table.Column<string>(maxLength: 100, nullable: false),
                     SalaryFrom = table.Column<int>(nullable: false),
                     SalaryTo = table.Column<int>(nullable: false),
                     Currency = table.Column<int>(nullable: false),
                     Location = table.Column<string>(nullable: true),
                     AddedOn = table.Column<DateTime>(nullable: false),
                     ValidUntil = table.Column<DateTime>(nullable: true),
-                    Specialization = table.Column<string>(nullable: true)
+                    Specialization = table.Column<string>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_JobOfers", x => x.Id);
+                    table.PrimaryKey("PK_JobOffers", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_JobOfers_Companies_CompanyId",
+                        name: "FK_JobOffers_Companies_CompanyId",
                         column: x => x.CompanyId,
                         principalTable: "Companies",
                         principalColumn: "Id",
@@ -56,10 +56,10 @@ namespace HRWebApplication.Migrations
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     OfferId = table.Column<int>(nullable: false),
-                    FirstName = table.Column<string>(nullable: true),
-                    LastName = table.Column<string>(nullable: true),
+                    FirstName = table.Column<string>(nullable: false),
+                    LastName = table.Column<string>(nullable: false),
                     PhoneNumber = table.Column<string>(nullable: true),
-                    EmailAddress = table.Column<string>(nullable: true),
+                    EmailAddress = table.Column<string>(nullable: false),
                     ContactAgreement = table.Column<bool>(nullable: false),
                     CvUrl = table.Column<string>(nullable: true),
                     JobOfferId = table.Column<int>(nullable: true)
@@ -68,9 +68,9 @@ namespace HRWebApplication.Migrations
                 {
                     table.PrimaryKey("PK_JobApplications", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_JobApplications_JobOfers_JobOfferId",
+                        name: "FK_JobApplications_JobOffers_JobOfferId",
                         column: x => x.JobOfferId,
-                        principalTable: "JobOfers",
+                        principalTable: "JobOffers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -81,8 +81,8 @@ namespace HRWebApplication.Migrations
                 column: "JobOfferId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_JobOfers_CompanyId",
-                table: "JobOfers",
+                name: "IX_JobOffers_CompanyId",
+                table: "JobOffers",
                 column: "CompanyId");
         }
 
@@ -92,7 +92,7 @@ namespace HRWebApplication.Migrations
                 name: "JobApplications");
 
             migrationBuilder.DropTable(
-                name: "JobOfers");
+                name: "JobOffers");
 
             migrationBuilder.DropTable(
                 name: "Companies");

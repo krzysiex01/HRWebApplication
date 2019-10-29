@@ -23,11 +23,11 @@
 
     @foreach (JobOffer jobOffer in Model)
     {
-        <div class="card bg-light mb-3" style="max-width: 18rem;">
+        <div class="card bg-light mb-3" style="max-width: 18rem; min-width: 16rem;">
             <div class="card-header">@Html.ActionLink(jobOffer.Title, "Details", new { id = jobOffer.Id })</div>
             <div class="card-body">
                 <h5 class="card-title">@jobOffer.SalaryFrom - @jobOffer.SalaryTo @jobOffer.Currency</h5>
-                <p class="card-text">@jobOffer.Overview</p>
+                <p class="card-text h-100">@jobOffer.Overview</p>
             </div>
             <ul class="list-group list-group-flush">
                 <li class="list-group-item">Location: @jobOffer.Location</li>

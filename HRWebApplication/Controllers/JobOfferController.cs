@@ -22,7 +22,7 @@ namespace HRWebApplication.Controllers
         public async Task<IActionResult> Index([FromQuery(Name = "search")] string searchString)
         {
             if (string.IsNullOrEmpty(searchString))
-                return View(await _context.JobOffers.Include(x => x.Company).ToListAsync());
+                return View(await _context.JobOffers.ToListAsync());
 
             List<JobOffer> searchResult = await _context.JobOffers.Include(x => x.Company).Where(o => o.Title.Contains(searchString)).ToListAsync();
             return View(searchResult);
@@ -34,7 +34,7 @@ namespace HRWebApplication.Controllers
                 return BadRequest($"id shouldn't not be null");
             }
             var offer = await _context.JobOffers.FirstOrDefaultAsync(x => x.Id == id.Value);
-            
+
             if (offer == null)
             {
                 return NotFound($"offer not found in DB");
@@ -54,6 +54,14 @@ namespace HRWebApplication.Controllers
 
             var offer = await _context.JobOffers.FirstOrDefaultAsync(x => x.Id == model.Id);
             offer.Title = model.Title;
+            offer.Overview = model.Overview;
+            offer.Location = model.Location;
+            offer.SalaryFrom = model.SalaryFrom;
+            offer.SalaryTo = model.SalaryTo;
+            offer.Specialization = model.Specialization;
+            offer.ValidUntil = model.ValidUntil;
+            offer.Description = model.Description;
+            offer.Currency = model.Currency;
             //TODO: Enable changing other fileds
             _context.Update(offer);
             await _context.SaveChangesAsync();
@@ -103,7 +111,8 @@ namespace HRWebApplication.Controllers
                 SalaryFrom = model.SalaryFrom,
                 SalaryTo = model.SalaryTo,
                 ValidUntil = model.ValidUntil,
-                AddedOn = DateTime.Now
+                AddedOn = DateTime.Now,
+                Specialization = model.Specialization
             };
 
             await _context.JobOffers.AddAsync(jobOffer);
@@ -114,6 +123,10 @@ namespace HRWebApplication.Controllers
         public async Task<IActionResult> Details(int id)
         {
             var offer = await _context.JobOffers.FirstOrDefaultAsync(x => x.Id == id);
+            if (offer is null)
+            {
+                return NotFound($"offer not found in DB");
+            }
             return View(offer);
         }
     }

@@ -231,7 +231,6 @@ C:\Users\Lenovo\source\repos\HR App\HR App\HRWebApplication\bin\Debug\netcoreapp
 C:\Users\Lenovo\source\repos\HR App\HR App\HRWebApplication\obj\Debug\netcoreapp3.0\HRWebApplication.csprojAssemblyReference.cache
 C:\Users\Lenovo\source\repos\HR App\HR App\HRWebApplication\obj\Debug\netcoreapp3.0\staticwebassets\HRWebApplication.StaticWebAssets.Manifest.cache
 C:\Users\Lenovo\source\repos\HR App\HR App\HRWebApplication\obj\Debug\netcoreapp3.0\staticwebassets\HRWebApplication.StaticWebAssets.xml
-C:\Users\Lenovo\source\repos\HR App\HR App\HRWebApplication\obj\Debug\netcoreapp3.0\HRWebApplication.MvcApplicationPartsAssemblyInfo.cache
 C:\Users\Lenovo\source\repos\HR App\HR App\HRWebApplication\obj\Debug\netcoreapp3.0\HRWebApplication.RazorAssemblyInfo.cache
 C:\Users\Lenovo\source\repos\HR App\HR App\HRWebApplication\obj\Debug\netcoreapp3.0\HRWebApplication.RazorAssemblyInfo.cs
 C:\Users\Lenovo\source\repos\HR App\HR App\HRWebApplication\obj\Debug\netcoreapp3.0\HRWebApplication.AssemblyInfoInputs.cache
@@ -259,3 +258,12 @@ C:\Users\Lenovo\source\repos\HR App\HR App\HRWebApplication\obj\Debug\netcoreapp
 C:\Users\Lenovo\source\repos\HR App\HR App\HRWebApplication\obj\Debug\netcoreapp3.0\Razor\Views\JobOffer\Create.cshtml.g.cs
 C:\Users\Lenovo\source\repos\HR App\HR App\HRWebApplication\obj\Debug\netcoreapp3.0\Razor\Views\Company\Edit.cshtml.g.cs
 C:\Users\Lenovo\source\repos\HR App\HR App\HRWebApplication\obj\Debug\netcoreapp3.0\Razor\Views\Company\Create.cshtml.g.cs
+C:\Users\Lenovo\source\repos\HR App\HR App\HRWebApplication\obj\Debug\netcoreapp3.0\Razor\Views\JobApplication\Create.cshtml.g.cs
+C:\Users\Lenovo\source\repos\HR App\HR App\HRWebApplication\bin\Debug\netcoreapp3.0\System.Web.Mvc.dll
+C:\Users\Lenovo\source\repos\HR App\HR App\HRWebApplication\bin\Debug\netcoreapp3.0\System.Web.Razor.dll
+C:\Users\Lenovo\source\repos\HR App\HR App\HRWebApplication\bin\Debug\netcoreapp3.0\System.Web.Helpers.dll
+C:\Users\Lenovo\source\repos\HR App\HR App\HRWebApplication\bin\Debug\netcoreapp3.0\System.Web.WebPages.Deployment.dll
+C:\Users\Lenovo\source\repos\HR App\HR App\HRWebApplication\bin\Debug\netcoreapp3.0\System.Web.WebPages.Razor.dll
+C:\Users\Lenovo\source\repos\HR App\HR App\HRWebApplication\bin\Debug\netcoreapp3.0\System.Web.WebPages.dll
+C:\Users\Lenovo\source\repos\HR App\HR App\HRWebApplication\bin\Debug\netcoreapp3.0\Microsoft.Web.Infrastructure.dll
+C:\Users\Lenovo\source\repos\HR App\HR App\HRWebApplication\obj\Debug\netcoreapp3.0\HRWebApplication.MvcApplicationPartsAssemblyInfo.cache
