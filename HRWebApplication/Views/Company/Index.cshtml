@@ -14,7 +14,7 @@
         <thead class="thead-dark">
             <tr>
                 <th scope="col">Company Name</th>
-                <th scope="col"></th>
+                <th style="width: 20px"></th>
             </tr>
         </thead>
         <tbody>
@@ -22,7 +22,13 @@
             {
                 <tr>
                     <td>@company.Name</td>
-                    <td>@Html.ActionLink("Edit", "Edit", "Company", new { company.Id }, new { @class = "btn btn-primary" })</td>
+                    <td>
+                        <a href="@Url.Action("Edit", "Company", new { company.Id })"
+                           class="text-primary">
+                            <i class="fas fa-edit"
+                               title="Edit"></i>
+                        </a>
+                    </td>
                 </tr>
             }
             <tr>
