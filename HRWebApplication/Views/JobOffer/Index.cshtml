@@ -10,7 +10,7 @@
             @Model.Count
         </span>
     </div>
-    <div class="col-12">
+    <div class="col-6">
         @using (Html.BeginForm("Index", "JobOffer", FormMethod.Get))
         {
             <div class="input-group mb-3" style="margin-bottom: 14px">
@@ -25,7 +25,7 @@
             </div>
         }
     </div>
-    <div class="col-12">
+    <div class="col-6">
             <a href="@Url.Action("Create", "JobOffer")">
                 <button class="btn btn-outline-primary">
                     <i class="fa fa-plus pr-3"></i>
