@@ -23,8 +23,9 @@ namespace HRWebApplication.Controllers
         {
             if (string.IsNullOrEmpty(searchString))
                 return View(await _context.JobOffers.ToListAsync());
-
-            List<JobOffer> searchResult = await _context.JobOffers.Include(x => x.Company).Where(o => o.Title.Contains(searchString)).ToListAsync();
+            //TODO: Why include - ok fixed
+            //TODO: maybe only one/two column needed
+            List<JobOffer> searchResult = await _context.JobOffers.Where(o => o.Title.Contains(searchString)).ToListAsync();
             return View(searchResult);
         }
         public async Task<IActionResult> Edit(int? id)
@@ -122,7 +123,7 @@ namespace HRWebApplication.Controllers
 
         public async Task<IActionResult> Details(int id)
         {
-            var offer = await _context.JobOffers.FirstOrDefaultAsync(x => x.Id == id);
+            var offer = await _context.JobOffers.Include(x => x.JobApplications).FirstOrDefaultAsync(x => x.Id == id);
             if (offer is null)
             {
                 return NotFound($"offer not found in DB");

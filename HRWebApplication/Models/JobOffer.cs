@@ -44,6 +44,6 @@ namespace HRWebApplication.Models
         [Required(ErrorMessage = "Please enter specialization.")]
         [Display(Name = "Specialization")]
         public string Specialization { get; set; }
-        public List<JobApplication> JobApplications { get; set; } = new List<JobApplication>();
+        public virtual List<JobApplication> JobApplications { get; set; } = new List<JobApplication>();
     }
 }

@@ -24,14 +24,14 @@ namespace HRWebApplication.Controllers
             {
                 return BadRequest($"id shouldn't not be null");
             }
-            //TODO: dont download whole offer only title
-            var offer = await _context.JobOffers.FirstOrDefaultAsync(x => x.Id == id.Value);
-            if (offer == null)
+            //TODO: dont download whole offer only title - DONE better??
+            var title = await _context.JobOffers.Where(x => x.Id == id.Value).Select(x => x.Title).FirstOrDefaultAsync();
+            if (title == null)
             {
                 return NotFound($"offer not found in DB");
             }
 
-            model.JobTitle = offer.Title;
+            model.JobTitle = title;
             model.OfferId = id.Value;
             return View(model);
         }
@@ -54,14 +54,13 @@ namespace HRWebApplication.Controllers
                 OfferId = model.OfferId,
                 ContactAgreement = model.ContactAgreement
             };
-
+            //TODO: better? .Select(x=> x.JobApplications)
             var offer = await _context.JobOffers.FirstOrDefaultAsync(x => x.Id == jobApplication.OfferId);
             if (offer == null)
             {
                 return NotFound($"offer not found in DB");
             }
             offer.JobApplications.Add(jobApplication);
-
             await _context.JobApplications.AddAsync(jobApplication);
             await _context.SaveChangesAsync();
             return RedirectToAction("Details","JobOffer", new { id = model.OfferId });
