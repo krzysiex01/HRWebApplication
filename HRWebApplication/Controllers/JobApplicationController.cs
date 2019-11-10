@@ -36,6 +36,8 @@ namespace HRWebApplication.Controllers
             return View(model);
         }
 
+
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Create(CreateJobApplicationViewModel model)

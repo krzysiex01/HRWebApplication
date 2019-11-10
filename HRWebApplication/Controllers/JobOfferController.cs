@@ -123,7 +123,11 @@ namespace HRWebApplication.Controllers
 
         public async Task<IActionResult> Details(int id)
         {
-            var offer = await _context.JobOffers.Include(x => x.JobApplications).FirstOrDefaultAsync(x => x.Id == id);
+            //Get all data at once
+            // var offer = await _context.JobOffers.Include(x => x.JobApplications).FirstOrDefaultAsync(x => x.Id == id);
+
+            //Get JobApplications using AJAX
+            var offer = await _context.JobOffers.FirstOrDefaultAsync(x => x.Id == id);
             if (offer is null)
             {
                 return NotFound($"offer not found in DB");
