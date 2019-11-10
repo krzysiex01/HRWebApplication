@@ -265,5 +265,6 @@ C:\Users\Lenovo\source\repos\HR App\HR App\HRWebApplication\bin\Debug\netcoreapp
 C:\Users\Lenovo\source\repos\HR App\HR App\HRWebApplication\bin\Debug\netcoreapp3.0\System.Web.WebPages.Razor.dll
 C:\Users\Lenovo\source\repos\HR App\HR App\HRWebApplication\bin\Debug\netcoreapp3.0\System.Web.WebPages.dll
 C:\Users\Lenovo\source\repos\HR App\HR App\HRWebApplication\bin\Debug\netcoreapp3.0\Microsoft.Web.Infrastructure.dll
-C:\Users\Lenovo\source\repos\HR App\HR App\HRWebApplication\obj\Debug\netcoreapp3.0\HRWebApplication.MvcApplicationPartsAssemblyInfo.cache
 C:\Users\Lenovo\source\repos\HR App\HR App\HRWebApplication\obj\Debug\netcoreapp3.0\HRWebApplication.csprojAssemblyReference.cache
+C:\Users\Lenovo\source\repos\HR App\HR App\HRWebApplication\obj\Debug\netcoreapp3.0\HRWebApplication.MvcApplicationPartsAssemblyInfo.cache
+C:\Users\Lenovo\source\repos\HR App\HR App\HRWebApplication\obj\Debug\netcoreapp3.0\Razor\Views\JobOffer\_JobOfferList.cshtml.g.cs

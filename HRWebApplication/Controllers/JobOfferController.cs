@@ -12,21 +12,72 @@ namespace HRWebApplication.Controllers
     [Route("[controller]/[action]")]
     public class JobOfferController : Controller
     {
+        private int pageSize = 4;
+
         private readonly DataContext _context;
         public JobOfferController(DataContext context)
         {
             _context = context;
         }
+       
+        public async Task<PartialViewResult> GetJobOffers(string sortOrder, string currentFilter, string searchString, int? page)
+        {
+            ViewBag.CurrentSort = sortOrder;
+            ViewBag.NameSortParm = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
+            ViewBag.DateSortParm = sortOrder == "Date" ? "date_desc" : "Date";
+
+            if (searchString != null)
+            {
+                page = 1;
+            }
+            else
+            {
+                searchString = currentFilter;
+            }
+
+            ViewBag.CurrentFilter = searchString;
+
+            var jobOffers = from s in _context.JobOffers
+                           select s;
+
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                jobOffers = jobOffers.Where(s => s.Title.Contains(searchString));
+            }
+
+            switch (sortOrder)
+            {
+                case "name_desc":
+                    jobOffers = jobOffers.OrderByDescending(s => s.Title);
+                    break;
+                case "Date":
+                    jobOffers = jobOffers.OrderBy(s => s.AddedOn);
+                    break;
+                case "date_desc":
+                    jobOffers = jobOffers.OrderByDescending(s => s.AddedOn);
+                    break;
+                default:  // Name ascending 
+                    jobOffers = jobOffers.OrderBy(s => s.Title);
+                    break;
+            }
+
+            int pageNumber = (page ?? 1);
+
+            ViewBag.CurrentPage = pageNumber;
+            ViewBag.PagesCount = Math.Ceiling((double)await jobOffers.CountAsync() / pageSize);
+            return PartialView("_JobOfferList", await jobOffers.Skip(pageSize * (pageNumber - 1)).Take(pageSize).ToListAsync());
+        }
+
 
         [HttpGet]
-        public async Task<IActionResult> Index([FromQuery(Name = "search")] string searchString)
+        public async Task<IActionResult> Index()
         {
-            if (string.IsNullOrEmpty(searchString))
-                return View(await _context.JobOffers.ToListAsync());
-            //TODO: Why include - ok fixed
-            //TODO: maybe only one/two column needed
-            List<JobOffer> searchResult = await _context.JobOffers.Where(o => o.Title.Contains(searchString)).ToListAsync();
-            return View(searchResult);
+            JobOfferViewModel jobOfferViewModel = new JobOfferViewModel();
+            jobOfferViewModel.JobOffersCount = await _context.JobOffers.CountAsync();
+
+            ViewBag.CurrentPage = 1;
+            ViewBag.PagesCount = Math.Ceiling((double)jobOfferViewModel.JobOffersCount / pageSize);
+            return View(jobOfferViewModel);
         }
         public async Task<IActionResult> Edit(int? id)
         {

@@ -1,74 +1,67 @@
-﻿@model List<JobOffer>
+﻿@model JobOfferViewModel
+
 @{
     ViewData["Title"] = "Job Offers";
-    var selectedPage = 0;
 }
 <div class="col-sm-12">
     <div class="col-12">
         <h2 class="h3 d-inline-block">Available job offers</h2>
         <span class="badge badge-pill badge-primary align-top">
-            @Model.Count
+            @Model.JobOffersCount
         </span>
     </div>
     <div class="col-6">
-        @using (Html.BeginForm("Index", "JobOffer", FormMethod.Get))
-        {
-            <div class="input-group mb-3" style="margin-bottom: 14px">
-                <input type="text" class="form-control" placeholder="Search"
-                       name="search" id="search" aria-label="Search by job title" aria-describedby="basic-addon2" />
-                <div class="input-group-append">
-                    <button class="btn btn-outline-primary" type="submit">
-                        <i class="fas fa-search"></i>
-                        Search
-                    </button>
-                </div>
+        @*@using (Html.BeginForm("Index", "JobOffer", FormMethod.Get))
+            {*@
+        <div class="input-group mb-3" style="margin-bottom: 14px">
+            <input type="text" class="form-control" placeholder="Search"
+                   name="searchString" id="Search" aria-label="Search by job title" aria-describedby="basic-addon2"/>
+            <div class="input-group-append">
+                <button class="btn btn-outline-primary" id="SearchButton">
+                    <i class="fas fa-search"></i>
+                    Search
+                </button>
             </div>
-        }
+        </div>
+        @*}*@
     </div>
     <div class="col-6">
-            <a href="@Url.Action("Create", "JobOffer")">
-                <button class="btn btn-outline-primary">
-                    <i class="fa fa-plus pr-3"></i>
-                    Create new offer
-                </button>
-            </a>
+        <a href="@Url.Action("Create", "JobOffer")">
+            <button class="btn btn-outline-primary">
+                <i class="fa fa-plus pr-3"></i>
+                Create new offer
+            </button>
+        </a>
     </div>
 </div>
 
-<div class="card-deck">
 
-    @foreach (JobOffer jobOffer in Model)
-    {
-        <div class="card bg-light mb-3" style="max-width: 18rem; min-width: 16rem;">
-            <div class="card-header">@Html.ActionLink(jobOffer.Title, "Details", new { id = jobOffer.Id })</div>
-            <div class="card-body">
-                <h5 class="card-title">@jobOffer.SalaryFrom - @jobOffer.SalaryTo @jobOffer.Currency</h5>
-                <p class="card-text h-100">@jobOffer.Overview</p>
-            </div>
-            <ul class="list-group list-group-flush">
-                <li class="list-group-item">Location: @jobOffer.Location</li>
-                <li class="list-group-item">Specialization: @jobOffer.Specialization</li>
-            </ul>
-            <div class="card-footer text-center"><small>Added on @jobOffer.AddedOn.ToShortDateString()</small></div>
-        </div>
-    }
+<div id="JobOfferList">
+
 </div>
 
 
-<nav aria-label="Page navigation">
-    <ul class="pagination justify-content-center">
-        @for (int i = 1; i <= Model.Count / 3; i++)
-        {
-            if (selectedPage + 1 == i)
-            {
-                <li class="page-item"><a class="page-link active" href="#">@i</a></li>
 
-            }
-            else
-            {
-                <li class="page-item"><a class="page-link" href="#">@i</a></li>
-            }
+@section Scripts
+{
+    <script>
+
+    $(document).ready(function () {
+        $("#JobOfferList").load('@(Url.Action("GetJobOffers","JobOffer", new { sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter}))');
+        $("#SearchButton").click(search);
+    });
+
+    function search() {
+        var searchString = $("#Search").val();
+        var link = '@(Url.Action("GetJobOffers",
+                                        "JobOffer",
+                                        new { sortOrder = ViewBag.CurrentSort,
+                                            currentFilter = ViewBag.CurrentFilter}))' + '?searchString=' + searchString;
+        $("#JobOfferList").load(link);
         }
-    </ul>
-</nav>
 
+         function GetJobOffersList(url) {
+        $("#JobOfferList").load(url);
+    }
+    </script>
+}

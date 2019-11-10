@@ -160,19 +160,9 @@
     })
 
         function isArrayEmpty(array) {
-    return array.filter(function(el) {
-        return !jQuery.isEmptyObject(el);
-    }).length === 0;
-}
-    function find() {
-        var id = $('#prodId').val();
-        $.getJSON(uri + '/' + id)
-            .done(function (data) {
-                $('#product').text(formatItem(data));
-            })
-            .fail(function (jqXHR, textStatus, err) {
-                $('#product').text('Error: ' + err);
-            });
-    }
+            return array.filter(function (el) {
+                return !jQuery.isEmptyObject(el);
+            }).length === 0;
+        }
     </script>
 }

@@ -16,7 +16,6 @@ namespace HRWebApplication.Controllers
         {
             _context = context;
         }
-
         public async Task<ActionResult> Create(int? id)
         {
             var model = new CreateJobApplicationViewModel();
@@ -35,9 +34,6 @@ namespace HRWebApplication.Controllers
             model.OfferId = id.Value;
             return View(model);
         }
-
-
-
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Create(CreateJobApplicationViewModel model)
