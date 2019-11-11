@@ -2,6 +2,9 @@
   "version": 3,
   "targets": {
     ".NETCoreApp,Version=v3.0": {
+      "knockoutjs/3.5.1": {
+        "type": "package"
+      },
       "Microsoft.AspNet.Mvc/5.2.7": {
         "type": "package",
         "dependencies": {
@@ -2993,6 +2996,19 @@
     }
   },
   "libraries": {
+    "knockoutjs/3.5.1": {
+      "sha512": "5Acbwk98GvNEevZdAWANyKd3UZWXh0ULy+nlfF2K7Qe47oQbSsEVWD9K6wddXGPn/dmeVy67WnKi8H9Z+HpS1A==",
+      "type": "package",
+      "path": "knockoutjs/3.5.1",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "Content/Scripts/knockout-3.5.1.debug.js",
+        "Content/Scripts/knockout-3.5.1.js",
+        "knockoutjs.3.5.1.nupkg.sha512",
+        "knockoutjs.nuspec"
+      ]
+    },
     "Microsoft.AspNet.Mvc/5.2.7": {
       "sha512": "m3hUsn48k6Qb5El9A8naTwGTLCdSQKGSpGweqIfiVKltGJzAJJxuXvhhaQQtLCGg3i5V88iGjz0JG72/tlFKlg==",
       "type": "package",
@@ -9170,7 +9186,8 @@
       "Microsoft.EntityFrameworkCore.Tools >= 3.0.0",
       "Microsoft.Extensions.Logging.Debug >= 3.0.0",
       "Microsoft.VisualStudio.Web.CodeGeneration.Design >= 3.0.0",
-      "Swashbuckle.AspNetCore >= 5.0.0-rc4"
+      "Swashbuckle.AspNetCore >= 5.0.0-rc4",
+      "knockoutjs >= 3.5.1"
     ]
   },
   "packageFolders": {
@@ -9248,6 +9265,10 @@
           "Swashbuckle.AspNetCore": {
             "target": "Package",
             "version": "[5.0.0-rc4, )"
+          },
+          "knockoutjs": {
+            "target": "Package",
+            "version": "[3.5.1, )"
           }
         },
         "imports": [

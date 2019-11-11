@@ -38,6 +38,7 @@ namespace HRWebApplication.Models
         public int SalaryTo { get; set; }
         [Display(Name = "Currency")]
         public Currency Currency { get; set; }
+        //[Required(ErrorMessage = "Please enter location.")]
         [Display(Name = "Location")]
         public string Location { get; set; }
         public DateTime AddedOn { get; set; }

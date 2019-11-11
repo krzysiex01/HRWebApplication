@@ -74,6 +74,10 @@
             "Swashbuckle.AspNetCore": {
               "target": "Package",
               "version": "[5.0.0-rc4, )"
+            },
+            "knockoutjs": {
+              "target": "Package",
+              "version": "[3.5.1, )"
             }
           },
           "imports": [
