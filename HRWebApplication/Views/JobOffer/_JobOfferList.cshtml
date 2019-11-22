@@ -31,7 +31,10 @@
             else
             {
                 <li class="page-item">
-                    <a class="page-link" href="#" onclick="GetJobOffersList('@(Url.Action("GetJobOffers", "JobOffer", new { sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter, page = i }))'); return false;">@i</a>
+                    <a class="page-link" href="#" 
+                       onclick="GetJobOffersList('@(Url.Action("GetJobOffers", "JobOffer", new { sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter, page = i }))'); return false;">
+                        @i
+                    </a>
                 </li>
             }
         }

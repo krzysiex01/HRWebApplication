@@ -3,35 +3,56 @@
 @{
     ViewData["Title"] = "Job Offers";
 }
-<div class="col-sm-12">
-    <div class="col-12">
-        <h2 class="h3 d-inline-block">Available job offers</h2>
-        <span class="badge badge-pill badge-primary align-top">
-            @Model.JobOffersCount
-        </span>
+<div class="container">
+    <div class="row mb-2">
+        <div class="col-12">
+            <h2 class="h3 d-inline-block">Available job offers</h2>
+            <span class="badge badge-pill badge-primary align-top">
+                @Model.JobOffersCount
+            </span>
+        </div>
+
     </div>
-    <div class="col-6">
-        @*@using (Html.BeginForm("Index", "JobOffer", FormMethod.Get))
-            {*@
-        <div class="input-group mb-3" style="margin-bottom: 14px">
-            <input type="text" class="form-control" placeholder="Search"
-                   name="searchString" id="Search" aria-label="Search by job title" aria-describedby="basic-addon2"/>
-            <div class="input-group-append">
-                <button class="btn btn-outline-primary" id="SearchButton">
-                    <i class="fas fa-search"></i>
-                    Search
-                </button>
+    <div class="row mb-4">
+        <div class="col-md-6">
+            <div class="input-group mb-3" style="margin-bottom: 14px">
+                <input type="text" class="form-control" placeholder="Search"
+                       name="searchString" id="Search" aria-label="Search by job title" aria-describedby="basic-addon2" />
+                <div class="input-group-append">
+                    <button class="btn btn-outline-primary" id="SearchButton">
+                        <i class="fas fa-search"></i>
+                        Search
+                    </button>
+                </div>
             </div>
         </div>
-        @*}*@
-    </div>
-    <div class="col-6">
-        <a href="@Url.Action("Create", "JobOffer")">
-            <button class="btn btn-outline-primary">
-                <i class="fa fa-plus pr-3"></i>
-                Create new offer
-            </button>
-        </a>
+        <div class="col-md-2 mb-4">
+            <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                <label class="btn btn-outline-primary active"
+                        onclick="SetNewSortOrder('@(Url.Action("GetJobOffers", "JobOffer", new { sortOrder = "name", page = 1 }))'); return false;">
+                    <input type="radio" name="sorting" id="optionNameSort" autocomplete="off" />
+                    <i class="fas fa-sort-alpha-down"></i>
+                </label>
+                <label class="btn btn-outline-primary"
+                           onclick="SetNewSortOrder('@(Url.Action("GetJobOffers", "JobOffer", new { sortOrder = "name_desc", page = 1 }))'); return false;">
+                    <input type="radio" name="sorting" id="optionNameDescSort" autocomplete="off" />
+                    <i class="fas fa-sort-alpha-up"></i>
+                </label>
+                <label class="btn btn-outline-primary"
+                           onclick="SetNewSortOrder('@(Url.Action("GetJobOffers", "JobOffer", new { sortOrder = "date", page = 1 }))'); return false;">
+                    <input type="radio" name="sorting" id="optionDateSort" autocomplete="off" />
+                    <i class="far fa-clock"></i>
+                </label>
+            </div>
+        </div>
+        <div class="col-md-4 mb-4">
+            <a href="@Url.Action("Create", "JobOffer")">
+                <button class="btn btn-outline-primary">
+                    <i class="fa fa-plus pr-3"></i>
+                    Create new offer
+                </button>
+            </a>
+        </div>
     </div>
 </div>
 
@@ -40,28 +61,34 @@
 
 </div>
 
-
-
 @section Scripts
 {
     <script>
 
     $(document).ready(function () {
-        $("#JobOfferList").load('@(Url.Action("GetJobOffers","JobOffer", new { sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter}))');
+        $("#JobOfferList").load('@(Url.Action("GetJobOffers", "JobOffer"))');
         $("#SearchButton").click(search);
     });
 
-    function search() {
-        var searchString = $("#Search").val();
-        var link = '@(Url.Action("GetJobOffers",
-                                        "JobOffer",
-                                        new { sortOrder = ViewBag.CurrentSort,
-                                            currentFilter = ViewBag.CurrentFilter}))' + '?searchString=' + searchString;
+          function search() {
+              var searchString = $("#Search").val();
+            var sortOrder = $('input[name=sorting]:checked').val();
+
+              var link = '@(Url.Action("GetJobOffers",
+                                        "JobOffer"))' + '?searchString=' + searchString + '&sortOrder=' + sortOrder;
         $("#JobOfferList").load(link);
         }
 
-         function GetJobOffersList(url) {
+       
+        function GetJobOffersList(url){
         $("#JobOfferList").load(url);
-    }
+        }
+
+        function SetNewSortOrder(url) {
+            var searchString = $("#Search").val();
+            if(searchString)
+                url = url + '&currentFilter=' + searchString;
+        $("#JobOfferList").load(url);
+        }
     </script>
 }

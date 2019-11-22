@@ -12,7 +12,7 @@ namespace HRWebApplication.Controllers
     [Route("[controller]/[action]")]
     public class JobOfferController : Controller
     {
-        private int pageSize = 4;
+        private int pageSize = 3;
 
         private readonly DataContext _context;
         public JobOfferController(DataContext context)
@@ -23,15 +23,13 @@ namespace HRWebApplication.Controllers
         public async Task<PartialViewResult> GetJobOffers(string sortOrder, string currentFilter, string searchString, int? page)
         {
             ViewBag.CurrentSort = sortOrder;
-            ViewBag.NameSortParm = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
-            ViewBag.DateSortParm = sortOrder == "Date" ? "date_desc" : "Date";
 
             if (searchString != null)
             {
                 page = 1;
             }
             else
-            {
+             {
                 searchString = currentFilter;
             }
 
@@ -47,10 +45,13 @@ namespace HRWebApplication.Controllers
 
             switch (sortOrder)
             {
+                case "name":
+                    jobOffers = jobOffers.OrderBy(s => s.Title);
+                    break;
                 case "name_desc":
                     jobOffers = jobOffers.OrderByDescending(s => s.Title);
                     break;
-                case "Date":
+                case "date":
                     jobOffers = jobOffers.OrderBy(s => s.AddedOn);
                     break;
                 case "date_desc":
