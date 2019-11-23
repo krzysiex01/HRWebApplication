@@ -9,8 +9,11 @@ using Microsoft.EntityFrameworkCore;
 
 namespace HRWebApplication.Controllers
 {
+    [Route("[controller]/[action]")]
     public class JobApplicationController : Controller
     {
+        private int pageSize = 3;
+
         private readonly DataContext _context;
         public JobApplicationController(DataContext context)
         {
@@ -23,7 +26,6 @@ namespace HRWebApplication.Controllers
             {
                 return BadRequest($"id shouldn't not be null");
             }
-            //TODO: dont download whole offer only title - DONE better??
             var title = await _context.JobOffers.Where(x => x.Id == id.Value).Select(x => x.Title).FirstOrDefaultAsync();
             if (title == null)
             {
@@ -63,9 +65,63 @@ namespace HRWebApplication.Controllers
             await _context.SaveChangesAsync();
             return RedirectToAction("Details","JobOffer", new { id = model.OfferId });
         }
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View();
+            JobApplicationViewModel jobApplicationViewModel = new JobApplicationViewModel();
+            jobApplicationViewModel.JobApplicationsCount = await _context.JobApplications.CountAsync();
+
+            //ViewBag.CurrentPage = 1;
+            //ViewBag.PagesCount = Math.Ceiling((double)jobApplicationViewModel.JobApplicationsCount / pageSize);
+            return View(jobApplicationViewModel);
+        }
+
+        public async Task<PartialViewResult> GetJobApplications(string sortOrder, string currentFilter, string searchString, int? page)
+        {
+            int pageNumber = (page ?? 1);
+
+            ViewBag.CurrentSort = sortOrder;
+
+            if (searchString != null)
+            {
+                page = 1;
+            }
+            else
+            {
+                searchString = currentFilter;
+            }
+
+            ViewBag.CurrentFilter = searchString;
+
+            var jobApplications = from s in _context.JobApplications select s;
+
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                jobApplications = jobApplications.Where(s => s.LastName.Contains(searchString));
+            }
+
+            switch (sortOrder)
+            {
+                case "name":
+                    jobApplications = jobApplications.OrderBy(s => s.LastName);
+                    break;
+                case "name_desc":
+                    jobApplications = jobApplications.OrderByDescending(s => s.LastName);
+                    break;
+                case "date":
+                    jobApplications = jobApplications.OrderBy(s => s.PhoneNumber);//TODO: ADD date 
+                    break;
+                case "date_desc":
+                    jobApplications = jobApplications.OrderByDescending(s => s.PhoneNumber);
+                    break;
+                default:  // Name ascending 
+                    jobApplications = jobApplications.OrderBy(s => s.LastName);
+                    break;
+            }
+
+
+            ViewBag.CurrentPage = pageNumber;
+            ViewBag.PagesCount = Math.Ceiling((double)await jobApplications.CountAsync() / pageSize);
+            return PartialView("_JobApplicationList", await jobApplications.Skip(pageSize * (pageNumber - 1)).Take(pageSize).ToListAsync());
         }
     }
 }

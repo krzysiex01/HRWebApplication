@@ -135,7 +135,6 @@ C:\Users\Lenovo\source\repos\HR App\HR App\HRWebApplication\bin\Debug\netcoreapp
 C:\Users\Lenovo\source\repos\HR App\HR App\HRWebApplication\bin\Debug\netcoreapp3.0\HRWebApplication.runtimeconfig.dev.json
 C:\Users\Lenovo\source\repos\HR App\HR App\HRWebApplication\bin\Debug\netcoreapp3.0\HRWebApplication.dll
 C:\Users\Lenovo\source\repos\HR App\HR App\HRWebApplication\bin\Debug\netcoreapp3.0\HRWebApplication.pdb
-C:\Users\Lenovo\source\repos\HR App\HR App\HRWebApplication\bin\Debug\netcoreapp3.0\Documentation.xml
 C:\Users\Lenovo\source\repos\HR App\HR App\HRWebApplication\bin\Debug\netcoreapp3.0\HRWebApplication.Views.dll
 C:\Users\Lenovo\source\repos\HR App\HR App\HRWebApplication\bin\Debug\netcoreapp3.0\HRWebApplication.Views.pdb
 C:\Users\Lenovo\source\repos\HR App\HR App\HRWebApplication\bin\Debug\netcoreapp3.0\System.Web.Mvc.dll
@@ -279,3 +278,5 @@ C:\Users\Lenovo\source\repos\HR App\HR App\HRWebApplication\obj\Debug\netcoreapp
 C:\Users\Lenovo\source\repos\HR App\HR App\HRWebApplication\obj\Debug\netcoreapp3.0\HRWebApplication.pdb
 C:\Users\Lenovo\source\repos\HR App\HR App\HRWebApplication\obj\Debug\netcoreapp3.0\HRWebApplication.MvcApplicationPartsAssemblyInfo.cs
 C:\Users\Lenovo\source\repos\HR App\HR App\HRWebApplication\obj\Debug\netcoreapp3.0\HRWebApplication.MvcApplicationPartsAssemblyInfo.cache
+C:\Users\Lenovo\source\repos\HR App\HR App\HRWebApplication\obj\Debug\netcoreapp3.0\Razor\Views\JobApplication\Index.cshtml.g.cs
+C:\Users\Lenovo\source\repos\HR App\HR App\HRWebApplication\obj\Debug\netcoreapp3.0\Razor\Views\JobApplication\_JobApplicationList.cshtml.g.cs

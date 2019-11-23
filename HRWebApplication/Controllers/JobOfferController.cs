@@ -68,8 +68,7 @@ namespace HRWebApplication.Controllers
             ViewBag.PagesCount = Math.Ceiling((double)await jobOffers.CountAsync() / pageSize);
             return PartialView("_JobOfferList", await jobOffers.Skip(pageSize * (pageNumber - 1)).Take(pageSize).ToListAsync());
         }
-
-
+       
         [HttpGet]
         public async Task<IActionResult> Index()
         {

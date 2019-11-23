@@ -62,18 +62,12 @@
                 </tr>
             </thead>
             <tbody>
-
-                @*@foreach (JobApplication jobApplication in Model.JobApplications)
-                    {
-                        <tr>
-                            <td>@Html.ActionLink(jobApplication.FirstName + " " + jobApplication.LastName, "Index", "Home")</td>
-                            <td>@jobApplication.EmailAddress</td>
-                            <td>@jobApplication.PhoneNumber</td>
-                        </tr>
-                    }*@
             </tbody>
         </table>
     </div>
+ </div>
+
+<div>
     <div class="col-sm-12 d-inline-block">
         <a href="@Url.Action("Create", "JobApplication", new { Model.Id })"
            class="btn rounded btn-primary">

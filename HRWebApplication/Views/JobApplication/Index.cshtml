@@ -1,0 +1,86 @@
+﻿@model JobApplicationViewModel
+@{
+    ViewData["Title"] = "Index";
+}
+
+
+<div class="container">
+    <div class="row mb-2">
+        <div class="col-12">
+            <h2 class="h3 d-inline-block">Job applications</h2>
+            <span class="badge badge-pill badge-primary align-top">
+                @Model.JobApplicationsCount
+            </span>
+        </div>
+
+    </div>
+    <div class="row mb-4">
+        <div class="col-md-6">
+            <div class="input-group mb-3" style="margin-bottom: 14px">
+                <input type="text" class="form-control" placeholder="Search"
+                       name="searchString" id="Search" aria-label="Search by name" aria-describedby="basic-addon2" />
+                <div class="input-group-append">
+                    <button class="btn btn-outline-primary" id="SearchButton">
+                        <i class="fas fa-search"></i>
+                        Search
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-2 mb-4">
+            <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                <label class="btn btn-outline-primary active"
+                       onclick="sort('name'); return false;">
+                    <input type="radio" name="sorting" id="optionNameSort" autocomplete="off" checked/>
+                    <i class="fas fa-sort-alpha-down"></i>
+                </label>
+                <label class="btn btn-outline-primary"
+                       onclick="sort('name_desc'); return false;">
+                    <input type="radio" name="sorting" id="optionNameDescSort" autocomplete="off" />
+                    <i class="fas fa-sort-alpha-up"></i>
+                </label>
+                <label class="btn btn-outline-primary"
+                       onclick="sort('date'); return false;">
+                    <input type="radio" name="sorting" id="optionDateSort" autocomplete="off" />
+                    <i class="far fa-clock"></i>
+                </label>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div id="JobApplicationList">
+
+</div>
+
+@section Scripts
+{
+    <script>
+
+    $(document).ready(function () {
+        $("#JobApplicationList").load('@(Url.Action("GetJobApplications", "JobApplication"))');
+        $("#SearchButton").click(search);
+    });
+        
+          function search() {
+            var searchString = $("#Search").val();
+            var sortOrder = $('input[name=sorting]:checked').val();
+
+            var link = '@(Url.Action("GetJobApplications",
+                                        "JobApplication"))' + '?searchString=' + searchString + '&sortOrder=' + sortOrder;
+        $("#JobApplicationList").load(link);
+        }
+
+        function sort(sortOrder) {
+            var searchString = $("#Search").val();
+            var link = '@(Url.Action("GetJobApplications", "JobApplication", new { page = 1 }))' + '?searchString=' + searchString + '&sortOrder=' + sortOrder;
+        $("#JobApplicationList").load(link);
+        }
+
+        //Functions used by PartialView called when changing page occurs
+        function getJobApplicationsList(url){
+        $("#JobApplicationList").load(url);
+        }
+    </script>
+}
