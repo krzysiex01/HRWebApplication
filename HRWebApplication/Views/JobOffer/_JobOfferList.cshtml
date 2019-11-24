@@ -1,8 +1,8 @@
-﻿@model List<JobOffer>
+﻿@model JobOfferListViewModel
 
 <div class="card-deck">
 
-    @foreach (JobOffer jobOffer in Model)
+    @foreach (JobOffer jobOffer in Model.JobOffers)
     {
         <div class="card bg-light mb-3" style="max-width: 18rem; min-width: 16rem;">
             <div class="card-header">@Html.ActionLink(jobOffer.Title, "Details", new { id = jobOffer.Id })</div>
@@ -32,7 +32,7 @@
             {
                 <li class="page-item">
                     <a class="page-link" href="#" 
-                       onclick="GetJobOffersList('@(Url.Action("GetJobOffers", "JobOffer", new { sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter, page = i }))'); return false;">
+                       onclick="getJobOffersList('@(Url.Action("GetJobOffers", "JobOffer", new { sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter, page = i }))'); return false;">
                         @i
                     </a>
                 </li>

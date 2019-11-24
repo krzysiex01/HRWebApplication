@@ -76,7 +76,8 @@ namespace HRWebApplication.Controllers
 
             var company =  await _context.Companies.FirstOrDefaultAsync(x => x.Id == model.Id);
             company.Name = model.Name;
-            //TODO: Enable changing other fileds
+            company.Location = model.Location;
+            company.Description = model.Description;
             _context.Update(company);
             await _context.SaveChangesAsync();
             return RedirectToAction("Index", null);

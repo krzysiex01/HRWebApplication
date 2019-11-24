@@ -29,17 +29,17 @@
         <div class="col-md-2 mb-4">
             <div class="btn-group btn-group-toggle" data-toggle="buttons">
                 <label class="btn btn-outline-primary active"
-                        onclick="SetNewSortOrder('@(Url.Action("GetJobOffers", "JobOffer", new { sortOrder = "name", page = 1 }))'); return false;">
+                       onclick="sort('name'); return false;">
                     <input type="radio" name="sorting" id="optionNameSort" autocomplete="off" />
                     <i class="fas fa-sort-alpha-down"></i>
                 </label>
                 <label class="btn btn-outline-primary"
-                           onclick="SetNewSortOrder('@(Url.Action("GetJobOffers", "JobOffer", new { sortOrder = "name_desc", page = 1 }))'); return false;">
+                       onclick="sort('name_desc'); return false;">
                     <input type="radio" name="sorting" id="optionNameDescSort" autocomplete="off" />
                     <i class="fas fa-sort-alpha-up"></i>
                 </label>
                 <label class="btn btn-outline-primary"
-                           onclick="SetNewSortOrder('@(Url.Action("GetJobOffers", "JobOffer", new { sortOrder = "date", page = 1 }))'); return false;">
+                       onclick="sort('date'); return false;">
                     <input type="radio" name="sorting" id="optionDateSort" autocomplete="off" />
                     <i class="far fa-clock"></i>
                 </label>
@@ -80,15 +80,14 @@
         }
 
        
-        function GetJobOffersList(url){
+        function getJobOffersList(url){
         $("#JobOfferList").load(url);
         }
 
-        function SetNewSortOrder(url) {
+          function sort(sortOrder) {
             var searchString = $("#Search").val();
-            if(searchString)
-                url = url + '&currentFilter=' + searchString;
-        $("#JobOfferList").load(url);
+            var link = '@(Url.Action("GetJobOffers", "JobOffer", new { page = 1 }))' + '?searchString=' + searchString + '&sortOrder=' + sortOrder;
+        $("#JobOfferList").load(link);
         }
     </script>
 }

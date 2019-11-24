@@ -43,30 +43,27 @@ namespace HRWebApplication.Controllers
                 jobOffers = jobOffers.Where(s => s.Title.Contains(searchString));
             }
 
-            switch (sortOrder)
+            jobOffers = sortOrder switch
             {
-                case "name":
-                    jobOffers = jobOffers.OrderBy(s => s.Title);
-                    break;
-                case "name_desc":
-                    jobOffers = jobOffers.OrderByDescending(s => s.Title);
-                    break;
-                case "date":
-                    jobOffers = jobOffers.OrderBy(s => s.AddedOn);
-                    break;
-                case "date_desc":
-                    jobOffers = jobOffers.OrderByDescending(s => s.AddedOn);
-                    break;
-                default:  // Name ascending 
-                    jobOffers = jobOffers.OrderBy(s => s.Title);
-                    break;
-            }
+                "name" => jobOffers.OrderBy(s => s.Title),
+                "name_desc" => jobOffers.OrderByDescending(s => s.Title),
+                "date" => jobOffers.OrderBy(s => s.AddedOn),
+                "date_desc" => jobOffers.OrderByDescending(s => s.AddedOn),
+                _ => jobOffers.OrderBy(s => s.Title),
+            };
 
             int pageNumber = (page ?? 1);
 
             ViewBag.CurrentPage = pageNumber;
             ViewBag.PagesCount = Math.Ceiling((double)await jobOffers.CountAsync() / pageSize);
-            return PartialView("_JobOfferList", await jobOffers.Skip(pageSize * (pageNumber - 1)).Take(pageSize).ToListAsync());
+            List<JobOffer> jobOffersList = await jobOffers.Skip(pageSize * (pageNumber - 1)).Take(pageSize).ToListAsync();
+            JobOfferListViewModel jobOfferListViewModel = new JobOfferListViewModel()
+            {
+                JobOffers = jobOffersList,
+                PendingOffers = new List<int>()
+            };
+
+            return PartialView("_JobOfferList", jobOfferListViewModel);
         }
        
         [HttpGet]
