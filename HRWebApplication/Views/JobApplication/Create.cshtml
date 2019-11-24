@@ -5,7 +5,7 @@
 
     <div class="row page-box">
         <div class="col-sm-12">
-            <h2>Apply for: @Html.ActionLink(Model.JobTitle, "Details", "JobOffer", new { id = Model.OfferId })</h2>
+            <h2>Apply for: @Html.ActionLink(Model.JobTitle, "Details", "JobOffer", new { id = Model.JobOfferId })</h2>
             @using (Html.BeginForm("Create", "JobApplication", Model, FormMethod.Post, null, null))
             {
                 @Html.AntiForgeryToken()

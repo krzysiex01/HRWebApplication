@@ -26,6 +26,12 @@ namespace HRWebApplication.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Location")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -45,6 +51,9 @@ namespace HRWebApplication.Migrations
                     b.Property<bool>("ContactAgreement")
                         .HasColumnType("bit");
 
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("CvUrl")
                         .HasColumnType("nvarchar(max)");
 
@@ -56,22 +65,24 @@ namespace HRWebApplication.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("JobOfferId")
+                    b.Property<int>("JobOfferId")
                         .HasColumnType("int");
 
                     b.Property<string>("LastName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("OfferId")
-                        .HasColumnType("int");
-
                     b.Property<string>("PhoneNumber")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("UserId")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
                     b.HasIndex("JobOfferId");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("JobApplications");
                 });
@@ -128,20 +139,65 @@ namespace HRWebApplication.Migrations
                     b.ToTable("JobOffers");
                 });
 
+            modelBuilder.Entity("HRWebApplication.Models.User", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int?>("CompanyId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("EmailAddress")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FirstName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("LastName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ProviderName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ProviderUserId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CompanyId");
+
+                    b.ToTable("Users");
+                });
+
             modelBuilder.Entity("HRWebApplication.Models.JobApplication", b =>
                 {
-                    b.HasOne("HRWebApplication.Models.JobOffer", null)
+                    b.HasOne("HRWebApplication.Models.JobOffer", "JobOffer")
                         .WithMany("JobApplications")
-                        .HasForeignKey("JobOfferId");
+                        .HasForeignKey("JobOfferId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("HRWebApplication.Models.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId");
                 });
 
             modelBuilder.Entity("HRWebApplication.Models.JobOffer", b =>
                 {
                     b.HasOne("HRWebApplication.Models.Company", "Company")
-                        .WithMany()
+                        .WithMany("JobOffers")
                         .HasForeignKey("CompanyId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("HRWebApplication.Models.User", b =>
+                {
+                    b.HasOne("HRWebApplication.Models.Company", "Company")
+                        .WithMany("Users")
+                        .HasForeignKey("CompanyId");
                 });
 #pragma warning restore 612, 618
         }

@@ -9,7 +9,11 @@ namespace HRWebApplication.Models
     public class JobApplication
     {
         public int Id { get; set; }
-        public int OfferId { get; set; }
+        public virtual int JobOfferId { get; set; }
+        public virtual JobOffer JobOffer { get; set; }
+        public int? UserId { get; set; }
+        public virtual User User { get; set; }
+
         [Required(ErrorMessage = "Please enter your first name.")]
         [Display(Name = "First Name")]
         public string FirstName { get; set; }
@@ -26,5 +30,8 @@ namespace HRWebApplication.Models
         public bool ContactAgreement { get; set; }
         [DataType(DataType.Url)]
         public string CvUrl { get; set; }
+
+        [DataType(DataType.Date)]
+        public DateTime CreatedOn { get; set; }
     }
 }

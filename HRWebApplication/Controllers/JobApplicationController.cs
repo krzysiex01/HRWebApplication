@@ -33,7 +33,7 @@ namespace HRWebApplication.Controllers
             }
 
             model.JobTitle = title;
-            model.OfferId = id.Value;
+            model.JobOfferId = id.Value;
             return View(model);
         }
         [HttpPost]
@@ -51,11 +51,13 @@ namespace HRWebApplication.Controllers
                 LastName = model.LastName,
                 EmailAddress = model.EmailAddress,
                 PhoneNumber = model.PhoneNumber,
-                OfferId = model.OfferId,
-                ContactAgreement = model.ContactAgreement
+                JobOfferId = model.JobOfferId,
+                ContactAgreement = model.ContactAgreement,
+                CreatedOn = DateTime.Now
+                //TODO: UserId = ();
             };
             //TODO: better? .Select(x=> x.JobApplications)
-            var offer = await _context.JobOffers.FirstOrDefaultAsync(x => x.Id == jobApplication.OfferId);
+            var offer = await _context.JobOffers.FirstOrDefaultAsync(x => x.Id == jobApplication.JobOfferId);
             if (offer == null)
             {
                 return NotFound($"offer not found in DB");
@@ -63,15 +65,14 @@ namespace HRWebApplication.Controllers
             offer.JobApplications.Add(jobApplication);
             await _context.JobApplications.AddAsync(jobApplication);
             await _context.SaveChangesAsync();
-            return RedirectToAction("Details","JobOffer", new { id = model.OfferId });
+            return RedirectToAction("Details","JobOffer", new { id = model.JobOfferId });
         }
         public async Task<IActionResult> Index()
         {
-            JobApplicationViewModel jobApplicationViewModel = new JobApplicationViewModel();
-            jobApplicationViewModel.JobApplicationsCount = await _context.JobApplications.CountAsync();
-
-            //ViewBag.CurrentPage = 1;
-            //ViewBag.PagesCount = Math.Ceiling((double)jobApplicationViewModel.JobApplicationsCount / pageSize);
+            JobApplicationViewModel jobApplicationViewModel = new JobApplicationViewModel
+            {
+                JobApplicationsCount = await _context.JobApplications.CountAsync()
+            };
             return View(jobApplicationViewModel);
         }
 
@@ -99,25 +100,14 @@ namespace HRWebApplication.Controllers
                 jobApplications = jobApplications.Where(s => s.LastName.Contains(searchString));
             }
 
-            switch (sortOrder)
+            jobApplications = sortOrder switch
             {
-                case "name":
-                    jobApplications = jobApplications.OrderBy(s => s.LastName);
-                    break;
-                case "name_desc":
-                    jobApplications = jobApplications.OrderByDescending(s => s.LastName);
-                    break;
-                case "date":
-                    jobApplications = jobApplications.OrderBy(s => s.PhoneNumber);//TODO: ADD date 
-                    break;
-                case "date_desc":
-                    jobApplications = jobApplications.OrderByDescending(s => s.PhoneNumber);
-                    break;
-                default:  // Name ascending 
-                    jobApplications = jobApplications.OrderBy(s => s.LastName);
-                    break;
-            }
-
+                "name" => jobApplications.OrderBy(s => s.LastName),
+                "name_desc" => jobApplications.OrderByDescending(s => s.LastName),
+                "date" => jobApplications.OrderBy(s => s.CreatedOn), 
+                "date_desc" => jobApplications.OrderByDescending(s => s.CreatedOn),
+                _ => jobApplications.OrderBy(s => s.LastName),
+            };
 
             ViewBag.CurrentPage = pageNumber;
             ViewBag.PagesCount = Math.Ceiling((double)await jobApplications.CountAsync() / pageSize);

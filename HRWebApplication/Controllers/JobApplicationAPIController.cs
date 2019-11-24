@@ -21,7 +21,7 @@ namespace HRWebApplication.Controllers
         [HttpGet("{offerId}")]
         public async Task<IEnumerable<JobApplication>> GetJobApplications(int offerId)
         {
-            var offer = await _context.JobApplications.Where((jobApplication) => jobApplication.OfferId == offerId).ToListAsync();
+            var offer = await _context.JobApplications.Where((jobApplication) => jobApplication.JobOfferId == offerId).ToListAsync();
             return offer;
         }
     }

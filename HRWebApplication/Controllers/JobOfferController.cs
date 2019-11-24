@@ -164,7 +164,8 @@ namespace HRWebApplication.Controllers
                 SalaryTo = model.SalaryTo,
                 ValidUntil = model.ValidUntil,
                 AddedOn = DateTime.Now,
-                Specialization = model.Specialization
+                Specialization = model.Specialization,
+
             };
 
             await _context.JobOffers.AddAsync(jobOffer);

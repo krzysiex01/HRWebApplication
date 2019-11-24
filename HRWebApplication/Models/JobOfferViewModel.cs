@@ -9,5 +9,6 @@ namespace HRWebApplication.Models
     public class JobOfferViewModel
     {
         public int JobOffersCount { get; set; }
+        public List<int> PendingOffers { get; set; }
     }
 }

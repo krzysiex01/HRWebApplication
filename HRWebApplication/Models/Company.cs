@@ -12,5 +12,9 @@ namespace HRWebApplication.Models
         [Required(ErrorMessage = "Please enter name of the comapny.")]
         [Display(Name = "Comapny name")]
         public string  Name { get; set; }
+        public string Location { get; set; }
+        public string Description { get; set; }
+        public virtual List<User> Users { get; set; } = new List<User>();
+        public virtual List<JobOffer> JobOffers { get; set; } = new List<JobOffer>();
     }
 }

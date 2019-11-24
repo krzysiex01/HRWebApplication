@@ -12,13 +12,13 @@ namespace HRWebApplication.Models
     public class JobOffer
     {
         public int Id { get; set; }
+        public virtual int CompanyId { get; set; }
+        public virtual Company Company { get; set; }
 
         [Required(ErrorMessage = "Your offer has no title!")]
         [DataType(DataType.Text)]
         [Display(Name = "Job title")]
         public string Title { get; set; }
-        public virtual Company Company { get; set; }
-        public virtual int CompanyId { get; set; }
 
         [Required(ErrorMessage = "Please enter description of your offer.")]
         [MinLength(10,ErrorMessage = "Your description is too short.")]
