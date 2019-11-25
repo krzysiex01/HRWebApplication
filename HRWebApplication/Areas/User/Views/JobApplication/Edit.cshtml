@@ -1,0 +1,42 @@
+﻿
+@model JobApplication
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<div class="row">
+    <div class="col-sm-12">
+        <h2>Edit Job Application</h2>
+        @using (Html.BeginForm("Edit"))
+        {
+            @Html.AntiForgeryToken()
+            @Html.HiddenFor(m => m.Id)
+            @Html.HiddenFor(m => m.JobOfferId)
+            @Html.HiddenFor(m => m.UserId)
+            @Html.HiddenFor(m => m.CreatedOn)
+            @Html.HiddenFor(m => m.ContactAgreement)
+            <div class="form-group">
+                @Html.LabelFor(m => m.FirstName)
+                @Html.EditorFor(m => m.FirstName, new { htmlAttributes = new { @class = "form-control", placeholder = "Enter first name" } })
+                @Html.ValidationMessageFor(m => m.FirstName, "", new { @class = "text-danger" })
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.LastName)
+                @Html.EditorFor(m => m.LastName, new { htmlAttributes = new { @class = "form-control", placeholder = "Enter last name" } })
+                @Html.ValidationMessageFor(m => m.LastName, "", new { @class = "text-danger" })
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.PhoneNumber)
+                @Html.EditorFor(m => m.PhoneNumber, new { htmlAttributes = new { @class = "form-control", placeholder = "Enter phone number" } })
+                @Html.ValidationMessageFor(m => m.PhoneNumber, "", new { @class = "text-danger" })
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.EmailAddress)
+                @Html.EditorFor(m => m.EmailAddress, new { htmlAttributes = new { @class = "form-control", type="email", placeholder = "Enter email" } })
+                @Html.ValidationMessageFor(m => m.EmailAddress, "", new { @class = "text-danger" })
+            </div>
+
+            <button type="submit" class="btn btn-primary">Save</button>
+        }
+    </div>
+</div>

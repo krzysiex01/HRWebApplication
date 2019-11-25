@@ -13,27 +13,18 @@ namespace HRWebApplication.Controllers
     public class JobApplicationController : Controller
     {
         private int pageSize = 3;
+        private PaginationHelper paginationHelper = new PaginationHelper();
+
 
         private readonly DataContext _context;
         public JobApplicationController(DataContext context)
         {
             _context = context;
         }
-        public async Task<ActionResult> Create(int? id)
+        public ActionResult Create()
         {
             var model = new CreateJobApplicationViewModel();
-            if (id == null)
-            {
-                return BadRequest($"id shouldn't not be null");
-            }
-            var title = await _context.JobOffers.Where(x => x.Id == id.Value).Select(x => x.Title).FirstOrDefaultAsync();
-            if (title == null)
-            {
-                return NotFound($"offer not found in DB");
-            }
 
-            model.JobTitle = title;
-            model.JobOfferId = id.Value;
             return View(model);
         }
         [HttpPost]
@@ -56,6 +47,7 @@ namespace HRWebApplication.Controllers
                 CreatedOn = DateTime.Now
                 //TODO: UserId = ();
             };
+
             //TODO: better? .Select(x=> x.JobApplications)
             var offer = await _context.JobOffers.FirstOrDefaultAsync(x => x.Id == jobApplication.JobOfferId);
             if (offer == null)
@@ -104,14 +96,17 @@ namespace HRWebApplication.Controllers
             {
                 "name" => jobApplications.OrderBy(s => s.LastName),
                 "name_desc" => jobApplications.OrderByDescending(s => s.LastName),
-                "date" => jobApplications.OrderBy(s => s.CreatedOn), 
+                "date" => jobApplications.OrderBy(s => s.CreatedOn),
                 "date_desc" => jobApplications.OrderByDescending(s => s.CreatedOn),
                 _ => jobApplications.OrderBy(s => s.LastName),
             };
 
             ViewBag.CurrentPage = pageNumber;
-            ViewBag.PagesCount = Math.Ceiling((double)await jobApplications.CountAsync() / pageSize);
-            return PartialView("_JobApplicationList", await jobApplications.Skip(pageSize * (pageNumber - 1)).Take(pageSize).ToListAsync());
+            ViewBag.PagesCount = paginationHelper.GetPagesCount(pageSize, await jobApplications.CountAsync());
+            return PartialView("_JobApplicationList", await jobApplications
+                .Skip(paginationHelper.GetFirstIndexOnPage(pageSize, pageNumber))
+                .Take(pageSize)
+                .ToListAsync());
         }
     }
 }

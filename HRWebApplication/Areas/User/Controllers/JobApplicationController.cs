@@ -13,27 +13,36 @@ namespace HRWebApplication.Areas.User.Controllers
     public class JobApplicationController : Controller
     {
         private int pageSize = 3;
+        private PaginationHelper paginationHelper = new PaginationHelper();
 
         private readonly DataContext _context;
         public JobApplicationController(DataContext context)
         {
             _context = context;
         }
-        public async Task<ActionResult> Create(int? id)
+        public async Task<IActionResult> Index()
         {
-            var model = new CreateJobApplicationViewModel();
-            if (id == null)
+            JobApplicationViewModel jobApplicationViewModel = new JobApplicationViewModel
             {
-                return BadRequest($"id shouldn't not be null");
+                JobApplicationsCount = await _context.JobApplications.CountAsync()
+            };
+            return View(jobApplicationViewModel);
+        }
+
+        public async Task<ActionResult> Create(int? jobOfferId)
+        {
+            if (jobOfferId == null)
+            {
+                return BadRequest($"jobOfferId cannot be null");
             }
-            var title = await _context.JobOffers.Where(x => x.Id == id.Value).Select(x => x.Title).FirstOrDefaultAsync();
+            var model = new CreateJobApplicationViewModel();
+            var title = await _context.JobOffers.Where(x => x.Id == jobOfferId).Select(x => x.Title).FirstOrDefaultAsync();
             if (title == null)
             {
                 return NotFound($"offer not found in DB");
             }
-
             model.JobTitle = title;
-            model.JobOfferId = id.Value;
+
             return View(model);
         }
         [HttpPost]
@@ -56,7 +65,7 @@ namespace HRWebApplication.Areas.User.Controllers
                 CreatedOn = DateTime.Now
                 //TODO: UserId = ();
             };
-            //TODO: better? .Select(x=> x.JobApplications)
+
             var offer = await _context.JobOffers.FirstOrDefaultAsync(x => x.Id == jobApplication.JobOfferId);
             if (offer == null)
             {
@@ -65,15 +74,49 @@ namespace HRWebApplication.Areas.User.Controllers
             offer.JobApplications.Add(jobApplication);
             await _context.JobApplications.AddAsync(jobApplication);
             await _context.SaveChangesAsync();
-            return RedirectToAction("Details", "JobOffer", new { id = model.JobOfferId });
+            return RedirectToAction("Details", "JobOffer", new { id = model.JobOfferId, Area = "User" });
         }
-        public async Task<IActionResult> Index()
+
+        public async Task<IActionResult> Edit(int? id)
         {
-            JobApplicationViewModel jobApplicationViewModel = new JobApplicationViewModel
+            if (id == null)
             {
-                JobApplicationsCount = await _context.JobApplications.CountAsync()
-            };
-            return View(jobApplicationViewModel);
+                return BadRequest($"id shouldn't not be null");
+            }
+            var application = await _context.JobApplications.FirstOrDefaultAsync(x => x.Id == id.Value);
+
+            if (application == null)
+            {
+                return NotFound($"application not found in DB");
+            }
+
+            return View(application);
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> Edit(JobApplication model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            var application = await _context.JobApplications.FirstOrDefaultAsync(x => x.Id == model.Id);
+
+            if (application == null)
+            {
+                return NotFound($"application not found in DB");
+            }
+
+            application.FirstName = model.FirstName;
+            application.LastName = model.LastName;
+            application.PhoneNumber = model.PhoneNumber;
+            application.EmailAddress = model.EmailAddress;
+            application.CvUrl = model.CvUrl;
+            application.ContactAgreement = model.ContactAgreement;
+            _context.Update(application);
+            await _context.SaveChangesAsync();
+            return RedirectToAction("Index");
         }
 
         public async Task<PartialViewResult> GetJobApplications(string sortOrder, string currentFilter, string searchString, int? page)
@@ -110,8 +153,11 @@ namespace HRWebApplication.Areas.User.Controllers
             };
 
             ViewBag.CurrentPage = pageNumber;
-            ViewBag.PagesCount = Math.Ceiling((double)await jobApplications.CountAsync() / pageSize);
-            return PartialView("_JobApplicationList", await jobApplications.Skip(pageSize * (pageNumber - 1)).Take(pageSize).ToListAsync());
+            ViewBag.PagesCount = paginationHelper.GetPagesCount(pageSize, await jobApplications.CountAsync());
+            return PartialView("_JobApplicationList.cshtml", await jobApplications
+                .Skip(paginationHelper.GetFirstIndexOnPage(pageSize, pageNumber))
+                .Take(pageSize)
+                .ToListAsync());
         }
     }
 }

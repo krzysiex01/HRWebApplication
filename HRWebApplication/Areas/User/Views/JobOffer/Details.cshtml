@@ -1,0 +1,63 @@
+﻿@model JobOffer
+@{
+    ViewData["Title"] = "Details";
+}
+
+<div class="card text-center">
+    <div class="card-header">
+        <div class="d-flex align-items-center">
+            <div class="pr-3">
+                <a href="@Url.Action("Index", "JobOffer", new { Area = "User" })">
+                    <i class="fas fa-chevron-circle-left"></i>
+                </a>
+            </div>
+            <h3 class="mb-1">
+                @Model.Title
+            </h3>
+        </div>
+    </div>
+
+    <ul class="list-group list-group-flush">
+        <li class="list-group-item">
+            <h4 class="card-title">Overview</h4>
+            <p class="card-text">@Model.Overview</p>
+        </li>
+        <li class="list-group-item">
+            <h4 class="card-title">Salary</h4>
+            <p class="card-text">@Model.SalaryFrom - @Model.SalaryTo @Model.Currency</p>
+        </li>
+        <li class="list-group-item">
+            <h4 class="card-title">Specialization</h4>
+            <p class="card-text">@Model.Specialization</p>
+        </li>
+        <li class="list-group-item">
+            <h4 class="card-title">Location</h4>
+            <p class="card-text">@Model.Location</p>
+        </li>
+        <li class="list-group-item">
+            <h4 class="card-title">Added on</h4>
+            <p class="card-text">@Model.AddedOn.ToShortDateString()</p>
+        </li>
+        <li class="list-group-item">
+            <h4 class="card-title">Description</h4>
+            <p class="card-text">@Model.Description</p>
+        </li>
+    </ul>
+    @if (Model.ValidUntil.HasValue)
+    {
+        <div class="card-footer text-muted">
+            @Model.ValidUntil.Value.Subtract(DateTime.Now).Days days left(@Model.ValidUntil.Value.ToShortDateString())
+        </div>
+    }
+</div>
+
+<div>
+    <div class="col-sm-12 d-inline-block">
+        <a href="@Url.Action("Create", "JobApplication", new { Model.Id , Area = "User"})"
+           class="btn rounded btn-success btn-lg">
+            <i class="fas fa-paper-plane"
+               title="Apply"></i>
+            Apply now
+        </a>
+    </div>
+</div>

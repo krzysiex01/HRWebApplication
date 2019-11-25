@@ -59,7 +59,7 @@
             {
                 <li class="page-item">
                     <a class="page-link" href="#"
-                       onclick="getJobApplicationsList('@(Url.Action("GetJobApplications", "JobApplication", new { sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter, page = i }))'); return false;">
+                       onclick="getJobApplicationsList('@(Url.Action("GetJobApplications", "JobApplication", new { sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter, page = i, Area = "User" }))'); return false;">
                         @i
                     </a>
                 </li>

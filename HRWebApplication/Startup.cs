@@ -33,9 +33,13 @@ namespace HRWebApplication
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "My API", Version = "v1" });
             });
 
+            ConfigureDatabaseServices(services);
+
+        }
+        protected virtual void ConfigureDatabaseServices(IServiceCollection services)
+        {
             var connection = Configuration["DatabaseConnectionString"];
             services.AddDbContext<DataContext>(options => options.UseSqlServer(connection));
-
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -13,6 +13,7 @@ namespace HRWebApplication.Areas.User.Controllers
     public class JobOfferController : Controller
     {
         private int pageSize = 3;
+        private PaginationHelper paginationHelper = new PaginationHelper();
 
         private readonly DataContext _context;
         public JobOfferController(DataContext context)
@@ -55,8 +56,12 @@ namespace HRWebApplication.Areas.User.Controllers
             int pageNumber = (page ?? 1);
 
             ViewBag.CurrentPage = pageNumber;
-            ViewBag.PagesCount = Math.Ceiling((double)await jobOffers.CountAsync() / pageSize);
-            List<JobOffer> jobOffersList = await jobOffers.Skip(pageSize * (pageNumber - 1)).Take(pageSize).ToListAsync();
+            ViewBag.PagesCount = paginationHelper.GetPagesCount(pageSize, await jobOffers.CountAsync());
+            List<JobOffer> jobOffersList = await jobOffers
+                .Skip(paginationHelper.GetFirstIndexOnPage(pageSize,pageNumber))
+                .Take(pageSize)
+                .ToListAsync();
+
             JobOfferListViewModel jobOfferListViewModel = new JobOfferListViewModel()
             {
                 JobOffers = jobOffersList,
@@ -77,8 +82,12 @@ namespace HRWebApplication.Areas.User.Controllers
             return View(jobOfferViewModel);
         }
   
-        public async Task<IActionResult> Details(int id)
+        public async Task<IActionResult> Details(int? id)
         {
+            if (id is null)
+            {
+                return BadRequest("id cannot be null");
+            }
             var offer = await _context.JobOffers.FirstOrDefaultAsync(x => x.Id == id);
             if (offer is null)
             {
