@@ -1,42 +1,47 @@
 ﻿@model JobOfferListViewModel
 
-<div class="card-deck">
-
-    @foreach (var jobOffer in Model.JobOffers)
-    {
-        <div class="card bg-light mb-3" style="max-width: 18rem; min-width: 16rem;">
-            <div class="card-header">@Html.ActionLink(jobOffer.Title, "Details", new { id = jobOffer.Id , Area = "User"})</div>
-            <div class="card-body">
-                <h5 class="card-title">@jobOffer.SalaryFrom - @jobOffer.SalaryTo @jobOffer.Currency</h5>
-                <p class="card-text h-100">@jobOffer.Overview</p>
-            </div>
-            <ul class="list-group list-group-flush">
-                <li class="list-group-item">Location: @jobOffer.Location</li>
-                <li class="list-group-item">Specialization: @jobOffer.Specialization</li>
-            </ul>
-            <div class="card-footer text-center"><small>Added on @jobOffer.AddedOn.ToShortDateString()</small></div>
-        </div>
-    }
-</div>
-<nav aria-label="Page navigation">
-    <ul class="pagination justify-content-center">
-        @for (int i = 1; i <= @ViewBag.PagesCount; i++)
+@if (Model.JobOffers.Count == 0)
+{
+    <div class="alert alert-info col-sm-12 text-center" role="alert">
+        No offers found!
+    </div>
+}
+    <div class="card-deck">
+        @foreach (var jobOffer in Model.JobOffers)
         {
-            if (@ViewBag.CurrentPage == i)
-            {
-                <li class="page-item  active">
-                    <a class="page-link">@i</a>
-                </li>
-            }
-            else
-            {
-                <li class="page-item">
-                    <a class="page-link" href="#"
-                       onclick="getJobOffersList('@(Url.Action("GetJobOffers", "JobOffer", new { sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter, page = i, Area = "User" }))'); return false;">
-                        @i
-                    </a>
-                </li>
-            }
+            <div class="card bg-light mb-3" style="max-width: 18rem; min-width: 16rem;">
+                <div class="card-header">@Html.ActionLink(jobOffer.Title, "Details", new { id = jobOffer.Id, Area = "User" })</div>
+                <div class="card-body">
+                    <h5 class="card-title">@jobOffer.SalaryFrom - @jobOffer.SalaryTo @jobOffer.Currency</h5>
+                    <p class="card-text h-100">@jobOffer.Overview</p>
+                </div>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">Location: @jobOffer.Location</li>
+                    <li class="list-group-item">Specialization: @jobOffer.Specialization</li>
+                </ul>
+                <div class="card-footer text-center"><small>Added on @jobOffer.AddedOn.ToShortDateString()</small></div>
+            </div>
         }
-    </ul>
-</nav>
+    </div>
+    <nav aria-label="Page navigation">
+        <ul class="pagination justify-content-center">
+            @for (int i = 1; i <= @ViewBag.PagesCount; i++)
+            {
+                if (@ViewBag.CurrentPage == i)
+                {
+                    <li class="page-item  active">
+                        <a class="page-link">@i</a>
+                    </li>
+                }
+                else
+                {
+                    <li class="page-item">
+                        <a class="page-link" href="#"
+                           onclick="getJobOffersList('@(Url.Action("GetJobOffers", "JobOffer", new { sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter, page = i, Area = "User" }))'); return false;">
+                            @i
+                        </a>
+                    </li>
+                }
+            }
+        </ul>
+    </nav>
