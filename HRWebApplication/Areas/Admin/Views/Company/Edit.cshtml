@@ -1,0 +1,31 @@
+﻿@model Company
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<div class="row">
+    <div class="col-sm-12">
+        <h2>Edit company data</h2>
+        @using (Html.BeginForm("Edit", "Comapny", new { Area = "Admin" }))
+        {
+            @Html.AntiForgeryToken()
+            @Html.HiddenFor(m => m.Id)
+            <div class="form-group">
+                @Html.LabelFor(m => m.Name)
+                @Html.EditorFor(m => m.Name, new { htmlAttributes = new { @class = "form-control", placeholder = "Full name of the company" } })
+                @Html.ValidationMessageFor(m => m.Name)
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.Location)
+                @Html.EditorFor(m => m.Location, new { htmlAttributes = new { @class = "form-control", placeholder = "Location" } })
+                @Html.ValidationMessageFor(m => m.Location)
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.Description)
+                @Html.EditorFor(m => m.Description, new { htmlAttributes = new { @class = "form-control", placeholder = "Description" } })
+                @Html.ValidationMessageFor(m => m.Description)
+            </div>
+            <button type="submit" class="btn btn-primary">Save</button>
+        }
+    </div>
+</div>
