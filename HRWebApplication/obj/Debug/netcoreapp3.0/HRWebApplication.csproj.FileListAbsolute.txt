@@ -334,8 +334,6 @@ C:\Users\Lenovo\source\repos\HR App\HR App\HRWebApplication\bin\Debug\netcoreapp
 C:\Users\Lenovo\source\repos\HR App\HR App\HRWebApplication\obj\Debug\netcoreapp3.0\HRWebApplication.csprojAssemblyReference.cache
 C:\Users\Lenovo\source\repos\HR App\HR App\HRWebApplication\obj\Debug\netcoreapp3.0\staticwebassets\HRWebApplication.StaticWebAssets.Manifest.cache
 C:\Users\Lenovo\source\repos\HR App\HR App\HRWebApplication\obj\Debug\netcoreapp3.0\staticwebassets\HRWebApplication.StaticWebAssets.xml
-C:\Users\Lenovo\source\repos\HR App\HR App\HRWebApplication\obj\Debug\netcoreapp3.0\HRWebApplication.MvcApplicationPartsAssemblyInfo.cs
-C:\Users\Lenovo\source\repos\HR App\HR App\HRWebApplication\obj\Debug\netcoreapp3.0\HRWebApplication.MvcApplicationPartsAssemblyInfo.cache
 C:\Users\Lenovo\source\repos\HR App\HR App\HRWebApplication\obj\Debug\netcoreapp3.0\HRWebApplication.RazorAssemblyInfo.cache
 C:\Users\Lenovo\source\repos\HR App\HR App\HRWebApplication\obj\Debug\netcoreapp3.0\HRWebApplication.RazorAssemblyInfo.cs
 C:\Users\Lenovo\source\repos\HR App\HR App\HRWebApplication\obj\Debug\netcoreapp3.0\HRWebApplication.AssemblyInfoInputs.cache
@@ -408,3 +406,15 @@ C:\Users\Lenovo\source\repos\HR App\HR App\HRWebApplication\obj\Debug\netcoreapp
 C:\Users\Lenovo\source\repos\HR App\HR App\HRWebApplication\obj\Debug\netcoreapp3.0\HRWebApplication.csproj.CopyComplete
 C:\Users\Lenovo\source\repos\HR App\HR App\HRWebApplication\obj\Debug\netcoreapp3.0\HRWebApplication.dll
 C:\Users\Lenovo\source\repos\HR App\HR App\HRWebApplication\obj\Debug\netcoreapp3.0\HRWebApplication.pdb
+C:\Users\Lenovo\source\repos\HR App\HR App\HRWebApplication\obj\Debug\netcoreapp3.0\Razor\Areas\Admin\Views\User\Index.cshtml.g.cs
+C:\Users\Lenovo\source\repos\HR App\HR App\HRWebApplication\bin\Debug\netcoreapp3.0\Microsoft.Graph.dll
+C:\Users\Lenovo\source\repos\HR App\HR App\HRWebApplication\bin\Debug\netcoreapp3.0\Microsoft.Graph.Core.dll
+C:\Users\Lenovo\source\repos\HR App\HR App\HRWebApplication\bin\Debug\netcoreapp3.0\Microsoft.Owin.dll
+C:\Users\Lenovo\source\repos\HR App\HR App\HRWebApplication\bin\Debug\netcoreapp3.0\Microsoft.Owin.Security.dll
+C:\Users\Lenovo\source\repos\HR App\HR App\HRWebApplication\bin\Debug\netcoreapp3.0\Microsoft.Owin.Security.OAuth.dll
+C:\Users\Lenovo\source\repos\HR App\HR App\HRWebApplication\bin\Debug\netcoreapp3.0\Owin.dll
+C:\Users\Lenovo\source\repos\HR App\HR App\HRWebApplication\bin\Debug\netcoreapp3.0\Microsoft.Graph.Auth.dll
+C:\Users\Lenovo\source\repos\HR App\HR App\HRWebApplication\obj\Debug\netcoreapp3.0\HRWebApplication.MvcApplicationPartsAssemblyInfo.cs
+C:\Users\Lenovo\source\repos\HR App\HR App\HRWebApplication\obj\Debug\netcoreapp3.0\HRWebApplication.MvcApplicationPartsAssemblyInfo.cache
+C:\Users\Lenovo\source\repos\HR App\HR App\HRWebApplication\obj\Debug\netcoreapp3.0\Razor\Areas\Admin\Views\Home\Index.cshtml.g.cs
+C:\Users\Lenovo\source\repos\HR App\HR App\HRWebApplication\obj\Debug\netcoreapp3.0\Razor\Areas\Admin\Views\Shared\_LoginPartial.cshtml.g.cs

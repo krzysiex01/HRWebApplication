@@ -6,10 +6,13 @@ using Microsoft.AspNetCore.Mvc;
 using HRWebApplication.Models;
 using HRWebApplication.EntityFramework;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authorization;
 
 namespace HRWebApplication.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize(Roles = "Admin")]
+
     public class JobOfferController : Controller
     {
         private int pageSize = 3;

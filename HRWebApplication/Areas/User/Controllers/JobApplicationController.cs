@@ -4,12 +4,14 @@ using System.Linq;
 using System.Threading.Tasks;
 using HRWebApplication.EntityFramework;
 using HRWebApplication.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace HRWebApplication.Areas.User.Controllers
 {
     [Area("User")]
+    [Authorize(Roles = "User")]
     public class JobApplicationController : Controller
     {
         private int pageSize = 3;

@@ -6,6 +6,8 @@ using Microsoft.AspNetCore.Mvc;
 using HRWebApplication.Models;
 using HRWebApplication.EntityFramework;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authorization;
+using System.Diagnostics;
 
 namespace HRWebApplication.Controllers
 {
@@ -75,6 +77,19 @@ namespace HRWebApplication.Controllers
         [HttpGet]
         public async Task<IActionResult> Index()
         {
+            foreach (var item in User.Claims)
+            {
+                Debug.WriteLine(item.Value + " " + item.Type);
+            }
+            foreach (var claims in User.Identities)
+            {
+                foreach (var item in claims.Claims)
+                {
+                    Debug.WriteLine(item.Value + " " + item.Type);
+                }
+            }
+
+
             JobOfferViewModel jobOfferViewModel = new JobOfferViewModel();
             jobOfferViewModel.JobOffersCount = await _context.JobOffers.CountAsync();
 

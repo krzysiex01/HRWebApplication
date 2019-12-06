@@ -20,5 +20,8 @@ namespace HRWebApplication.Models
         [EmailAddress(ErrorMessage = "Please enter valid email address.")]
         [Display(Name = "E-mail")]
         public string EmailAddress { get; set; }
+        public string Role { get; set; }
+        public string City { get; set; }
+        public string Country { get; set; }
     }
 }

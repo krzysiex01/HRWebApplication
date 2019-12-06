@@ -4,12 +4,14 @@ using System.Linq;
 using System.Threading.Tasks;
 using HRWebApplication.EntityFramework;
 using HRWebApplication.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace HRWebApplication.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize(Roles = "Admin")]
     public class CompanyController : Controller
     {
         private readonly DataContext _context;

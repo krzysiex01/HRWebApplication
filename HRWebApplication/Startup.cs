@@ -13,7 +13,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using Microsoft.AspNetCore.Authentication.AzureADB2C.UI;
 using Microsoft.AspNetCore.Authentication;
-
+using HRWebApplication.Models;
 
 namespace HRWebApplication
 {
@@ -30,10 +30,17 @@ namespace HRWebApplication
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddAuthentication(AzureADB2CDefaults.AuthenticationScheme)
-                 .AddAzureADB2C(options => Configuration.Bind("AzureAdB2C", options));
+                 .AddAzureADB2C(options =>
+                 {
+                     Configuration.Bind("AzureAdB2C", options);
+                 });
 
+            
             services.AddControllersWithViews();
             services.AddRazorPages();
+
+            services.AddScoped<IClaimsTransformation, UserInfoClaims>();
+
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "My API", Version = "v1" });
@@ -77,6 +84,7 @@ namespace HRWebApplication
             app.UseRouting();
 
             app.UseAuthentication();
+            
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>

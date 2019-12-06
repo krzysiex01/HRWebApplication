@@ -20,6 +20,10 @@ namespace HRWebApplication.Controllers
 
         public IActionResult Index()
         {
+            if (User.Identity.IsAuthenticated)
+            {
+                return RedirectToAction("LogInSuccess", "Auth");
+            }
             return View();
         }
 
