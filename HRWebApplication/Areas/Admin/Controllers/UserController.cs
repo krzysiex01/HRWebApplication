@@ -24,12 +24,49 @@ namespace HRWebApplication.Areas.Admin.Controllers
         {
             _context = context;
         }
-        public async Task<IActionResult> IndexAsync()
+        public async Task<IActionResult> Index()
         {
             UserViewModel userViewModel = new UserViewModel();
             userViewModel.Users = await _context.Users.Include(x => x.Company).ToListAsync();
+            userViewModel.Companies = await _context.Companies.ToListAsync();
 
             return View(userViewModel);
         }
-    }
+
+        public async Task<IActionResult> Delete(int? userId)
+        {
+            if (!userId.HasValue)
+            {
+                return BadRequest($"id should not be null");
+            }
+
+            _context.Users.Remove(new Models.User() { Id = userId.Value });
+            await _context.SaveChangesAsync();
+            return RedirectToAction("Index", "User", new { Area = "Admin"});
+        }
+
+        public async Task<IActionResult> Update(int? userId, int? companyId)
+        {
+            if (userId.HasValue)
+            {
+                var user = await _context.Users.FirstOrDefaultAsync(x => x.Id == userId.Value);
+                
+                if (companyId.HasValue)
+                {
+                    user.Company = await _context.Companies.FirstOrDefaultAsync(x => x.Id == companyId.Value);
+                    user.Role = "HRUser";
+                }
+                else
+                {
+                    user.CompanyId = null;
+                    user.Company = null;
+                    user.Role = "User";
+                }
+                
+                _context.Users.Update(user);
+                await _context.SaveChangesAsync();
+            }
+            return RedirectToAction("Index", "User", new { Area = "Admin" });
+        }
+     }
 }

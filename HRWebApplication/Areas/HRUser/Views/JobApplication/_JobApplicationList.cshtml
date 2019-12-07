@@ -23,18 +23,17 @@
                 <th scope="col">@jobApplication.JobOfferId</th>
                 <th scope="col">
                     <div class="btn-group" role="group" aria-label="Actions">
-                        <button type="button" class="btn btn-outline-success"><i class="fas fa-check-circle"></i></button>
-                        <button type="button" class="btn btn-outline-danger"><i class="fas fa-times-circle"></i></button>
+                        <button type="button" class="btn btn-outline-success" href="@Url.Action("AcceptApplication", "JobApplication", new { Area = "HRUser", id = jobApplication.Id })"><i class="fas fa-check-circle"></i></button>
+                        <button type="button" class="btn btn-outline-danger" href="@Url.Action("RejectApplication", "JobApplication", new { Area = "HRUser", id = jobApplication.Id })"><i class="fas fa-times-circle"></i></button>
                         <button type="button" class="btn btn-outline-primary"><i class="fas fa-arrow-circle-right"></i></button>
                         <div class="btn-group" role="group">
                             <button id="drop_@jobApplication.Id" type="button" class="btn btn-outline-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <i class="fas fa-chevron-circle-down"></i>
                             </button>
                             <div class="dropdown-menu" aria-labelledby="drop_@jobApplication.Id">
-                                <a class="dropdown-item" href="#"><i class="fas fa-edit"></i> Edit</a>
                                 <a class="dropdown-item" href="#"><i class="fas fa-file-download"></i> Download CV</a>
                                 <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="#"><i class="fas fa-trash-alt"></i> Remove</a>
+                                <a class="dropdown-item" href="@Url.Action("Delete", "JobApplication", new { Area = "HRUser", id = jobApplication.Id })"><i class="fas fa-trash-alt"></i> Remove</a>
                             </div>
                         </div>
                     </div>

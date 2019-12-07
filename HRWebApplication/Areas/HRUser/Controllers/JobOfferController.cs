@@ -7,6 +7,7 @@ using HRWebApplication.Models;
 using HRWebApplication.EntityFramework;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authorization;
+using System.Security.Claims;
 
 namespace HRWebApplication.Areas.HRUser.Controllers
 {
@@ -119,7 +120,7 @@ namespace HRWebApplication.Areas.HRUser.Controllers
             offer.Currency = model.Currency;
             _context.Update(offer);
             await _context.SaveChangesAsync();
-            return RedirectToAction("Details", new { id = model.Id });
+            return RedirectToAction("Details", "",new { id = model.Id });
         }
 
         [HttpPost]
@@ -132,14 +133,15 @@ namespace HRWebApplication.Areas.HRUser.Controllers
 
             _context.JobOffers.Remove(new JobOffer() { Id = id.Value });
             await _context.SaveChangesAsync();
-            return RedirectToAction("Index");
+            return RedirectToAction("Index", "JobOffer", new { Area = "HRUser" });
         }
 
         public async Task<ActionResult> Create()
         {
+            var user = await _context.Users.FirstOrDefaultAsync(x => x.ProviderUserId == User.FindFirst(ClaimTypes.NameIdentifier).Value);
             var model = new CreateJobOfferViewModel
             {
-                Companies = await _context.Companies.ToListAsync()
+                Companies = new List<Company>() { await _context.Companies.FirstOrDefaultAsync(x=>x.Id == user.CompanyId) }
             };
 
             return View(model);
@@ -149,6 +151,10 @@ namespace HRWebApplication.Areas.HRUser.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Create(CreateJobOfferViewModel model)
         {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
 
             JobOffer jobOffer = new JobOffer
             {
@@ -162,12 +168,12 @@ namespace HRWebApplication.Areas.HRUser.Controllers
                 ValidUntil = model.ValidUntil,
                 AddedOn = DateTime.Now,
                 Specialization = model.Specialization,
-
+                Currency = model.Currency,
             };
 
             await _context.JobOffers.AddAsync(jobOffer);
             await _context.SaveChangesAsync();
-            return RedirectToAction("Index");
+            return RedirectToAction("Index", "JobOffer", new { Area = "HRUser"});
         }
 
         public async Task<IActionResult> Details(int id)

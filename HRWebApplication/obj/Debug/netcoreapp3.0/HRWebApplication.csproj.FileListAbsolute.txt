@@ -418,3 +418,7 @@ C:\Users\Lenovo\source\repos\HR App\HR App\HRWebApplication\obj\Debug\netcoreapp
 C:\Users\Lenovo\source\repos\HR App\HR App\HRWebApplication\obj\Debug\netcoreapp3.0\HRWebApplication.MvcApplicationPartsAssemblyInfo.cache
 C:\Users\Lenovo\source\repos\HR App\HR App\HRWebApplication\obj\Debug\netcoreapp3.0\Razor\Areas\Admin\Views\Home\Index.cshtml.g.cs
 C:\Users\Lenovo\source\repos\HR App\HR App\HRWebApplication\obj\Debug\netcoreapp3.0\Razor\Areas\Admin\Views\Shared\_LoginPartial.cshtml.g.cs
+C:\Users\Lenovo\source\repos\HR App\HR App\HRWebApplication\obj\Debug\netcoreapp3.0\Razor\Areas\HRUser\Views\Home\Index.cshtml.g.cs
+C:\Users\Lenovo\source\repos\HR App\HR App\HRWebApplication\obj\Debug\netcoreapp3.0\Razor\Areas\HRUser\Views\Shared\_LoginPartial.cshtml.g.cs
+C:\Users\Lenovo\source\repos\HR App\HR App\HRWebApplication\obj\Debug\netcoreapp3.0\Razor\Areas\User\Views\Home\Index.cshtml.g.cs
+C:\Users\Lenovo\source\repos\HR App\HR App\HRWebApplication\obj\Debug\netcoreapp3.0\Razor\Areas\User\Views\Shared\_LoginPartial.cshtml.g.cs

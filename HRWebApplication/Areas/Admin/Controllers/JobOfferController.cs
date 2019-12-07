@@ -12,12 +12,10 @@ namespace HRWebApplication.Areas.Admin.Controllers
 {
     [Area("Admin")]
     [Authorize(Roles = "Admin")]
-
     public class JobOfferController : Controller
     {
         private int pageSize = 3;
         private PaginationHelper paginationHelper = new PaginationHelper();
-
 
         private readonly DataContext _context;
         public JobOfferController(DataContext context)
@@ -120,7 +118,7 @@ namespace HRWebApplication.Areas.Admin.Controllers
             offer.Currency = model.Currency;
             _context.Update(offer);
             await _context.SaveChangesAsync();
-            return RedirectToAction("Details", new { id = model.Id });
+            return RedirectToAction("Details", "JobOffer", new { Area = "Admin", id = model.Id });
         }
 
         [HttpPost]
@@ -133,50 +131,11 @@ namespace HRWebApplication.Areas.Admin.Controllers
 
             _context.JobOffers.Remove(new JobOffer() { Id = id.Value });
             await _context.SaveChangesAsync();
-            return RedirectToAction("Index");
+            return RedirectToAction("Index", "JobOffer", new { Area = "Admin"});
         }
-
-        public async Task<ActionResult> Create()
-        {
-            var model = new CreateJobOfferViewModel
-            {
-                Companies = await _context.Companies.ToListAsync()
-            };
-
-            return View(model);
-        }
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create(CreateJobOfferViewModel model)
-        {
-
-            JobOffer jobOffer = new JobOffer
-            {
-                CompanyId = model.CompanyId,
-                Overview = model.Overview,
-                Description = model.Description,
-                Title = model.Title,
-                Location = model.Location,
-                SalaryFrom = model.SalaryFrom,
-                SalaryTo = model.SalaryTo,
-                ValidUntil = model.ValidUntil,
-                AddedOn = DateTime.Now,
-                Specialization = model.Specialization,
-
-            };
-
-            await _context.JobOffers.AddAsync(jobOffer);
-            await _context.SaveChangesAsync();
-            return RedirectToAction("Index");
-        }
-
+      
         public async Task<IActionResult> Details(int id)
         {
-            //Get all data at once
-            // var offer = await _context.JobOffers.Include(x => x.JobApplications).FirstOrDefaultAsync(x => x.Id == id);
-
-            //Get JobApplications using AJAX
             var offer = await _context.JobOffers.FirstOrDefaultAsync(x => x.Id == id);
             if (offer is null)
             {

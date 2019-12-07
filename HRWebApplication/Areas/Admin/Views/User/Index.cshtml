@@ -7,7 +7,7 @@
 <div class="container">
     <div class="row mb-2">
         <div class="col-12">
-            <h2 class="h3 d-inline-block">Job applications</h2>
+            <h2 class="h3 d-inline-block">Users</h2>
             <span class="badge badge-pill badge-primary align-top">
                 @Model.Users.Count
             </span>
@@ -33,20 +33,40 @@
                         <th scope="col">@user.FirstName @user.LastName</th>
                         <th scope="col">@user.EmailAddress</th>
                         <th scope="col">@user.Role</th>
-                        <th scope="col">@user.Company?.Name</th>
                         <th scope="col">
-                            <div class="btn-group" role="group" aria-label="Actions">
-                                <div class="btn-group" role="group">
-                                    <button id="drop_@user.Id" type="button" class="btn btn-outline-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        <i class="fas fa-chevron-circle-down"></i>
-                                    </button>
-                                    <div class="dropdown-menu" aria-labelledby="drop_@user.Id">
-                                        <a class="dropdown-item" href="#"><i class="fas fa-edit"></i> Upgrade</a>
-                                        <div class="dropdown-divider"></div>
-                                        <a class="dropdown-item" href="#"><i class="fas fa-trash-alt"></i> Remove user</a>
+                            @if (user.Role == "User")
+                            {
+                                @Html.DropDownList("companyList" + user.Id,
+                               Model.Companies.Select(c => new SelectListItem() { Text = c.Name, Value = c.Id.ToString()}),
+                                              "Assign Company",
+                                              new { @class = "form-control" })
+                            }
+                            else if(user.Role == "HRUser")
+                            {
+                                @Html.DropDownList("companyList" + user.Id,
+                                Model.Companies.Select(c => new SelectListItem() { Text = c.Name, Value = c.Id.ToString(), Selected = user.CompanyId == c.Id }),
+                                               null,
+                                               new { @class = "form-control" })
+                            }
+
+                        </th>
+                        <th scope="col">
+                            @if (user.Role != "Admin")
+                            {
+                                <div class="btn-group" role="group" aria-label="Actions">
+                                    <div class="btn-group" role="group">
+                                        <button onclick="updateUserComapny('@(Url.Action("Update", "User", new { Area = "Admin", userId = user.Id }))','@user.Id');" type="button" class="btn btn-outline-secondary"><i class="fas fa-save"></i></button>
+                                        <button id="drop_@user.Id" type="button" class="btn btn-outline-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            <i class="fas fa-chevron-circle-down"></i>
+                                        </button>
+                                        <div class="dropdown-menu" aria-labelledby="drop_@user.Id">
+                                            <a class="dropdown-item" href="@(Url.Action("Update", "User", new { Area = "Admin", userId = user.Id }))"><i class="fas fa-edit"></i>Remove company</a>
+                                            <div class="dropdown-divider"></div>
+                                            <a class="dropdown-item" href="@(Url.Action("Delete", "User", new { Area = "Admin", userId = user.Id }))"><i class="fas fa-trash-alt"></i> Remove user</a>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
+                            }
                         </th>
                     </tr>
                 }
@@ -54,3 +74,15 @@
         </table>
     </div>
 </div>
+
+@section Scripts
+{
+    <script>
+        function updateUserComapny(url, userId) {
+            var comapnyId = $('#companyList' + userId).find(":selected").val();
+            alert("Saved successfully.")
+            url = url + '&companyId=' + comapnyId;
+            window.location.href = url;
+        }
+    </script>
+}

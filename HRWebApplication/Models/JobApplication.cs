@@ -33,5 +33,6 @@ namespace HRWebApplication.Models
 
         [DataType(DataType.Date)]
         public DateTime CreatedOn { get; set; }
+        public ApplicationState ApplicationState { get; set; } = ApplicationState.Waiting;
     }
 }

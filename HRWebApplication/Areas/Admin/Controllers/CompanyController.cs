@@ -36,7 +36,7 @@ namespace HRWebApplication.Areas.Admin.Controllers
 
             await _context.Companies.AddAsync(model);
             await _context.SaveChangesAsync();
-            return RedirectToAction("Index");
+            return RedirectToAction("Index","Company",new { Area = "Admin"});
         }
 
         public async Task<ActionResult> Delete(int? id)
@@ -48,7 +48,8 @@ namespace HRWebApplication.Areas.Admin.Controllers
 
             _context.Companies.Remove(new Company() { Id = id.Value });
             await _context.SaveChangesAsync();
-            return RedirectToAction("Index");
+            return RedirectToAction("Index", "Company", new { Area = "Admin" });
+
         }
 
         public async Task<IActionResult> Edit(int? id)
@@ -82,7 +83,7 @@ namespace HRWebApplication.Areas.Admin.Controllers
             company.Description = model.Description;
             _context.Update(company);
             await _context.SaveChangesAsync();
-            return RedirectToAction("Index", null);
+            return RedirectToAction("Index", "Company", new { Area = "Admin" });
         }
 
         public async Task<IActionResult> Index()

@@ -72,5 +72,49 @@ namespace HRWebApplication.Areas.HRUser.Controllers
                 .Take(pageSize)
                 .ToListAsync());
         }
+    
+        public async Task<IActionResult> AcceptApplication(int? id)
+        {
+            if (!id.HasValue)
+            {
+                return BadRequest("id cannot be null");
+            }
+
+            var jobApplication = await _context.JobApplications.FirstOrDefaultAsync(x => x.Id == id);
+            jobApplication.ApplicationState = ApplicationState.Accepted;
+            _context.Update(jobApplication);
+            await _context.SaveChangesAsync();
+
+            return RedirectToAction("Index", "JobApplication", new { Area = "HRUser" });
+        }
+
+        public async Task<IActionResult> RejectApplication(int? id)
+        {
+            if (!id.HasValue)
+            {
+                return BadRequest("id cannot be null");
+            }
+
+            var jobApplication = await _context.JobApplications.FirstOrDefaultAsync(x => x.Id == id);
+            jobApplication.ApplicationState = ApplicationState.Rejected;
+            _context.Update(jobApplication);
+            await _context.SaveChangesAsync();
+
+            return RedirectToAction("Index", "JobApplication", new { Area = "HRUser" });
+        }
+
+        public async Task<IActionResult> Delete(int? id)
+        {
+            if (!id.HasValue)
+            {
+                return BadRequest("id cannot be null");
+            }
+
+            _context.Remove(new JobApplication() { Id = id.Value });
+            await _context.SaveChangesAsync();
+
+            return RedirectToAction("Index", "JobApplication", new { Area = "HRUser" });
+        }
+    
     }
 }

@@ -6,7 +6,7 @@
 <div class="row page-box">
     <div class="col-sm-12 col col-lg-6">
         <h2 class="text-center">Now J☺b Offer</h2>
-        @using (Html.BeginForm("Create", "JobOffer", new { Area = "HRUser", Model }, FormMethod.Post, null, null))
+        @using (Html.BeginForm("Create", "JobOffer", new { Area = "HRUser" }, FormMethod.Post, null, null))
         {
             @Html.AntiForgeryToken()
             <div class="form-group">

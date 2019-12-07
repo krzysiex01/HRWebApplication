@@ -46,32 +46,31 @@ namespace Web.Controllers
         [Route("loginsuccess")]
         public async Task<IActionResult> LogInSuccessAsync()
         {
-            var isNewUser = User.FindFirst("NewUser");
-            var userNameId = User.FindFirst(ClaimTypes.NameIdentifier);
+            //var userNameId = User.FindFirst(ClaimTypes.NameIdentifier);
+          
+            //if(isNewUser != null)
+            //{
+            //    //Add new user to databese
+            //    var name = User.FindFirst(ClaimTypes.GivenName);
+            //    var surname = User.FindFirst(ClaimTypes.Surname);
+            //    var email = User.FindFirst("emails");
+            //    var country = User.FindFirst("country");
+            //    var city = User.FindFirst("city");
 
-            if(isNewUser != null)
-            {
-                //Add new user to databese
-                var name = User.FindFirst(ClaimTypes.GivenName);
-                var surname = User.FindFirst(ClaimTypes.Surname);
-                var email = User.FindFirst("emails");
-                var country = User.FindFirst("country");
-                var city = User.FindFirst("city");
-
-                User newUser = new User()
-                {
-                    City = city.Value,
-                    Country = country.Value,
-                    EmailAddress = email.Value,
-                    FirstName = name.Value,
-                    LastName = surname.Value,
-                    ProviderUserId = userNameId.Value,
-                    ProviderName = "AZURE_AD_B2C",
-                    Role = "USER"
-                };
-                await _context.Users.AddAsync(newUser);
-                await _context.SaveChangesAsync();
-            }
+            //    User newUser = new User()
+            //    {
+            //        City = city.Value,
+            //        Country = country.Value,
+            //        EmailAddress = email.Value,
+            //        FirstName = name.Value,
+            //        LastName = surname.Value,
+            //        ProviderUserId = userNameId.Value,
+            //        ProviderName = "AZURE_AD_B2C",
+            //        Role = "User"
+            //    };
+            //    await _context.Users.AddAsync(newUser);
+            //    await _context.SaveChangesAsync();
+            //}
 
             //Redirect user to area matching user role
             switch (User.FindFirst(ClaimTypes.Role).Value)

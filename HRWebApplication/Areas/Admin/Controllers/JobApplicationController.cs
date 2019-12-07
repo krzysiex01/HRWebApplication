@@ -18,50 +18,12 @@ namespace HRWebApplication.Areas.Admin.Controllers
         private int pageSize = 3;
         private PaginationHelper paginationHelper = new PaginationHelper();
 
-
         private readonly DataContext _context;
         public JobApplicationController(DataContext context)
         {
             _context = context;
         }
-        public ActionResult Create()
-        {
-            var model = new CreateJobApplicationViewModel();
-
-            return View(model);
-        }
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create(CreateJobApplicationViewModel model)
-        {
-            if (!ModelState.IsValid)
-            {
-                return View(model);
-            }
-
-            JobApplication jobApplication = new JobApplication
-            {
-                FirstName = model.FirstName,
-                LastName = model.LastName,
-                EmailAddress = model.EmailAddress,
-                PhoneNumber = model.PhoneNumber,
-                JobOfferId = model.JobOfferId,
-                ContactAgreement = model.ContactAgreement,
-                CreatedOn = DateTime.Now
-                //TODO: UserId = ();
-            };
-
-            //TODO: better? .Select(x=> x.JobApplications)
-            var offer = await _context.JobOffers.FirstOrDefaultAsync(x => x.Id == jobApplication.JobOfferId);
-            if (offer == null)
-            {
-                return NotFound($"offer not found in DB");
-            }
-            offer.JobApplications.Add(jobApplication);
-            await _context.JobApplications.AddAsync(jobApplication);
-            await _context.SaveChangesAsync();
-            return RedirectToAction("Details","JobOffer", new { id = model.JobOfferId });
-        }
+     
         public async Task<IActionResult> Index()
         {
             JobApplicationViewModel jobApplicationViewModel = new JobApplicationViewModel

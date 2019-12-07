@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using HRWebApplication.EntityFramework;
 using HRWebApplication.Models;
@@ -43,7 +44,14 @@ namespace HRWebApplication.Areas.User.Controllers
             {
                 return NotFound($"offer not found in DB");
             }
+
+            var user = await _context.Users.FirstOrDefaultAsync(x => x.ProviderUserId == User.FindFirst(ClaimTypes.NameIdentifier).Value);
+
             model.JobTitle = title;
+            //Pre-fill the form with data from users Database
+            model.FirstName = user.FirstName;
+            model.EmailAddress = user.EmailAddress;
+            model.LastName = user.LastName;
 
             return View(model);
         }
@@ -56,6 +64,8 @@ namespace HRWebApplication.Areas.User.Controllers
                 return View(model);
             }
 
+            var user = await _context.Users.FirstOrDefaultAsync(x => x.ProviderUserId == User.FindFirst(ClaimTypes.NameIdentifier).Value);
+
             JobApplication jobApplication = new JobApplication
             {
                 FirstName = model.FirstName,
@@ -64,8 +74,9 @@ namespace HRWebApplication.Areas.User.Controllers
                 PhoneNumber = model.PhoneNumber,
                 JobOfferId = model.JobOfferId,
                 ContactAgreement = model.ContactAgreement,
-                CreatedOn = DateTime.Now
-                //TODO: UserId = ();
+                CreatedOn = DateTime.Now,
+                ApplicationState = ApplicationState.Waiting,
+                UserId = user.Id
             };
 
             var offer = await _context.JobOffers.FirstOrDefaultAsync(x => x.Id == jobApplication.JobOfferId);
@@ -118,7 +129,7 @@ namespace HRWebApplication.Areas.User.Controllers
             application.ContactAgreement = model.ContactAgreement;
             _context.Update(application);
             await _context.SaveChangesAsync();
-            return RedirectToAction("Index");
+            return RedirectToAction("Index", "JobApplication", new { Area = "User"});
         }
 
         public async Task<PartialViewResult> GetJobApplications(string sortOrder, string currentFilter, string searchString, int? page)
