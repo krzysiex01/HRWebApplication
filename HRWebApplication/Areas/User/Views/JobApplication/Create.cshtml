@@ -3,41 +3,43 @@
     ViewData["Title"] = "Apply";
 }
 
-    <div class="row page-box">
-        <div class="col-sm-12">
-            <h3>You are applying for: @Html.ActionLink(Model.JobTitle, "Details", "JobOffer", new { id = Model.JobOfferId, Area = "User" })</h3>
-            @using (Html.BeginForm("Create", "JobApplication", new { Area = "User" }, FormMethod.Post, null, null))
-            {
-                @Html.AntiForgeryToken()
-                <div class="form-group">
-                    @Html.LabelFor(m => m.FirstName)
-                    @Html.EditorFor(m => m.FirstName, new { htmlAttributes = new { @class = "form-control", placeholder = "First name" } })
-                    @Html.ValidationMessageFor(m => m.FirstName, "", new { @class = "text-danger" })
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(m => m.LastName)
-                    @Html.EditorFor(m => m.LastName, new { htmlAttributes = new { @class = "form-control", placeholder = "Last name" } })
-                    @Html.ValidationMessageFor(m => m.LastName, "", new { @class = "text-danger" })
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(m => m.PhoneNumber)
-                    @Html.EditorFor(m => m.PhoneNumber, new { htmlAttributes = new { @class = "form-control", placeholder = "Enter your phone number" } })
-                    @Html.ValidationMessageFor(m => m.PhoneNumber, "", new { @class = "text-danger" })
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(m => m.EmailAddress)
-                    @Html.EditorFor(m => m.EmailAddress, new { htmlAttributes = new { @class = "form-control", type = "email", placeholder = "Enter your email" } })
-                    @Html.ValidationMessageFor(m => m.EmailAddress, "", new { @class = "text-danger" })
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(m => m.ContactAgreement, "I agree to use my email for marketing purposes.")
-                    @Html.EditorFor(m => m.ContactAgreement, new { @class = "form-control" })
-                    @Html.ValidationMessageFor(m => m.ContactAgreement, "", new { @class = "text-danger" })
-                </div>
-                
-                <div class="form-group">
-                    <button type="submit" class="btn btn-success btn-lg">Send</button>
-                </div>
-            }
-        </div>
+<div class="row page-box">
+    <div class="col-sm-12">
+        <h3>You are applying for: @Html.ActionLink(Model.JobTitle, "Details", "JobOffer", new { id = Model.JobOfferId, Area = "User" })</h3>
+        <form asp-controller="JobApplication" asp-action="Create" asp-area="User" enctype="multipart/form-data" formmethod="post">
+            @Html.AntiForgeryToken()
+            @Html.HiddenFor(m => Model.JobOfferId)
+            <div class="form-group">
+                @Html.LabelFor(m => m.FirstName)
+                @Html.EditorFor(m => m.FirstName, new { htmlAttributes = new { @class = "form-control", placeholder = "First name" } })
+                @Html.ValidationMessageFor(m => m.FirstName, "", new { @class = "text-danger" })
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.LastName)
+                @Html.EditorFor(m => m.LastName, new { htmlAttributes = new { @class = "form-control", placeholder = "Last name" } })
+                @Html.ValidationMessageFor(m => m.LastName, "", new { @class = "text-danger" })
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.PhoneNumber)
+                @Html.EditorFor(m => m.PhoneNumber, new { htmlAttributes = new { @class = "form-control", placeholder = "Enter your phone number" } })
+                @Html.ValidationMessageFor(m => m.PhoneNumber, "", new { @class = "text-danger" })
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.EmailAddress)
+                @Html.EditorFor(m => m.EmailAddress, new { htmlAttributes = new { @class = "form-control", type = "email", placeholder = "Enter your email" } })
+                @Html.ValidationMessageFor(m => m.EmailAddress, "", new { @class = "text-danger" })
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.ContactAgreement, "I agree to use my email for marketing purposes.")
+                @Html.EditorFor(m => m.ContactAgreement, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.ContactAgreement, "", new { @class = "text-danger" })
+            </div>
+            <div class="form-group">
+                <input asp-for="UploadedCVFile" required/>
+            </div>
+            <div class="form-group">
+                <button type="submit" class="btn btn-success btn-lg">Send</button>
+            </div>
+        </form>
     </div>
+</div>

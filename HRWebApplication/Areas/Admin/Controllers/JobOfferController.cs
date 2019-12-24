@@ -70,6 +70,7 @@ namespace HRWebApplication.Areas.Admin.Controllers
                 PendingOffers = new List<int>()
             };
 
+     
             return PartialView("_JobOfferList", jobOfferListViewModel);
         }
        

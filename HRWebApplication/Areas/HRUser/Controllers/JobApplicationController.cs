@@ -1,12 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using Azure.Storage.Blobs;
 using HRWebApplication.EntityFramework;
 using HRWebApplication.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 
 namespace HRWebApplication.Areas.HRUser.Controllers
 {
@@ -14,14 +18,16 @@ namespace HRWebApplication.Areas.HRUser.Controllers
     [Authorize(Roles = "HRUser")]
     public class JobApplicationController : Controller
     {
-        private int pageSize = 3;
+        private int pageSize = 10;
         private PaginationHelper paginationHelper = new PaginationHelper();
 
 
         private readonly DataContext _context;
-        public JobApplicationController(DataContext context)
+        private readonly IConfiguration _config;
+        public JobApplicationController(DataContext context, IConfiguration config)
         {
             _context = context;
+            _config = config;
         }
         public async Task<IActionResult> Index()
         {
@@ -67,12 +73,13 @@ namespace HRWebApplication.Areas.HRUser.Controllers
 
             ViewBag.CurrentPage = pageNumber;
             ViewBag.PagesCount = paginationHelper.GetPagesCount(pageSize, await jobApplications.CountAsync());
+            //TODO: show only application for certain Company
             return PartialView("_JobApplicationList", await jobApplications
                 .Skip(paginationHelper.GetFirstIndexOnPage(pageSize, pageNumber))
                 .Take(pageSize)
                 .ToListAsync());
         }
-    
+
         public async Task<IActionResult> AcceptApplication(int? id)
         {
             if (!id.HasValue)
@@ -110,11 +117,43 @@ namespace HRWebApplication.Areas.HRUser.Controllers
                 return BadRequest("id cannot be null");
             }
 
-            _context.Remove(new JobApplication() { Id = id.Value });
+            var jobApplication = await _context.JobApplications.FirstOrDefaultAsync(x => x.Id == id);
+            string connectionString = _config.GetValue<string>("AzureBlob:ConnectionString");
+
+            // Get a reference to a container
+            BlobContainerClient container = new BlobContainerClient(connectionString, "applications");
+
+            // Get a reference to a blob
+            BlobClient blob = container.GetBlobClient(jobApplication.CvUrl);
+            // Remove from AzureBlob
+            _ = blob.DeleteIfExistsAsync();
+
+            // Remove from database
+            _context.Remove(jobApplication);
             await _context.SaveChangesAsync();
 
             return RedirectToAction("Index", "JobApplication", new { Area = "HRUser" });
         }
-    
+
+        public async Task<ActionResult> DownloadCVFile(int? id)
+        {
+            if (!id.HasValue)
+            {
+                return NoContent();
+            }
+            var jobApplication = await _context.JobApplications.FirstOrDefaultAsync(x => x.Id == id);
+            string connectionString = _config.GetValue<string>("AzureBlob:ConnectionString");
+
+            // Get a reference to a container
+            BlobContainerClient container = new BlobContainerClient(connectionString, "applications");
+
+            // Get a reference to a blob
+            BlobClient blob = container.GetBlobClient(jobApplication.CvUrl);
+
+            var fileName = "CV.pdf";
+            Stream stream = new MemoryStream();
+            var file = await blob.DownloadAsync();
+            return File(file.Value.Content, file.Value.ContentType, fileName);
+        }
     }
 }

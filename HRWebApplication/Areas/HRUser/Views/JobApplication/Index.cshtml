@@ -62,7 +62,7 @@
         $("#JobApplicationList").load('@(Url.Action("GetJobApplications", "JobApplication", new { Area = "HRUser" }))');
         $("#SearchButton").click(search);
     });
-        
+
           function search() {
             var searchString = $("#Search").val();
             var sortOrder = $('input[name=sorting]:checked').val();
@@ -76,6 +76,11 @@
             var searchString = $("#Search").val();
             var link = '@(Url.Action("GetJobApplications", "JobApplication", new { Area = "HRUser" ,page = 1 }))' + '?searchString=' + searchString + '&sortOrder=' + sortOrder;
         $("#JobApplicationList").load(link);
+        }
+
+       
+        function downloadCV(url) {
+            window.location.href = url;
         }
 
         //Functions used by PartialView called when changing page occurs

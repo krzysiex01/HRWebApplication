@@ -48,10 +48,16 @@ namespace HRWebApplication.Models
                     await _context.Users.AddAsync(newUser);
                     await _context.SaveChangesAsync();
                     id.AddClaim(new Claim(ClaimTypes.Role, "User"));
+                    id.AddClaim(new Claim(ClaimTypes.GivenName, name.Value));
                 }
                 else
                 {
                     id.AddClaim(new Claim(ClaimTypes.Role, user.Role));
+                    id.AddClaim(new Claim(ClaimTypes.GivenName, user.FirstName));
+                    if (user.CompanyId.HasValue)
+                    {
+                        id.AddClaim(new Claim(ClaimTypes.GroupSid, user.CompanyId.ToString()));
+                    }
                 }
                 principal.AddIdentity(id);
             }

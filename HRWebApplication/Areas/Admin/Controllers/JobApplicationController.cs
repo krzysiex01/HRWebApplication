@@ -12,7 +12,6 @@ namespace HRWebApplication.Areas.Admin.Controllers
 {
     [Area("Admin")]
     [Authorize(Roles = "Admin")]
-
     public class JobApplicationController : Controller
     {
         private int pageSize = 3;

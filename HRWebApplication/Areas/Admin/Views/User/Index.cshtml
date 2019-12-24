@@ -23,6 +23,7 @@
                     <th scope="col">Email</th>
                     <th scope="col">User type</th>
                     <th scope="col">Company</th>
+                    <th scope="col">Actions</th>
                 </tr>
             </thead>
             <tbody>
@@ -60,9 +61,7 @@
                                             <i class="fas fa-chevron-circle-down"></i>
                                         </button>
                                         <div class="dropdown-menu" aria-labelledby="drop_@user.Id">
-                                            <a class="dropdown-item" href="@(Url.Action("Update", "User", new { Area = "Admin", userId = user.Id }))"><i class="fas fa-edit"></i>Remove company</a>
-                                            <div class="dropdown-divider"></div>
-                                            <a class="dropdown-item" href="@(Url.Action("Delete", "User", new { Area = "Admin", userId = user.Id }))"><i class="fas fa-trash-alt"></i> Remove user</a>
+                                            <a class="dropdown-item" href="@(Url.Action("Update", "User", new { Area = "Admin", userId = user.Id }))"><i class="fas fa-edit"></i>Downgrade user</a>
                                         </div>
                                     </div>
                                 </div>

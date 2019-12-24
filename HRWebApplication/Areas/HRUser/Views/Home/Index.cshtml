@@ -1,13 +1,11 @@
 ﻿@{
     ViewData["Title"] = "Home Page";
 }
+@using System.Security.Claims;
 
 <div class="jumbotron">
-    <h1 class="display-4">Welcome HR user @User.Identity.Name!</h1>
-    <p class="lead">Looking for a job? Find a job offer for you among a few fake offers.</p>
+    <h1 class="display-4">Welcome @User.FindFirst(ClaimTypes.GivenName).Value!</h1>
+    <p class="lead">Looking for a something exciting? Spend hours of your time reading random applications!</p>
     <hr class="my-4">
-    <p>Come build your future with us.</p>
-    <p class="lead">
-        <a class="btn btn-primary btn-lg" href="#" role="button">Learn more</a>
-    </p>
+    <p>Don't wait start now.</p>
 </div>

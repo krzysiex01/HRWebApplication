@@ -1,13 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using Azure.Storage;
+using Azure.Storage.Blobs;
+using Azure.Storage.Blobs.Models;
 using HRWebApplication.EntityFramework;
 using HRWebApplication.Models;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 
 namespace HRWebApplication.Areas.User.Controllers
 {
@@ -15,26 +22,29 @@ namespace HRWebApplication.Areas.User.Controllers
     [Authorize(Roles = "User")]
     public class JobApplicationController : Controller
     {
-        private int pageSize = 3;
+        private int pageSize = 10;
         private PaginationHelper paginationHelper = new PaginationHelper();
 
         private readonly DataContext _context;
-        public JobApplicationController(DataContext context)
+        private readonly IConfiguration _config;
+
+        public JobApplicationController(DataContext context, IConfiguration config)
         {
             _context = context;
+            _config = config;
         }
         public async Task<IActionResult> Index()
         {
             JobApplicationViewModel jobApplicationViewModel = new JobApplicationViewModel
             {
-                JobApplicationsCount = await _context.JobApplications.CountAsync()
+                JobApplicationsCount = await _context.JobApplications.Where(s => s.User.ProviderUserId == User.FindFirstValue(ClaimTypes.NameIdentifier)).CountAsync()
             };
             return View(jobApplicationViewModel);
         }
 
         public async Task<ActionResult> Create(int? jobOfferId)
         {
-            if (jobOfferId == null)
+            if (!jobOfferId.HasValue)
             {
                 return BadRequest($"jobOfferId cannot be null");
             }
@@ -48,6 +58,7 @@ namespace HRWebApplication.Areas.User.Controllers
             var user = await _context.Users.FirstOrDefaultAsync(x => x.ProviderUserId == User.FindFirst(ClaimTypes.NameIdentifier).Value);
 
             model.JobTitle = title;
+            model.JobOfferId = jobOfferId.Value;
             //Pre-fill the form with data from users Database
             model.FirstName = user.FirstName;
             model.EmailAddress = user.EmailAddress;
@@ -61,10 +72,29 @@ namespace HRWebApplication.Areas.User.Controllers
         {
             if (!ModelState.IsValid)
             {
+                var title = await _context.JobOffers.Where(x => x.Id == model.JobOfferId).Select(x => x.Title).FirstOrDefaultAsync();
+                if (title == null)
+                {
+                    return NotFound($"offer not found in DB");
+                }
+                model.JobTitle = title;
                 return View(model);
             }
 
             var user = await _context.Users.FirstOrDefaultAsync(x => x.ProviderUserId == User.FindFirst(ClaimTypes.NameIdentifier).Value);
+            if (user == null)
+            {
+                return NotFound($"user not found");
+            }
+
+            var offer = await _context.JobOffers.FirstOrDefaultAsync(x => x.Id == model.JobOfferId);
+            if (offer == null)
+            {
+                return NotFound($"offer not found in DB");
+            }
+
+            string trustedName = user.ProviderUserId + DateTime.Now.ToFileTime() + ".pdf";
+            await UploadCVAsync(model.UploadedCVFile, trustedName);
 
             JobApplication jobApplication = new JobApplication
             {
@@ -76,17 +106,15 @@ namespace HRWebApplication.Areas.User.Controllers
                 ContactAgreement = model.ContactAgreement,
                 CreatedOn = DateTime.Now,
                 ApplicationState = ApplicationState.Waiting,
-                UserId = user.Id
+                UserId = user.Id,
+                User = user,
+                CvUrl = trustedName
             };
 
-            var offer = await _context.JobOffers.FirstOrDefaultAsync(x => x.Id == jobApplication.JobOfferId);
-            if (offer == null)
-            {
-                return NotFound($"offer not found in DB");
-            }
             offer.JobApplications.Add(jobApplication);
             await _context.JobApplications.AddAsync(jobApplication);
             await _context.SaveChangesAsync();
+
             return RedirectToAction("Details", "JobOffer", new { id = model.JobOfferId, Area = "User" });
         }
 
@@ -97,6 +125,11 @@ namespace HRWebApplication.Areas.User.Controllers
                 return BadRequest($"id shouldn't not be null");
             }
             var application = await _context.JobApplications.FirstOrDefaultAsync(x => x.Id == id.Value);
+
+            if (application.ApplicationState != ApplicationState.Waiting)
+            {
+                return BadRequest("can edit only waiting applications");
+            }
 
             if (application == null)
             {
@@ -129,7 +162,32 @@ namespace HRWebApplication.Areas.User.Controllers
             application.ContactAgreement = model.ContactAgreement;
             _context.Update(application);
             await _context.SaveChangesAsync();
-            return RedirectToAction("Index", "JobApplication", new { Area = "User"});
+            return RedirectToAction("Index", "JobApplication", new { Area = "User" });
+        }
+
+        public async Task<IActionResult> Delete(int? id)
+        {
+            if (!id.HasValue)
+            {
+                return BadRequest("id cannot be null");
+            }
+
+            var jobApplication = await _context.JobApplications.FirstOrDefaultAsync(x => x.Id == id);
+            string connectionString = _config.GetValue<string>("AzureBlob:ConnectionString");
+
+            // Get a reference to a container
+            BlobContainerClient container = new BlobContainerClient(connectionString, "applications");
+
+            // Get a reference to a blob
+            BlobClient blob = container.GetBlobClient(jobApplication.CvUrl);
+            // Remove from AzureBlob
+            _ = blob.DeleteIfExistsAsync();
+
+            // Remove from database
+            _context.Remove(jobApplication);
+            await _context.SaveChangesAsync();
+
+            return RedirectToAction("Index", "JobApplication", new { Area = "User" });
         }
 
         public async Task<PartialViewResult> GetJobApplications(string sortOrder, string currentFilter, string searchString, int? page)
@@ -149,7 +207,7 @@ namespace HRWebApplication.Areas.User.Controllers
 
             ViewBag.CurrentFilter = searchString;
 
-            var jobApplications = from s in _context.JobApplications select s;
+            var jobApplications = _context.JobApplications.Where(s => s.User.ProviderUserId == User.FindFirstValue(ClaimTypes.NameIdentifier));
 
             if (!String.IsNullOrEmpty(searchString))
             {
@@ -165,12 +223,33 @@ namespace HRWebApplication.Areas.User.Controllers
                 _ => jobApplications.OrderBy(s => s.LastName),
             };
 
+
             ViewBag.CurrentPage = pageNumber;
             ViewBag.PagesCount = paginationHelper.GetPagesCount(pageSize, await jobApplications.CountAsync());
-            return PartialView("_JobApplicationList.cshtml", await jobApplications
+            return PartialView("_JobApplicationList", await jobApplications
                 .Skip(paginationHelper.GetFirstIndexOnPage(pageSize, pageNumber))
                 .Take(pageSize)
+                .Include(s => s.JobOffer)
+                .ThenInclude(s => s.Company)
                 .ToListAsync());
+        }
+
+        private async Task UploadCVAsync(IFormFile formFile, string trustedName)
+        {
+            string fileName = trustedName;
+            string connectionString = _config.GetValue<string>("AzureBlob:ConnectionString");
+
+            // Get a reference to a container
+            BlobContainerClient container = new BlobContainerClient(connectionString, "applications");
+
+            // Get a reference to a blob
+            BlobClient blob = container.GetBlobClient(fileName);
+
+            if (formFile.Length > 0)
+            {
+                // Open the stream and upload its data
+                await blob.UploadAsync(formFile.OpenReadStream());
+            }
         }
     }
 }

@@ -46,14 +46,14 @@
     @if (Model.ValidUntil.HasValue)
     {
         <div class="card-footer text-muted">
-            @Model.ValidUntil.Value.Subtract(DateTime.Now).Days days left(@Model.ValidUntil.Value.ToShortDateString())
+            @Model.ValidUntil.Value.Subtract(DateTime.Now).Days days left (@Model.ValidUntil.Value.ToShortDateString())
         </div>
     }
 </div>
 
-<div>
-    <div class="col-sm-12 d-inline-block">
-        <a href="@Url.Action("Create", "JobApplication", new { Model.Id , Area = "User"})"
+<div class="col-md-6 offset-5 p-5">
+    <div>
+        <a href="@Url.Action("Create", "JobApplication", new { jobOfferId = Model.Id , Area = "User"})"
            class="btn rounded btn-success btn-lg">
             <i class="fas fa-paper-plane"
                title="Apply"></i>

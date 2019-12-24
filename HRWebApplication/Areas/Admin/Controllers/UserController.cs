@@ -33,18 +33,6 @@ namespace HRWebApplication.Areas.Admin.Controllers
             return View(userViewModel);
         }
 
-        public async Task<IActionResult> Delete(int? userId)
-        {
-            if (!userId.HasValue)
-            {
-                return BadRequest($"id should not be null");
-            }
-
-            _context.Users.Remove(new Models.User() { Id = userId.Value });
-            await _context.SaveChangesAsync();
-            return RedirectToAction("Index", "User", new { Area = "Admin"});
-        }
-
         public async Task<IActionResult> Update(int? userId, int? companyId)
         {
             if (userId.HasValue)

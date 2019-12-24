@@ -7,6 +7,7 @@
 
 
   <ItemGroup>
+    <PackageReference Include="Azure.Storage.Blobs" Version="12.1.0" />
     <PackageReference Include="knockoutjs" Version="3.5.1" />
     <PackageReference Include="Microsoft.AspNet.Mvc" Version="5.2.7" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.AzureADB2C.UI" Version="3.0.0" />
@@ -33,5 +34,8 @@
     <Folder Include="Areas\User\Data\" />
     <Folder Include="Areas\User\Models\" />
   </ItemGroup>
+
+
+  <ProjectExtensions><VisualStudio><UserProperties appsettings_1json__JsonSchema="http://json.schemastore.org/backportrc" /></VisualStudio></ProjectExtensions>
 
 </Project>

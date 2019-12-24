@@ -57,7 +57,7 @@
     <script>
 
     $(document).ready(function () {
-        $("#JobApplicationList").load('@(Url.Action("GetJobApplications", "JobApplication", new { Area = "User"}))');
+        $("#JobApplicationList").load('@(Url.Action("GetJobApplications", "JobApplication", new { Area = "User", page = 1 }))');
         $("#SearchButton").click(search);
     });
 
@@ -72,7 +72,7 @@
 
         function sort(sortOrder) {
             var searchString = $("#Search").val();
-            var link = '@(Url.Action("GetJobApplications", "JobApplication", new { Area = "User", page = 1 }))' + '?searchString=' + searchString + '&sortOrder=' + sortOrder;
+            var link = '@(Url.Action("GetJobApplications", "JobApplication", new { Area = "User", page = 1 }))' + '&searchString=' + searchString + '&sortOrder=' + sortOrder;
         $("#JobApplicationList").load(link);
         }
 

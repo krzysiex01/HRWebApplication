@@ -6,6 +6,10 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using HRWebApplication.Models;
+using Azure.Storage;
+using Azure.Storage.Blobs;
+using Microsoft.AspNetCore.Http;
+using System.IO;
 
 namespace HRWebApplication.Controllers
 {

@@ -45,14 +45,6 @@
                 </label>
             </div>
         </div>
-        <div class="col-md-4 mb-4">
-            <a href="@Url.Action("Create", "JobOffer", new { Area = "Admin" })">
-                <button class="btn btn-outline-primary">
-                    <i class="fa fa-plus pr-3"></i>
-                    Create new offer
-                </button>
-            </a>
-        </div>
     </div>
 </div>
 
@@ -66,7 +58,7 @@
     <script>
 
     $(document).ready(function () {
-        $("#JobOfferList").load('@(Url.Action("GetJobOffers", "JobOffer"))');
+        $("#JobOfferList").load('@(Url.Action("GetJobOffers", "JobOffer", new { Area = "Admin" }))');
         $("#SearchButton").click(search);
     });
 
@@ -75,7 +67,7 @@
             var sortOrder = $('input[name=sorting]:checked').val();
 
               var link = '@(Url.Action("GetJobOffers",
-                                        "JobOffer"))' + '?searchString=' + searchString + '&sortOrder=' + sortOrder;
+                                        "JobOffer", new { Area = "Admin"}))' + '?searchString=' + searchString + '&sortOrder=' + sortOrder;
         $("#JobOfferList").load(link);
         }
 
@@ -86,7 +78,7 @@
 
           function sort(sortOrder) {
             var searchString = $("#Search").val();
-            var link = '@(Url.Action("GetJobOffers", "JobOffer", new { page = 1 }))' + '?searchString=' + searchString + '&sortOrder=' + sortOrder;
+            var link = '@(Url.Action("GetJobOffers", "JobOffer", new { Area = "Admin",page = 1 }))' + '?searchString=' + searchString + '&sortOrder=' + sortOrder;
         $("#JobOfferList").load(link);
         }
     </script>

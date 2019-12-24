@@ -40,8 +40,7 @@ namespace HRWebApplication.Areas.HRUser.Controllers
 
             ViewBag.CurrentFilter = searchString;
 
-            var jobOffers = from s in _context.JobOffers
-                            select s;
+            var jobOffers = from s in _context.JobOffers select s;
 
             if (!String.IsNullOrEmpty(searchString))
             {
@@ -58,6 +57,8 @@ namespace HRWebApplication.Areas.HRUser.Controllers
             };
 
             int pageNumber = (page ?? 1);
+
+            jobOffers = jobOffers.Where(s => s.CompanyId.ToString() == User.FindFirst(ClaimTypes.GroupSid).Value);
 
             ViewBag.CurrentPage = pageNumber;
             ViewBag.PagesCount = paginationHelper.GetPagesCount(pageSize, await jobOffers.CountAsync());
@@ -79,7 +80,7 @@ namespace HRWebApplication.Areas.HRUser.Controllers
         public async Task<IActionResult> Index()
         {
             JobOfferViewModel jobOfferViewModel = new JobOfferViewModel();
-            jobOfferViewModel.JobOffersCount = await _context.JobOffers.CountAsync();
+            jobOfferViewModel.JobOffersCount = await _context.JobOffers.Where(s => s.CompanyId.ToString() == User.FindFirst(ClaimTypes.GroupSid).Value).CountAsync();
 
             return View(jobOfferViewModel);
         }
@@ -120,7 +121,7 @@ namespace HRWebApplication.Areas.HRUser.Controllers
             offer.Currency = model.Currency;
             _context.Update(offer);
             await _context.SaveChangesAsync();
-            return RedirectToAction("Details", "",new { id = model.Id });
+            return RedirectToAction("Details", "JobOffer", new { Area = "HRUser", id = model.Id });
         }
 
         [HttpPost]
@@ -178,10 +179,6 @@ namespace HRWebApplication.Areas.HRUser.Controllers
 
         public async Task<IActionResult> Details(int id)
         {
-            //Get all data at once
-            // var offer = await _context.JobOffers.Include(x => x.JobApplications).FirstOrDefaultAsync(x => x.Id == id);
-
-            //Get JobApplications using AJAX
             var offer = await _context.JobOffers.FirstOrDefaultAsync(x => x.Id == id);
             if (offer is null)
             {
