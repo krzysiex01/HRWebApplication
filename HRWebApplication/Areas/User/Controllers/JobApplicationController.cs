@@ -15,6 +15,8 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using SendGrid;
+using SendGrid.Helpers.Mail;
 
 namespace HRWebApplication.Areas.User.Controllers
 {
@@ -41,7 +43,6 @@ namespace HRWebApplication.Areas.User.Controllers
             };
             return View(jobApplicationViewModel);
         }
-
         public async Task<ActionResult> Create(int? jobOfferId)
         {
             if (!jobOfferId.HasValue)
@@ -94,8 +95,8 @@ namespace HRWebApplication.Areas.User.Controllers
             }
 
             string trustedName = user.ProviderUserId + DateTime.Now.ToFileTime() + ".pdf";
-            await UploadCVAsync(model.UploadedCVFile, trustedName);
-
+            // Upload CV to AzureBlob
+            UploadCV(model.UploadedCVFile, trustedName);
             JobApplication jobApplication = new JobApplication
             {
                 FirstName = model.FirstName,
@@ -110,14 +111,14 @@ namespace HRWebApplication.Areas.User.Controllers
                 User = user,
                 CvUrl = trustedName
             };
-
             offer.JobApplications.Add(jobApplication);
             await _context.JobApplications.AddAsync(jobApplication);
             await _context.SaveChangesAsync();
+            // Send notification emails using SendGrid
+            SendNotifications(offer.CompanyId);
 
             return RedirectToAction("Details", "JobOffer", new { id = model.JobOfferId, Area = "User" });
         }
-
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -164,7 +165,6 @@ namespace HRWebApplication.Areas.User.Controllers
             await _context.SaveChangesAsync();
             return RedirectToAction("Index", "JobApplication", new { Area = "User" });
         }
-
         public async Task<IActionResult> Delete(int? id)
         {
             if (!id.HasValue)
@@ -189,7 +189,6 @@ namespace HRWebApplication.Areas.User.Controllers
 
             return RedirectToAction("Index", "JobApplication", new { Area = "User" });
         }
-
         public async Task<PartialViewResult> GetJobApplications(string sortOrder, string currentFilter, string searchString, int? page)
         {
             int pageNumber = (page ?? 1);
@@ -233,8 +232,29 @@ namespace HRWebApplication.Areas.User.Controllers
                 .ThenInclude(s => s.Company)
                 .ToListAsync());
         }
+        private async void SendNotifications(int companyId)
+        {
+            // Get API key
+            var apiKey = _config.GetSection("SendGridAPIKey").Value;
+            // Create SendGrid client
+            var client = new SendGridClient(apiKey);
+            var from = new EmailAddress("noreplymessage@hrwebapplication.com", "HR Web Application");
+            // Get users assigned to given compnay
+            var users = await _context.Users.Where(m => m.CompanyId.HasValue && m.CompanyId == companyId).ToListAsync();
+            // Craete email list
+            List<EmailAddress> tos = new List<EmailAddress>();
+            // Populate with data
+            foreach (var user in users)
+            {
+                tos.Add(new EmailAddress(user.EmailAddress, user.FirstName + user.LastName));
+            }
 
-        private async Task UploadCVAsync(IFormFile formFile, string trustedName)
+            var subject = "You received new application";
+            var htmlContent = "<strong>Hello you have new application waiting for you!</strong>";
+            var msg = MailHelper.CreateSingleEmailToMultipleRecipients(from, tos, subject, "", htmlContent, false);
+            _ = client.SendEmailAsync(msg);
+        }
+        private async void UploadCV(IFormFile formFile, string trustedName)
         {
             string fileName = trustedName;
             string connectionString = _config.GetValue<string>("AzureBlob:ConnectionString");

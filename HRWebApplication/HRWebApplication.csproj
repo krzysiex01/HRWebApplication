@@ -22,6 +22,7 @@
     <PackageReference Include="Microsoft.Identity.Client" Version="4.7.1" />
     <PackageReference Include="Microsoft.Owin.Security.OAuth" Version="4.1.0" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.0.0" />
+    <PackageReference Include="Sendgrid" Version="9.12.0" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="5.0.0-rc4" />
   </ItemGroup>
 
@@ -36,6 +37,11 @@
   </ItemGroup>
 
 
-  <ProjectExtensions><VisualStudio><UserProperties appsettings_1json__JsonSchema="http://json.schemastore.org/backportrc" /></VisualStudio></ProjectExtensions>
+  <ItemGroup>
+    <WCFMetadata Include="Connected Services" />
+  </ItemGroup>
+
+
+  <ProjectExtensions><VisualStudio><UserProperties appsettings_1json__JsonSchema="" /></VisualStudio></ProjectExtensions>
 
 </Project>
