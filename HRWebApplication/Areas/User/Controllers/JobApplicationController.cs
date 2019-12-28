@@ -20,6 +20,9 @@ using SendGrid.Helpers.Mail;
 
 namespace HRWebApplication.Areas.User.Controllers
 {
+    /// <summary>
+    /// Job application controller for standard user.
+    /// </summary>
     [Area("User")]
     [Authorize(Roles = "User")]
     public class JobApplicationController : Controller
@@ -30,11 +33,21 @@ namespace HRWebApplication.Areas.User.Controllers
         private readonly DataContext _context;
         private readonly IConfiguration _config;
 
+        /// <summary>
+        /// JobApplicationController constructor.
+        /// </summary>
+        /// <param name="context"></param>
+        /// <param name="config"></param>
         public JobApplicationController(DataContext context, IConfiguration config)
         {
             _context = context;
             _config = config;
         }
+
+        /// <summary>
+        /// Displays main view for paging jobs application.
+        /// </summary>
+        /// <returns></returns>
         public async Task<IActionResult> Index()
         {
             JobApplicationViewModel jobApplicationViewModel = new JobApplicationViewModel
@@ -43,6 +56,12 @@ namespace HRWebApplication.Areas.User.Controllers
             };
             return View(jobApplicationViewModel);
         }
+
+        /// <summary>
+        /// Displays a view with form to create new job applictation.
+        /// </summary>
+        /// <param name="jobOfferId"></param>
+        /// <returns></returns>
         public async Task<ActionResult> Create(int? jobOfferId)
         {
             if (!jobOfferId.HasValue)
@@ -67,6 +86,12 @@ namespace HRWebApplication.Areas.User.Controllers
 
             return View(model);
         }
+
+        /// <summary>
+        /// Validates and saves newly created application to a database
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Create(CreateJobApplicationViewModel model)
@@ -119,6 +144,12 @@ namespace HRWebApplication.Areas.User.Controllers
 
             return RedirectToAction("Details", "JobOffer", new { id = model.JobOfferId, Area = "User" });
         }
+       
+        /// <summary>
+        /// Displays custom edit form for specified application. Only application in wating state can be edited.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -127,18 +158,24 @@ namespace HRWebApplication.Areas.User.Controllers
             }
             var application = await _context.JobApplications.FirstOrDefaultAsync(x => x.Id == id.Value);
 
-            if (application.ApplicationState != ApplicationState.Waiting)
-            {
-                return BadRequest("can edit only waiting applications");
-            }
-
             if (application == null)
             {
                 return NotFound($"application not found in DB");
             }
 
+            if (application.ApplicationState != ApplicationState.Waiting)
+            {
+                return BadRequest("can edit only waiting applications");
+            }
+          
             return View(application);
         }
+
+        /// <summary>
+        /// Validates and upadates in database just edited job appplcation.
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Edit(JobApplication model)
@@ -165,6 +202,12 @@ namespace HRWebApplication.Areas.User.Controllers
             await _context.SaveChangesAsync();
             return RedirectToAction("Index", "JobApplication", new { Area = "User" });
         }
+       
+        /// <summary>
+        /// Permamently delete job application and all connected resources.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public async Task<IActionResult> Delete(int? id)
         {
             if (!id.HasValue)
@@ -189,6 +232,15 @@ namespace HRWebApplication.Areas.User.Controllers
 
             return RedirectToAction("Index", "JobApplication", new { Area = "User" });
         }
+
+        /// <summary>
+        /// Action gets the view containing list of applications matching filters defined as parametrs.
+        /// </summary>
+        /// <param name="sortOrder"></param>
+        /// <param name="currentFilter"></param>
+        /// <param name="searchString"></param>
+        /// <param name="page"></param>
+        /// <returns>Partial view with list of applications.</returns>
         public async Task<PartialViewResult> GetJobApplications(string sortOrder, string currentFilter, string searchString, int? page)
         {
             int pageNumber = (page ?? 1);
@@ -232,6 +284,11 @@ namespace HRWebApplication.Areas.User.Controllers
                 .ThenInclude(s => s.Company)
                 .ToListAsync());
         }
+       
+        /// <summary>
+        /// Sends notification emails to all HR users who are members of specified company.
+        /// </summary>
+        /// <param name="companyId"></param>
         private async void SendNotifications(int companyId)
         {
             // Get API key
@@ -254,6 +311,12 @@ namespace HRWebApplication.Areas.User.Controllers
             var msg = MailHelper.CreateSingleEmailToMultipleRecipients(from, tos, subject, "", htmlContent, false);
             _ = client.SendEmailAsync(msg);
         }
+
+        /// <summary>
+        /// Uploads file to Azure BlobStorage.
+        /// </summary>
+        /// <param name="formFile"></param>
+        /// <param name="trustedName"></param>
         private async void UploadCV(IFormFile formFile, string trustedName)
         {
             string fileName = trustedName;

@@ -10,21 +10,38 @@ using Microsoft.EntityFrameworkCore;
 
 namespace HRWebApplication.Areas.Admin.Controllers
 {
+    /// <summary>
+    /// Company controller for Admin user. 
+    /// </summary>
     [Area("Admin")]
     [Authorize(Roles = "Admin")]
     public class CompanyController : Controller
     {
         private readonly DataContext _context;
+
+        /// <summary>
+        /// CompanyController constructor.
+        /// </summary>
+        /// <param name="context"></param>
         public CompanyController(DataContext context)
         {
             _context = context;
         }
 
+        /// <summary>
+        /// Display custom page for creating new company.
+        /// </summary>
+        /// <returns></returns>
         public IActionResult Create()
         {
             return View(new Company());
         }
 
+        /// <summary>
+        /// Validate and add to database newly created company.
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Create(Company model)
@@ -39,6 +56,11 @@ namespace HRWebApplication.Areas.Admin.Controllers
             return RedirectToAction("Index","Company",new { Area = "Admin"});
         }
 
+        /// <summary>
+        /// Removes compnay with specified id.
+        /// </summary>
+        /// <param name="id">ID of company to remove.</param>
+        /// <returns></returns>
         public async Task<ActionResult> Delete(int? id)
         {
             if (id == null)
@@ -52,6 +74,11 @@ namespace HRWebApplication.Areas.Admin.Controllers
 
         }
 
+        /// <summary>
+        /// Displays custom page for editing company.
+        /// </summary>
+        /// <param name="id">ID of company to edit.</param>
+        /// <returns></returns>
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -68,6 +95,11 @@ namespace HRWebApplication.Areas.Admin.Controllers
             return View(offer);
         }
 
+        /// <summary>
+        /// Updates data for given company.
+        /// </summary>
+        /// <param name="model">New company data.</param>
+        /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Edit(Company model)
@@ -86,6 +118,10 @@ namespace HRWebApplication.Areas.Admin.Controllers
             return RedirectToAction("Index", "Company", new { Area = "Admin" });
         }
 
+        /// <summary>
+        /// Displays view with list of comapnies.
+        /// </summary>
+        /// <returns></returns>
         public async Task<IActionResult> Index()
         {
             return View(await _context.Companies.ToListAsync());

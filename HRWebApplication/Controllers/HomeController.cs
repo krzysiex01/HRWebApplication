@@ -13,15 +13,26 @@ using System.IO;
 
 namespace HRWebApplication.Controllers
 {
+    /// <summary>
+    /// Home controller for unauthenticated user.
+    /// </summary>
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
 
+        /// <summary>
+        /// Home controller constructor.
+        /// </summary>
+        /// <param name="logger"></param>
         public HomeController(ILogger<HomeController> logger)
         {
             _logger = logger;
         }
 
+        /// <summary>
+        /// Action displaying main page of application.
+        /// </summary>
+        /// <returns>Main page view.</returns>
         public IActionResult Index()
         {
             if (User.Identity.IsAuthenticated)
@@ -31,11 +42,19 @@ namespace HRWebApplication.Controllers
             return View();
         }
 
+        /// <summary>
+        /// Action displaying privacy page.
+        /// </summary>
+        /// <returns>Privacy view.</returns>
         public IActionResult Privacy()
         {
             return View();
         }
 
+        /// <summary>
+        /// Custom error page.
+        /// </summary>
+        /// <returns></returns>
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {

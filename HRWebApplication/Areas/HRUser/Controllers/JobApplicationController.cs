@@ -14,6 +14,9 @@ using Microsoft.Extensions.Configuration;
 
 namespace HRWebApplication.Areas.HRUser.Controllers
 {
+    /// <summary>
+    /// Job application controller.
+    /// </summary>
     [Area("HRUser")]
     [Authorize(Roles = "HRUser")]
     public class JobApplicationController : Controller
@@ -24,11 +27,22 @@ namespace HRWebApplication.Areas.HRUser.Controllers
 
         private readonly DataContext _context;
         private readonly IConfiguration _config;
+
+        /// <summary>
+        /// JobApplication controller constructor.
+        /// </summary>
+        /// <param name="context"></param>
+        /// <param name="config"></param>
         public JobApplicationController(DataContext context, IConfiguration config)
         {
             _context = context;
             _config = config;
         }
+
+        /// <summary>
+        /// Displays main view for paging jobs application.
+        /// </summary>
+        /// <returns></returns>
         public async Task<IActionResult> Index()
         {
             JobApplicationViewModel jobApplicationViewModel = new JobApplicationViewModel
@@ -38,6 +52,14 @@ namespace HRWebApplication.Areas.HRUser.Controllers
             return View(jobApplicationViewModel);
         }
 
+        /// <summary>
+        /// Action gets the view containing list of applications matching filters defined as parametrs.
+        /// </summary>
+        /// <param name="sortOrder"></param>
+        /// <param name="currentFilter"></param>
+        /// <param name="searchString"></param>
+        /// <param name="page"></param>
+        /// <returns>Partial view with list of applications.</returns>
         public async Task<PartialViewResult> GetJobApplications(string sortOrder, string currentFilter, string searchString, int? page)
         {
             int pageNumber = (page ?? 1);
@@ -80,6 +102,11 @@ namespace HRWebApplication.Areas.HRUser.Controllers
                 .ToListAsync());
         }
 
+        /// <summary>
+        /// Change state of appliction to accepted.
+        /// </summary>
+        /// <param name="id">Application id.</param>
+        /// <returns></returns>
         public async Task<IActionResult> AcceptApplication(int? id)
         {
             if (!id.HasValue)
@@ -95,6 +122,11 @@ namespace HRWebApplication.Areas.HRUser.Controllers
             return RedirectToAction("Index", "JobApplication", new { Area = "HRUser" });
         }
 
+        /// <summary>
+        /// Change state of appliction to rejected.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public async Task<IActionResult> RejectApplication(int? id)
         {
             if (!id.HasValue)
@@ -110,6 +142,11 @@ namespace HRWebApplication.Areas.HRUser.Controllers
             return RedirectToAction("Index", "JobApplication", new { Area = "HRUser" });
         }
 
+        /// <summary>
+        /// Permamently delete job application and all connected resources.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public async Task<IActionResult> Delete(int? id)
         {
             if (!id.HasValue)
@@ -135,6 +172,11 @@ namespace HRWebApplication.Areas.HRUser.Controllers
             return RedirectToAction("Index", "JobApplication", new { Area = "HRUser" });
         }
 
+        /// <summary>
+        /// Gets CV saved in Azure BlobStorage for specified job applcation.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns>CV as PDF file.</returns>
         public async Task<ActionResult> DownloadCVFile(int? id)
         {
             if (!id.HasValue)

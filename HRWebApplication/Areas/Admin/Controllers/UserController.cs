@@ -15,15 +15,28 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace HRWebApplication.Areas.Admin.Controllers
 {
+    /// <summary>
+    /// Controller for admins to manage registered users.
+    /// </summary>
     [Area("Admin")]
     [Authorize(Roles = "Admin")]
     public class UserController : Controller
     {
         private readonly DataContext _context;
+
+        /// <summary>
+        /// UserController constructor.
+        /// </summary>
+        /// <param name="context"></param>
         public UserController(DataContext context)
         {
             _context = context;
         }
+
+        /// <summary>
+        /// Gets view with list of all users 
+        /// </summary>
+        /// <returns></returns>
         public async Task<IActionResult> Index()
         {
             UserViewModel userViewModel = new UserViewModel();
@@ -33,6 +46,12 @@ namespace HRWebApplication.Areas.Admin.Controllers
             return View(userViewModel);
         }
 
+        /// <summary>
+        /// Update the role of specified user by company assigment.
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <param name="companyId"></param>
+        /// <returns></returns>
         public async Task<IActionResult> Update(int? userId, int? companyId)
         {
             if (userId.HasValue)

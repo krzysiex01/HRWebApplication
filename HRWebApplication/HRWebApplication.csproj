@@ -3,6 +3,12 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp3.0</TargetFramework>
     <UserSecretsId>aspnet-HRWebApplication-722E79FF-FC83-4F56-847B-B50B9C9AC3A9</UserSecretsId>
+    <NoWarn>$(NoWarn);1591</NoWarn>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DocumentationFile>bin\Debug\netcoreapp3.0\HRWebApplication.xml</DocumentationFile>
+    <OutputPath>bin\Debug\netcoreapp3.0\</OutputPath>
   </PropertyGroup>
 
 
@@ -17,6 +23,7 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="3.0.0" />
+    <PackageReference Include="Microsoft.Extensions.PlatformAbstractions" Version="1.1.0" />
     <PackageReference Include="Microsoft.Graph" Version="1.20.0" />
     <PackageReference Include="Microsoft.Graph.Auth" Version="1.0.0-preview.2" />
     <PackageReference Include="Microsoft.Identity.Client" Version="4.7.1" />
@@ -42,6 +49,6 @@
   </ItemGroup>
 
 
-  <ProjectExtensions><VisualStudio><UserProperties appsettings_1json__JsonSchema="" /></VisualStudio></ProjectExtensions>
+  <ProjectExtensions><VisualStudio><UserProperties properties_4launchsettings_1json__JsonSchema="http://json.schemastore.org/jsinspectrc" appsettings_1json__JsonSchema="" /></VisualStudio></ProjectExtensions>
 
 </Project>

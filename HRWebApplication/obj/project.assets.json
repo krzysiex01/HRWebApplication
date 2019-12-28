@@ -1020,6 +1020,19 @@
           "lib/netcoreapp3.0/Microsoft.Extensions.Options.dll": {}
         }
       },
+      "Microsoft.Extensions.PlatformAbstractions/1.1.0": {
+        "type": "package",
+        "dependencies": {
+          "NETStandard.Library": "1.6.1",
+          "System.Reflection.TypeExtensions": "4.3.0"
+        },
+        "compile": {
+          "lib/netstandard1.3/Microsoft.Extensions.PlatformAbstractions.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard1.3/Microsoft.Extensions.PlatformAbstractions.dll": {}
+        }
+      },
       "Microsoft.Extensions.Primitives/3.0.0": {
         "type": "package",
         "compile": {
@@ -4417,6 +4430,20 @@
         "lib/netstandard2.0/Microsoft.Extensions.Options.xml",
         "microsoft.extensions.options.3.0.0.nupkg.sha512",
         "microsoft.extensions.options.nuspec"
+      ]
+    },
+    "Microsoft.Extensions.PlatformAbstractions/1.1.0": {
+      "sha512": "H6ZsQzxYw/6k2DfEQRXdC+vQ6obd6Uba3uGJrnJ2vG4PRXjQZ7seB13JdCfE72abp8E6Fk3gGgDzfJiLZi5ZpQ==",
+      "type": "package",
+      "path": "microsoft.extensions.platformabstractions/1.1.0",
+      "files": [
+        ".nupkg.metadata",
+        "lib/net451/Microsoft.Extensions.PlatformAbstractions.dll",
+        "lib/net451/Microsoft.Extensions.PlatformAbstractions.xml",
+        "lib/netstandard1.3/Microsoft.Extensions.PlatformAbstractions.dll",
+        "lib/netstandard1.3/Microsoft.Extensions.PlatformAbstractions.xml",
+        "microsoft.extensions.platformabstractions.1.1.0.nupkg.sha512",
+        "microsoft.extensions.platformabstractions.nuspec"
       ]
     },
     "Microsoft.Extensions.Primitives/3.0.0": {
@@ -10000,6 +10027,7 @@
       "Microsoft.EntityFrameworkCore.SqlServer >= 3.0.0",
       "Microsoft.EntityFrameworkCore.Tools >= 3.0.0",
       "Microsoft.Extensions.Logging.Debug >= 3.0.0",
+      "Microsoft.Extensions.PlatformAbstractions >= 1.1.0",
       "Microsoft.Graph >= 1.20.0",
       "Microsoft.Graph.Auth >= 1.0.0-preview.2",
       "Microsoft.Identity.Client >= 4.7.1",
@@ -10079,6 +10107,10 @@
           "Microsoft.Extensions.Logging.Debug": {
             "target": "Package",
             "version": "[3.0.0, )"
+          },
+          "Microsoft.Extensions.PlatformAbstractions": {
+            "target": "Package",
+            "version": "[1.1.0, )"
           },
           "Microsoft.Graph": {
             "target": "Package",

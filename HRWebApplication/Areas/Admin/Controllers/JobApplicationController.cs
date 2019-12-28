@@ -10,6 +10,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace HRWebApplication.Areas.Admin.Controllers
 {
+    /// <summary>
+    /// Job application controller for Admin user.
+    /// </summary>
     [Area("Admin")]
     [Authorize(Roles = "Admin")]
     public class JobApplicationController : Controller
@@ -18,11 +21,20 @@ namespace HRWebApplication.Areas.Admin.Controllers
         private PaginationHelper paginationHelper = new PaginationHelper();
 
         private readonly DataContext _context;
+
+        /// <summary>
+        /// JobApplicationController constructor.
+        /// </summary>
+        /// <param name="context"></param>
         public JobApplicationController(DataContext context)
         {
             _context = context;
         }
      
+        /// <summary>
+        /// Displays main view for paging jobs application.
+        /// </summary>
+        /// <returns></returns>
         public async Task<IActionResult> Index()
         {
             JobApplicationViewModel jobApplicationViewModel = new JobApplicationViewModel
@@ -32,6 +44,14 @@ namespace HRWebApplication.Areas.Admin.Controllers
             return View(jobApplicationViewModel);
         }
 
+        /// <summary>
+        /// Action gets the view containing list of applications matching filters defined as parametrs.
+        /// </summary>
+        /// <param name="sortOrder"></param>
+        /// <param name="currentFilter"></param>
+        /// <param name="searchString"></param>
+        /// <param name="page"></param>
+        /// <returns>Partial view with list of applications.</returns>
         public async Task<PartialViewResult> GetJobApplications(string sortOrder, string currentFilter, string searchString, int? page)
         {
             int pageNumber = (page ?? 1);

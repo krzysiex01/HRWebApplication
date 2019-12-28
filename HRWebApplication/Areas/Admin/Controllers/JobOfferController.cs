@@ -10,6 +10,9 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace HRWebApplication.Areas.Admin.Controllers
 {
+    /// <summary>
+    /// Job offer controller for Admin user.
+    /// </summary>
     [Area("Admin")]
     [Authorize(Roles = "Admin")]
     public class JobOfferController : Controller
@@ -18,11 +21,24 @@ namespace HRWebApplication.Areas.Admin.Controllers
         private PaginationHelper paginationHelper = new PaginationHelper();
 
         private readonly DataContext _context;
+
+        /// <summary>
+        /// JobOfferController constructor.
+        /// </summary>
+        /// <param name="context"></param>
         public JobOfferController(DataContext context)
         {
             _context = context;
         }
-       
+
+        /// <summary>
+        /// Action gets the view containing list of job offers matching filters defined as parametrs.
+        /// </summary>
+        /// <param name="sortOrder"></param>
+        /// <param name="currentFilter"></param>
+        /// <param name="searchString"></param>
+        /// <param name="page"></param>
+        /// <returns></returns>
         public async Task<PartialViewResult> GetJobOffers(string sortOrder, string currentFilter, string searchString, int? page)
         {
             ViewBag.CurrentSort = sortOrder;
@@ -73,7 +89,11 @@ namespace HRWebApplication.Areas.Admin.Controllers
      
             return PartialView("_JobOfferList", jobOfferListViewModel);
         }
-       
+
+        /// <summary>
+        /// Displays main view for managing jobs offers.
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         public async Task<IActionResult> Index()
         {
@@ -82,6 +102,12 @@ namespace HRWebApplication.Areas.Admin.Controllers
 
             return View(jobOfferViewModel);
         }
+
+        /// <summary>
+        /// Gets view with page to edit job offer with specified id.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -98,6 +124,11 @@ namespace HRWebApplication.Areas.Admin.Controllers
             return View(offer);
         }
 
+        /// <summary>
+        /// Validate and updates recived job offer in database.
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Edit(JobOffer model)
@@ -122,6 +153,11 @@ namespace HRWebApplication.Areas.Admin.Controllers
             return RedirectToAction("Details", "JobOffer", new { Area = "Admin", id = model.Id });
         }
 
+        /// <summary>
+        /// Removes job offer from database.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpPost]
         public async Task<ActionResult> Delete(int? id)
         {
@@ -135,6 +171,11 @@ namespace HRWebApplication.Areas.Admin.Controllers
             return RedirectToAction("Index", "JobOffer", new { Area = "Admin"});
         }
       
+        /// <summary>
+        /// Gets page with detailed information about job offer with specified id.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public async Task<IActionResult> Details(int id)
         {
             var offer = await _context.JobOffers.FirstOrDefaultAsync(x => x.Id == id);

@@ -11,6 +11,9 @@ using System.Security.Claims;
 
 namespace HRWebApplication.Areas.HRUser.Controllers
 {
+    /// <summary>
+    /// Job offer controller for HR user.
+    /// </summary>
     [Area("HRUser")]
     [Authorize(Roles = "HRUser")]
     public class JobOfferController : Controller
@@ -20,11 +23,24 @@ namespace HRWebApplication.Areas.HRUser.Controllers
 
 
         private readonly DataContext _context;
+
+        /// <summary>
+        /// JobOfferController constructor.
+        /// </summary>
+        /// <param name="context"></param>
         public JobOfferController(DataContext context)
         {
             _context = context;
         }
 
+        /// <summary>
+        /// Action gets the view containing list of job offers matching filters defined as parametrs.
+        /// </summary>
+        /// <param name="sortOrder"></param>
+        /// <param name="currentFilter"></param>
+        /// <param name="searchString"></param>
+        /// <param name="page"></param>
+        /// <returns></returns>
         public async Task<PartialViewResult> GetJobOffers(string sortOrder, string currentFilter, string searchString, int? page)
         {
             ViewBag.CurrentSort = sortOrder;
@@ -76,6 +92,10 @@ namespace HRWebApplication.Areas.HRUser.Controllers
             return PartialView("_JobOfferList", jobOfferListViewModel);
         }
 
+        /// <summary>
+        /// Displays main view for paging and filtering jobs offer.
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         public async Task<IActionResult> Index()
         {
@@ -84,6 +104,12 @@ namespace HRWebApplication.Areas.HRUser.Controllers
 
             return View(jobOfferViewModel);
         }
+
+        /// <summary>
+        /// Gets view with page to edit job offer with specified id.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -100,6 +126,11 @@ namespace HRWebApplication.Areas.HRUser.Controllers
             return View(offer);
         }
 
+        /// <summary>
+        /// Validate and updates recived job offer in database.
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Edit(JobOffer model)
@@ -124,6 +155,11 @@ namespace HRWebApplication.Areas.HRUser.Controllers
             return RedirectToAction("Details", "JobOffer", new { Area = "HRUser", id = model.Id });
         }
 
+        /// <summary>
+        /// Removes job offer from database.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpPost]
         public async Task<ActionResult> Delete(int? id)
         {
@@ -137,6 +173,10 @@ namespace HRWebApplication.Areas.HRUser.Controllers
             return RedirectToAction("Index", "JobOffer", new { Area = "HRUser" });
         }
 
+        /// <summary>
+        /// Gets page with form to create new job offer .
+        /// </summary>
+        /// <returns></returns>
         public async Task<ActionResult> Create()
         {
             var user = await _context.Users.FirstOrDefaultAsync(x => x.ProviderUserId == User.FindFirst(ClaimTypes.NameIdentifier).Value);
@@ -148,6 +188,11 @@ namespace HRWebApplication.Areas.HRUser.Controllers
             return View(model);
         }
 
+        /// <summary>
+        /// Validates and saves recived to a database.
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Create(CreateJobOfferViewModel model)
@@ -177,6 +222,11 @@ namespace HRWebApplication.Areas.HRUser.Controllers
             return RedirectToAction("Index", "JobOffer", new { Area = "HRUser"});
         }
 
+        /// <summary>
+        /// Gets page with detailed information about job offer with specified id.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public async Task<IActionResult> Details(int id)
         {
             var offer = await _context.JobOffers.FirstOrDefaultAsync(x => x.Id == id);

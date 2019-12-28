@@ -10,6 +10,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace HRWebApplication.Areas.User.Controllers
 {
+    /// <summary>
+    /// Job offer controller for standard user.
+    /// </summary>
     [Area("User")]
     [Authorize(Roles = "User")]
     public class JobOfferController : Controller
@@ -18,11 +21,24 @@ namespace HRWebApplication.Areas.User.Controllers
         private PaginationHelper paginationHelper = new PaginationHelper();
 
         private readonly DataContext _context;
+
+        /// <summary>
+        /// JobOfferController constructor.
+        /// </summary>
+        /// <param name="context"></param>
         public JobOfferController(DataContext context)
         {
             _context = context;
         }
 
+        /// <summary>
+        /// Action gets the view containing list of job offers matching filters defined as parametrs.
+        /// </summary>
+        /// <param name="sortOrder"></param>
+        /// <param name="currentFilter"></param>
+        /// <param name="searchString"></param>
+        /// <param name="page"></param>
+        /// <returns></returns>
         public async Task<PartialViewResult> GetJobOffers(string sortOrder, string currentFilter, string searchString, int? page)
         {
             ViewBag.CurrentSort = sortOrder;
@@ -73,6 +89,10 @@ namespace HRWebApplication.Areas.User.Controllers
             return PartialView("_JobOfferList", jobOfferListViewModel);
         }
 
+        /// <summary>
+        /// Displays main view for paging jobs offers.
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         public async Task<IActionResult> Index()
         {
@@ -83,7 +103,12 @@ namespace HRWebApplication.Areas.User.Controllers
             ViewBag.PagesCount = Math.Ceiling((double)jobOfferViewModel.JobOffersCount / pageSize);
             return View(jobOfferViewModel);
         }
-  
+
+        /// <summary>
+        /// Gets page with detailed information about job offer with specified id.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public async Task<IActionResult> Details(int? id)
         {
             if (id is null)

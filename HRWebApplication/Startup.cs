@@ -14,6 +14,9 @@ using Microsoft.OpenApi.Models;
 using Microsoft.AspNetCore.Authentication.AzureADB2C.UI;
 using Microsoft.AspNetCore.Authentication;
 using HRWebApplication.Models;
+using System.Reflection;
+using System.IO;
+using Microsoft.Extensions.PlatformAbstractions;
 
 namespace HRWebApplication
 {
@@ -26,15 +29,21 @@ namespace HRWebApplication
 
         public IConfiguration Configuration { get; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
+        /// <summary>
+        /// This method gets called by the runtime. Use this method to add services to the container.
+        /// </summary>
+        /// <param name="services"></param>
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddMvc(o => o.EnableEndpointRouting = false);
+
             services.AddAuthentication(AzureADB2CDefaults.AuthenticationScheme)
                  .AddAzureADB2C(options =>
                  {
                      Configuration.Bind("AzureAdB2C", options);
                  });
 
+            ConfigureDatabaseServices(services);
             
             services.AddControllersWithViews();
             services.AddRazorPages();
@@ -44,18 +53,25 @@ namespace HRWebApplication
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "My API", Version = "v1" });
+                c.IncludeXmlComments(Path.Combine(PlatformServices.Default.Application.ApplicationBasePath, "HRWebApplication.xml"));
+                c.ResolveConflictingActions(apiDescriptions => apiDescriptions.First());
             });
-
-            ConfigureDatabaseServices(services);
-
+            
         }
+
+        /// <summary>
+        /// Configure database services.
+        /// </summary>
+        /// <param name="services"></param>
         protected virtual void ConfigureDatabaseServices(IServiceCollection services)
         {
             var connection = Configuration["DatabaseConnectionString"];
             services.AddDbContext<DataContext>(options => options.UseSqlServer(connection));
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+        /// <summary>
+        /// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+        /// </summary>
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             // Enable middleware to serve generated Swagger as a JSON endpoint.
@@ -66,6 +82,7 @@ namespace HRWebApplication
             app.UseSwaggerUI(c =>
             {
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
+
             });
 
             if (env.IsDevelopment())
@@ -83,16 +100,17 @@ namespace HRWebApplication
             app.UseRouting();
             app.UseAuthentication();
             app.UseAuthorization();
-            app.UseEndpoints(endpoints =>
+            app.UseMvc(routes =>
             {
-                endpoints.MapControllerRoute(
-                name: "areas",
-                pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
+                routes.MapRoute(
+                  name: "MyArea",
+                  template: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
 
-                endpoints.MapControllerRoute(
-                    name: "default",
-                    pattern: "{controller=Home}/{action=Index}/{id?}");
+                routes.MapRoute(
+                   name: "default",
+                   template: "{controller=Home}/{action=Index}/{id?}");
             });
+            
         }
     }
 }
