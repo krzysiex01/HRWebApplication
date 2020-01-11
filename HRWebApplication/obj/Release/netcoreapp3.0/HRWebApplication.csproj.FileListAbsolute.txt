@@ -196,17 +196,8 @@ C:\Users\Lenovo\source\repos\HR App\HR App\HRWebApplication\obj\Release\netcorea
 C:\Users\Lenovo\source\repos\HR App\HR App\HRWebApplication\obj\Release\netcoreapp3.0\Razor\Areas\User\Views\Shared\_ValidationScriptsPartial.cshtml.g.cs
 C:\Users\Lenovo\source\repos\HR App\HR App\HRWebApplication\obj\Release\netcoreapp3.0\Razor\Areas\User\Views\_ViewImports.cshtml.g.cs
 C:\Users\Lenovo\source\repos\HR App\HR App\HRWebApplication\obj\Release\netcoreapp3.0\Razor\Areas\User\Views\_ViewStart.cshtml.g.cs
-C:\Users\Lenovo\source\repos\HR App\HR App\HRWebApplication\obj\Release\netcoreapp3.0\Razor\Views\Company\Create.cshtml.g.cs
-C:\Users\Lenovo\source\repos\HR App\HR App\HRWebApplication\obj\Release\netcoreapp3.0\Razor\Views\Company\Edit.cshtml.g.cs
-C:\Users\Lenovo\source\repos\HR App\HR App\HRWebApplication\obj\Release\netcoreapp3.0\Razor\Views\Company\Index.cshtml.g.cs
 C:\Users\Lenovo\source\repos\HR App\HR App\HRWebApplication\obj\Release\netcoreapp3.0\Razor\Views\Home\Index.cshtml.g.cs
 C:\Users\Lenovo\source\repos\HR App\HR App\HRWebApplication\obj\Release\netcoreapp3.0\Razor\Views\Home\Privacy.cshtml.g.cs
-C:\Users\Lenovo\source\repos\HR App\HR App\HRWebApplication\obj\Release\netcoreapp3.0\Razor\Views\JobApplication\Create.cshtml.g.cs
-C:\Users\Lenovo\source\repos\HR App\HR App\HRWebApplication\obj\Release\netcoreapp3.0\Razor\Views\JobApplication\Index.cshtml.g.cs
-C:\Users\Lenovo\source\repos\HR App\HR App\HRWebApplication\obj\Release\netcoreapp3.0\Razor\Views\JobOffer\Create.cshtml.g.cs
-C:\Users\Lenovo\source\repos\HR App\HR App\HRWebApplication\obj\Release\netcoreapp3.0\Razor\Views\JobOffer\Details.cshtml.g.cs
-C:\Users\Lenovo\source\repos\HR App\HR App\HRWebApplication\obj\Release\netcoreapp3.0\Razor\Views\JobOffer\Edit.cshtml.g.cs
-C:\Users\Lenovo\source\repos\HR App\HR App\HRWebApplication\obj\Release\netcoreapp3.0\Razor\Views\JobOffer\Index.cshtml.g.cs
 C:\Users\Lenovo\source\repos\HR App\HR App\HRWebApplication\obj\Release\netcoreapp3.0\Razor\Views\Shared\Error.cshtml.g.cs
 C:\Users\Lenovo\source\repos\HR App\HR App\HRWebApplication\obj\Release\netcoreapp3.0\Razor\Views\Shared\_Layout.cshtml.g.cs
 C:\Users\Lenovo\source\repos\HR App\HR App\HRWebApplication\obj\Release\netcoreapp3.0\Razor\Views\Shared\_LoginPartial.cshtml.g.cs
@@ -219,3 +210,4 @@ C:\Users\Lenovo\source\repos\HR App\HR App\HRWebApplication\obj\Release\netcorea
 C:\Users\Lenovo\source\repos\HR App\HR App\HRWebApplication\obj\Release\netcoreapp3.0\HRWebApplication.csproj.CopyComplete
 C:\Users\Lenovo\source\repos\HR App\HR App\HRWebApplication\obj\Release\netcoreapp3.0\HRWebApplication.dll
 C:\Users\Lenovo\source\repos\HR App\HR App\HRWebApplication\obj\Release\netcoreapp3.0\HRWebApplication.pdb
+C:\Users\Lenovo\source\repos\HR App\HR App\HRWebApplication\bin\Release\netcoreapp3.0\Microsoft.Extensions.PlatformAbstractions.dll

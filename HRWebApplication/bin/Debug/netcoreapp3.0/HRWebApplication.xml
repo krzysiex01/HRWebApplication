@@ -508,6 +508,11 @@
             <param name="model"></param>
             <returns></returns>
         </member>
+        <member name="T:HRWebApplication.Models.PaginationHelper">
+            <summary>
+            Helps to calculate correct indexes when pagination is used.
+            </summary>
+        </member>
         <member name="M:HRWebApplication.Startup.ConfigureServices(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
             <summary>
             This method gets called by the runtime. Use this method to add services to the container.
@@ -520,7 +525,7 @@
             </summary>
             <param name="services"></param>
         </member>
-        <member name="M:HRWebApplication.Startup.Configure(Microsoft.AspNetCore.Builder.IApplicationBuilder,Microsoft.AspNetCore.Hosting.IWebHostEnvironment)">
+        <member name="M:HRWebApplication.Startup.Configure(Microsoft.AspNetCore.Builder.IApplicationBuilder,Microsoft.AspNetCore.Hosting.IWebHostEnvironment,HRWebApplication.EntityFramework.DataContext)">
             <summary>
             This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
             </summary>

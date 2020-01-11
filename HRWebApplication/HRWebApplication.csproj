@@ -4,6 +4,8 @@
     <TargetFramework>netcoreapp3.0</TargetFramework>
     <UserSecretsId>aspnet-HRWebApplication-722E79FF-FC83-4F56-847B-B50B9C9AC3A9</UserSecretsId>
     <NoWarn>$(NoWarn);1591</NoWarn>
+    <NoWarn>$(NoWarn);NU1701</NoWarn>
+    <ApplicationInsightsResourceId>/subscriptions/a26198a2-ffec-49f8-b5fa-9f47ac7f780d/resourcegroups/test1/providers/microsoft.insights/components/AppInsightshrwebapplicationnpbmqx2lw462q</ApplicationInsightsResourceId>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -11,10 +13,15 @@
     <OutputPath>bin\Debug\netcoreapp3.0\</OutputPath>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <DocumentationFile></DocumentationFile>
+  </PropertyGroup>
+
 
   <ItemGroup>
     <PackageReference Include="Azure.Storage.Blobs" Version="12.1.0" />
     <PackageReference Include="knockoutjs" Version="3.5.1" />
+    <PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.12.0" />
     <PackageReference Include="Microsoft.AspNet.Mvc" Version="5.2.7" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.AzureADB2C.UI" Version="3.0.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.0.0" />

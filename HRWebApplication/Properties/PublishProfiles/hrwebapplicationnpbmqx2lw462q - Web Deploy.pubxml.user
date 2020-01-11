@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+Ten plik jest wykorzystywany przez proces publikowania/pakowania projektu sieci Web. Możesz dostosować zachowanie tego procesu
+ poprzez edycję tego pliku MSBuild. Aby dowiedzieć się więcej o tym działaniu, odwiedź stronę https://go.microsoft.com/fwlink/?LinkID=208121. 
+-->
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <TimeStampOfAssociatedLegacyPublishXmlFile />
+    <EncryptedPassword>AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAGw989JANnEytLwzQD3x4jwAAAAACAAAAAAAQZgAAAAEAACAAAAAqpUsK/QwhsCZhTbKVX+H8kkD0ecl1Cx6guvke11+lYgAAAAAOgAAAAAIAACAAAAD4wdwR2BIDcG/CDpUJT6ZSbn6wWw+7zYEj3BWnbrLjA4AAAAAYoIk0o1TS75QYCcBXT6N7fiu55ZOQajl+RSU0jk7fkvV7zWHunT+2l7cLwXhiITKX8QZwQKLusCSVI5+qKYd2+9+vL5/92N+thxjSAd1BsAgQNHVFPqHmS3aCesMHuMSMa5pU4H4JA+AsBaPrXtIBUroMaU+mi1GEBgz8bSVyNUAAAADXYuZS7hdMrTNQ9Twg4DJzmgZsSEsuLfULxOva6ficfq8mUWPlSwbCXHs0EY0598aaVt9yEa3AEaNNYqWYXlT6</EncryptedPassword>
+  </PropertyGroup>
+  <ItemGroup>
+    <DestinationConnectionStrings Include="DefaultConnection">
+      <Value>Data Source=tcp:hrwebapplicationsqlservernpbmqx2lw462q.database.windows.net,1433%3bInitial Catalog=hrwebapplicationsqldatabase%3bUser Id=krzysiex01%40hrwebapplicationsqlservernpbmqx2lw462q.database.windows.net%3bPassword=THISisPASSWORD01!%3b</Value>
+    </DestinationConnectionStrings>
+  </ItemGroup>
+  <ItemGroup>
+    <EFMigrations Include="HRWebApplication.EntityFramework.DataContext">
+      <Value>Data Source=tcp:hrwebapplicationsqlservernpbmqx2lw462q.database.windows.net,1433%3bInitial Catalog=hrwebapplicationsqldatabase%3bUser Id=krzysiex01%40hrwebapplicationsqlservernpbmqx2lw462q.database.windows.net%3bPassword=THISisPASSWORD01!%3b</Value>
+    </EFMigrations>
+  </ItemGroup>
+</Project>

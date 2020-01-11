@@ -1,0 +1,5 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<sitemanifest>
+  <IisApp path="C:\Users\Lenovo\source\repos\HR App\HR App\HRWebApplication\obj\Debug\netcoreapp3.0\PubTmp\Out\" />
+  <dbfullsql path="C:\Users\Lenovo\source\repos\HR App\HR App\HRWebApplication\obj\Debug\netcoreapp3.0\PubTmp\EFSQLScripts\HRWebApplication.EntityFramework.DataContext.sql" />
+</sitemanifest>

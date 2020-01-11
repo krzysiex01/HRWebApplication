@@ -1,4 +1,11 @@
-﻿@model List<JobApplication> 
+﻿@model List<JobApplication>
+
+@if (Model.Count == 0)
+{
+    <div class="alert alert-info col-sm-12 text-center" role="alert">
+        No application found!
+    </div>
+}
 
 <div class="col-sm-12">
     <table class="table table-striped table-hover" id="JobApplications">
@@ -14,29 +21,29 @@
         <tbody>
             @foreach (JobApplication jobApplication in Model)
             {
-            <tr>
-                <th scope="col">@Html.ActionLink(jobApplication.JobOffer.Title, "Details", "JobOffer", new { id = jobApplication.JobOfferId, Area = "User" })</th>
-                <th scope="col">@jobApplication.JobOffer.Company.Name</th>
-                <th scope="col">@jobApplication.CreatedOn</th>
-                <th scope="col">@jobApplication.ApplicationState.ToString()</th>
-                <th scope="col">
-                    <div class="btn-group" role="group" aria-label="Actions">
-                        <div class="btn-group" role="group">
-                            <button id="drop_@jobApplication.Id" type="button" class="btn btn-outline-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <i class="fas fa-chevron-circle-down"></i>
-                            </button>
-                            <div class="dropdown-menu" aria-labelledby="drop_@jobApplication.Id">
-                                @if (jobApplication.ApplicationState == ApplicationState.Waiting)
-                                {
-                                <a class="dropdown-item" href="@Url.Action("Edit", "JobApplication", new { Area = "User", id = jobApplication.Id })"><i class="fas fa-edit"></i> Edit</a>
-                                }
-                                <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="@Url.Action("Delete", "JobApplication", new { Area = "User", id = jobApplication.Id })"><i class="fas fa-trash-alt"></i> Remove</a>
+                <tr>
+                    <th scope="col">@Html.ActionLink(jobApplication.JobOffer.Title, "Details", "JobOffer", new { id = jobApplication.JobOfferId, Area = "User" })</th>
+                    <th scope="col">@jobApplication.JobOffer.Company.Name</th>
+                    <th scope="col">@jobApplication.CreatedOn</th>
+                    <th scope="col">@jobApplication.ApplicationState.ToString()</th>
+                    <th scope="col">
+                        <div class="btn-group" role="group" aria-label="Actions">
+                            <div class="btn-group" role="group">
+                                <button id="drop_@jobApplication.Id" type="button" class="btn btn-outline-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <i class="fas fa-chevron-circle-down"></i>
+                                </button>
+                                <div class="dropdown-menu" aria-labelledby="drop_@jobApplication.Id">
+                                    @if (jobApplication.ApplicationState == ApplicationState.Waiting)
+                                    {
+                                        <a class="dropdown-item" href="@Url.Action("Edit", "JobApplication", new { Area = "User", id = jobApplication.Id })"><i class="fas fa-edit"></i> Edit</a>
+                                    }
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item" href="@Url.Action("Delete", "JobApplication", new { Area = "User", id = jobApplication.Id })"><i class="fas fa-trash-alt"></i> Remove</a>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                </th>
-            </tr>
+                    </th>
+                </tr>
             }
         </tbody>
     </table>

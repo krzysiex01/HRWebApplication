@@ -5,6 +5,9 @@ using System.Threading.Tasks;
 
 namespace HRWebApplication.Models
 {
+    /// <summary>
+    /// Helps to calculate correct indexes when pagination is used.
+    /// </summary>
     public class PaginationHelper
     {
         public int GetPagesCount(int pageSize, int itemsCount)

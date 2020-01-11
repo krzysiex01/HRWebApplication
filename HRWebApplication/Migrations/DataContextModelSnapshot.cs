@@ -39,6 +39,15 @@ namespace HRWebApplication.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Companies");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Description = "Some desctiption",
+                            Location = "Warsaw",
+                            Name = "Apple"
+                        });
                 });
 
             modelBuilder.Entity("HRWebApplication.Models.JobApplication", b =>
@@ -181,6 +190,45 @@ namespace HRWebApplication.Migrations
                     b.HasIndex("CompanyId");
 
                     b.ToTable("Users");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            City = "Warsaw",
+                            Country = "Poland",
+                            EmailAddress = "krzysiex01@wp.pl",
+                            FirstName = "Krzysztof",
+                            LastName = "Oniszczuk",
+                            ProviderName = "AZURE_AD_B2C",
+                            ProviderUserId = "f484c79c-dd70-4dab-82bb-fdf4d5687a64",
+                            Role = "Admin"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            City = "Warsaw",
+                            Country = "Poland",
+                            EmailAddress = "hrwebapplication.user@wp.pl",
+                            FirstName = "Andrzej",
+                            LastName = "Powała",
+                            ProviderName = "AZURE_AD_B2C",
+                            ProviderUserId = "d9fa8c96-873b-481d-8194-78ff752f32d6",
+                            Role = "User"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            City = "Warsaw",
+                            CompanyId = 1,
+                            Country = "Poland",
+                            EmailAddress = "hrwebapplication.hruser@wp.pl",
+                            FirstName = "Jan",
+                            LastName = "Kowalski",
+                            ProviderName = "AZURE_AD_B2C",
+                            ProviderUserId = "0c198acb-ac45-47ac-9b49-46dc37c373b4",
+                            Role = "HRUser"
+                        });
                 });
 
             modelBuilder.Entity("HRWebApplication.Models.JobApplication", b =>

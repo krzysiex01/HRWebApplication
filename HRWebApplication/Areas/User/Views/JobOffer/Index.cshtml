@@ -11,7 +11,6 @@
                 @Model.JobOffersCount
             </span>
         </div>
-
     </div>
     <div class="row mb-4">
         <div class="col-md-6">
@@ -48,7 +47,6 @@
     </div>
 </div>
 
-
 <div id="JobOfferList">
 
 </div>
@@ -81,6 +79,5 @@
             var link = '@(Url.Action("GetJobOffers", "JobOffer", new { Area = "User", page = 1 }))' + '?searchString=' + searchString + '&sortOrder=' + sortOrder;
         $("#JobOfferList").load(link);
         }
-   
     </script>
 }
