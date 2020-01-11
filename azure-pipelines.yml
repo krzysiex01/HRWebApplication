@@ -28,12 +28,12 @@ steps:
 - task: PublishBuildArtifacts@1
   inputs:
     pathtoPublish: '$(Build.ArtifactStagingDirectory)' 
-    artifactName: 'myhrwebapplication'
+    artifactName: 'hrwebapplicationnpbmqx2lw462q'
 
 - task: AzureWebApp@1
   inputs:
     azureSubscription: 'HRWebApplicationConnection'
-    appName: 'myhrwebapplication'
+    appName: 'hrwebapplicationnpbmqx2lw462q'
     appType: webApp
     package: $(System.ArtifactsDirectory)/**/*.zip    
 
