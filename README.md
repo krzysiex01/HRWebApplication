@@ -50,3 +50,13 @@ HR Application is MVC web application created with .Net Core 3.0. Application wa
 * *Swagger* documentation created for API endpoints
 * UI tests using *Selenium*
 * Unit Tests, Integration tests created using *Xunit* framework
+
+## Screenshots
+
+<p align="center">
+  <img src="/Demo/s1.jpg" width="600" height="300">
+  <img src="/Demo/s2.jpg" width="600" height="300">
+  <img src="/Demo/s3.jpg" width="600" height="300">
+  <img src="/Demo/s4.jpg" width="600" height="300">
+</p>
+
