@@ -54,9 +54,9 @@ HR Application is MVC web application created with .Net Core 3.0. Application wa
 ## Screenshots
 
 <p align="center">
-  <img src="/Demo/s1.jpg" width="600" height="300">
-  <img src="/Demo/s2.jpg" width="600" height="300">
-  <img src="/Demo/s3.jpg" width="600" height="300">
-  <img src="/Demo/s4.jpg" width="600" height="300">
+  <img src="/Demo/s1.jpg" width="400" height="200">
+  <img src="/Demo/s2.jpg" width="400" height="200">
+  <img src="/Demo/s3.jpg" width="400" height="200">
+  <img src="/Demo/s4.jpg" width="400" height="200">
 </p>
 
