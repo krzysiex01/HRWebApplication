@@ -1,0 +1,563 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>HRWebApplication</name>
+    </assembly>
+    <members>
+        <member name="T:HRWebApplication.Areas.Admin.Controllers.CompanyController">
+            <summary>
+            Company controller for Admin user. 
+            </summary>
+        </member>
+        <member name="M:HRWebApplication.Areas.Admin.Controllers.CompanyController.#ctor(HRWebApplication.EntityFramework.DataContext)">
+            <summary>
+            CompanyController constructor.
+            </summary>
+            <param name="context"></param>
+        </member>
+        <member name="M:HRWebApplication.Areas.Admin.Controllers.CompanyController.Create">
+            <summary>
+            Display custom page for creating new company.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:HRWebApplication.Areas.Admin.Controllers.CompanyController.Create(HRWebApplication.Models.Company)">
+            <summary>
+            Validate and add to database newly created company.
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:HRWebApplication.Areas.Admin.Controllers.CompanyController.Delete(System.Nullable{System.Int32})">
+            <summary>
+            Removes compnay with specified id.
+            </summary>
+            <param name="id">ID of company to remove.</param>
+            <returns></returns>
+        </member>
+        <member name="M:HRWebApplication.Areas.Admin.Controllers.CompanyController.Edit(System.Nullable{System.Int32})">
+            <summary>
+            Displays custom page for editing company.
+            </summary>
+            <param name="id">ID of company to edit.</param>
+            <returns></returns>
+        </member>
+        <member name="M:HRWebApplication.Areas.Admin.Controllers.CompanyController.Edit(HRWebApplication.Models.Company)">
+            <summary>
+            Updates data for given company.
+            </summary>
+            <param name="model">New company data.</param>
+            <returns></returns>
+        </member>
+        <member name="M:HRWebApplication.Areas.Admin.Controllers.CompanyController.Index">
+            <summary>
+            Displays view with list of comapnies.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:HRWebApplication.Areas.Admin.Controllers.HomeController">
+            <summary>
+            Home controller for admin user.
+            </summary>
+        </member>
+        <member name="M:HRWebApplication.Areas.Admin.Controllers.HomeController.#ctor(Microsoft.Extensions.Logging.ILogger{HRWebApplication.Areas.Admin.Controllers.HomeController})">
+            <summary>
+            HomeController constructor.
+            </summary>
+            <param name="logger"></param>
+        </member>
+        <member name="M:HRWebApplication.Areas.Admin.Controllers.HomeController.Index">
+            <summary>
+            Displays home page for Admin user.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:HRWebApplication.Areas.Admin.Controllers.HomeController.Error">
+            <summary>
+            Custom admin page error.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:HRWebApplication.Areas.Admin.Controllers.JobApplicationController">
+            <summary>
+            Job application controller for Admin user.
+            </summary>
+        </member>
+        <member name="M:HRWebApplication.Areas.Admin.Controllers.JobApplicationController.#ctor(HRWebApplication.EntityFramework.DataContext)">
+            <summary>
+            JobApplicationController constructor.
+            </summary>
+            <param name="context"></param>
+        </member>
+        <member name="M:HRWebApplication.Areas.Admin.Controllers.JobApplicationController.Index">
+            <summary>
+            Displays main view for paging jobs application.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:HRWebApplication.Areas.Admin.Controllers.JobApplicationController.GetJobApplications(System.String,System.String,System.String,System.Nullable{System.Int32})">
+            <summary>
+            Action gets the view containing list of applications matching filters defined as parametrs.
+            </summary>
+            <param name="sortOrder"></param>
+            <param name="currentFilter"></param>
+            <param name="searchString"></param>
+            <param name="page"></param>
+            <returns>Partial view with list of applications.</returns>
+        </member>
+        <member name="T:HRWebApplication.Areas.Admin.Controllers.JobOfferController">
+            <summary>
+            Job offer controller for Admin user.
+            </summary>
+        </member>
+        <member name="M:HRWebApplication.Areas.Admin.Controllers.JobOfferController.#ctor(HRWebApplication.EntityFramework.DataContext)">
+            <summary>
+            JobOfferController constructor.
+            </summary>
+            <param name="context"></param>
+        </member>
+        <member name="M:HRWebApplication.Areas.Admin.Controllers.JobOfferController.GetJobOffers(System.String,System.String,System.String,System.Nullable{System.Int32})">
+            <summary>
+            Action gets the view containing list of job offers matching filters defined as parametrs.
+            </summary>
+            <param name="sortOrder"></param>
+            <param name="currentFilter"></param>
+            <param name="searchString"></param>
+            <param name="page"></param>
+            <returns></returns>
+        </member>
+        <member name="M:HRWebApplication.Areas.Admin.Controllers.JobOfferController.Index">
+            <summary>
+            Displays main view for managing jobs offers.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:HRWebApplication.Areas.Admin.Controllers.JobOfferController.Edit(System.Nullable{System.Int32})">
+            <summary>
+            Gets view with page to edit job offer with specified id.
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:HRWebApplication.Areas.Admin.Controllers.JobOfferController.Edit(HRWebApplication.Models.JobOffer)">
+            <summary>
+            Validate and updates recived job offer in database.
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:HRWebApplication.Areas.Admin.Controllers.JobOfferController.Delete(System.Nullable{System.Int32})">
+            <summary>
+            Removes job offer from database.
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:HRWebApplication.Areas.Admin.Controllers.JobOfferController.Details(System.Int32)">
+            <summary>
+            Gets page with detailed information about job offer with specified id.
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="T:HRWebApplication.Areas.Admin.Controllers.UserController">
+            <summary>
+            Controller for admins to manage registered users.
+            </summary>
+        </member>
+        <member name="M:HRWebApplication.Areas.Admin.Controllers.UserController.#ctor(HRWebApplication.EntityFramework.DataContext)">
+            <summary>
+            UserController constructor.
+            </summary>
+            <param name="context"></param>
+        </member>
+        <member name="M:HRWebApplication.Areas.Admin.Controllers.UserController.Index">
+            <summary>
+            Gets view with list of all users 
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:HRWebApplication.Areas.Admin.Controllers.UserController.Update(System.Nullable{System.Int32},System.Nullable{System.Int32})">
+            <summary>
+            Update the role of specified user by company assigment.
+            </summary>
+            <param name="userId"></param>
+            <param name="companyId"></param>
+            <returns></returns>
+        </member>
+        <member name="T:HRWebApplication.Areas.HRUser.Controllers.HomeController">
+            <summary>
+            Home controller for HR User.
+            </summary>
+        </member>
+        <member name="M:HRWebApplication.Areas.HRUser.Controllers.HomeController.#ctor(Microsoft.Extensions.Logging.ILogger{HRWebApplication.Areas.HRUser.Controllers.HomeController})">
+            <summary>
+            HomeController constructor.
+            </summary>
+            <param name="logger"></param>
+        </member>
+        <member name="M:HRWebApplication.Areas.HRUser.Controllers.HomeController.Index">
+            <summary>
+            Gets strating main page for HR user.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:HRWebApplication.Areas.HRUser.Controllers.HomeController.Error">
+            <summary>
+            Customerror page.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:HRWebApplication.Areas.HRUser.Controllers.JobApplicationController">
+            <summary>
+            Job application controller.
+            </summary>
+        </member>
+        <member name="M:HRWebApplication.Areas.HRUser.Controllers.JobApplicationController.#ctor(HRWebApplication.EntityFramework.DataContext,Microsoft.Extensions.Configuration.IConfiguration)">
+            <summary>
+            JobApplication controller constructor.
+            </summary>
+            <param name="context"></param>
+            <param name="config"></param>
+        </member>
+        <member name="M:HRWebApplication.Areas.HRUser.Controllers.JobApplicationController.Index">
+            <summary>
+            Displays main view for paging jobs application.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:HRWebApplication.Areas.HRUser.Controllers.JobApplicationController.GetJobApplications(System.String,System.String,System.String,System.Nullable{System.Int32})">
+            <summary>
+            Action gets the view containing list of applications matching filters defined as parametrs.
+            </summary>
+            <param name="sortOrder"></param>
+            <param name="currentFilter"></param>
+            <param name="searchString"></param>
+            <param name="page"></param>
+            <returns>Partial view with list of applications.</returns>
+        </member>
+        <member name="M:HRWebApplication.Areas.HRUser.Controllers.JobApplicationController.AcceptApplication(System.Nullable{System.Int32})">
+            <summary>
+            Change state of appliction to accepted.
+            </summary>
+            <param name="id">Application id.</param>
+            <returns></returns>
+        </member>
+        <member name="M:HRWebApplication.Areas.HRUser.Controllers.JobApplicationController.RejectApplication(System.Nullable{System.Int32})">
+            <summary>
+            Change state of appliction to rejected.
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:HRWebApplication.Areas.HRUser.Controllers.JobApplicationController.Delete(System.Nullable{System.Int32})">
+            <summary>
+            Permamently delete job application and all connected resources.
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:HRWebApplication.Areas.HRUser.Controllers.JobApplicationController.DownloadCVFile(System.Nullable{System.Int32})">
+            <summary>
+            Gets CV saved in Azure BlobStorage for specified job applcation.
+            </summary>
+            <param name="id"></param>
+            <returns>CV as PDF file.</returns>
+        </member>
+        <member name="T:HRWebApplication.Areas.HRUser.Controllers.JobOfferController">
+            <summary>
+            Job offer controller for HR user.
+            </summary>
+        </member>
+        <member name="M:HRWebApplication.Areas.HRUser.Controllers.JobOfferController.#ctor(HRWebApplication.EntityFramework.DataContext)">
+            <summary>
+            JobOfferController constructor.
+            </summary>
+            <param name="context"></param>
+        </member>
+        <member name="M:HRWebApplication.Areas.HRUser.Controllers.JobOfferController.GetJobOffers(System.String,System.String,System.String,System.Nullable{System.Int32})">
+            <summary>
+            Action gets the view containing list of job offers matching filters defined as parametrs.
+            </summary>
+            <param name="sortOrder"></param>
+            <param name="currentFilter"></param>
+            <param name="searchString"></param>
+            <param name="page"></param>
+            <returns></returns>
+        </member>
+        <member name="M:HRWebApplication.Areas.HRUser.Controllers.JobOfferController.Index">
+            <summary>
+            Displays main view for paging and filtering jobs offer.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:HRWebApplication.Areas.HRUser.Controllers.JobOfferController.Edit(System.Nullable{System.Int32})">
+            <summary>
+            Gets view with page to edit job offer with specified id.
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:HRWebApplication.Areas.HRUser.Controllers.JobOfferController.Edit(HRWebApplication.Models.JobOffer)">
+            <summary>
+            Validate and updates recived job offer in database.
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:HRWebApplication.Areas.HRUser.Controllers.JobOfferController.Delete(System.Nullable{System.Int32})">
+            <summary>
+            Removes job offer from database.
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:HRWebApplication.Areas.HRUser.Controllers.JobOfferController.Create">
+            <summary>
+            Gets page with form to create new job offer .
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:HRWebApplication.Areas.HRUser.Controllers.JobOfferController.Create(HRWebApplication.Models.CreateJobOfferViewModel)">
+            <summary>
+            Validates and saves recived to a database.
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:HRWebApplication.Areas.HRUser.Controllers.JobOfferController.Details(System.Int32)">
+            <summary>
+            Gets page with detailed information about job offer with specified id.
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="T:HRWebApplication.Areas.User.Controllers.HomeController">
+            <summary>
+            Home controller for standard login user.
+            </summary>
+        </member>
+        <member name="M:HRWebApplication.Areas.User.Controllers.HomeController.#ctor(Microsoft.Extensions.Logging.ILogger{HRWebApplication.Areas.User.Controllers.HomeController})">
+            <summary>
+            HomeController constructor.
+            </summary>
+            <param name="logger"></param>
+        </member>
+        <member name="M:HRWebApplication.Areas.User.Controllers.HomeController.Index">
+            <summary>
+            Displays main page for log-in user.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:HRWebApplication.Areas.User.Controllers.HomeController.Error">
+            <summary>
+            Displays custom error page.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:HRWebApplication.Areas.User.Controllers.JobApplicationController">
+            <summary>
+            Job application controller for standard user.
+            </summary>
+        </member>
+        <member name="M:HRWebApplication.Areas.User.Controllers.JobApplicationController.#ctor(HRWebApplication.EntityFramework.DataContext,Microsoft.Extensions.Configuration.IConfiguration)">
+            <summary>
+            JobApplicationController constructor.
+            </summary>
+            <param name="context"></param>
+            <param name="config"></param>
+        </member>
+        <member name="M:HRWebApplication.Areas.User.Controllers.JobApplicationController.Index">
+            <summary>
+            Displays main view for paging jobs application.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:HRWebApplication.Areas.User.Controllers.JobApplicationController.Create(System.Nullable{System.Int32})">
+            <summary>
+            Displays a view with form to create new job applictation.
+            </summary>
+            <param name="jobOfferId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:HRWebApplication.Areas.User.Controllers.JobApplicationController.Create(HRWebApplication.Models.CreateJobApplicationViewModel)">
+            <summary>
+            Validates and saves newly created application to a database
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:HRWebApplication.Areas.User.Controllers.JobApplicationController.Edit(System.Nullable{System.Int32})">
+            <summary>
+            Displays custom edit form for specified application. Only application in wating state can be edited.
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:HRWebApplication.Areas.User.Controllers.JobApplicationController.Edit(HRWebApplication.Models.JobApplication)">
+            <summary>
+            Validates and upadates in database just edited job appplcation.
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:HRWebApplication.Areas.User.Controllers.JobApplicationController.Delete(System.Nullable{System.Int32})">
+            <summary>
+            Permamently delete job application and all connected resources.
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:HRWebApplication.Areas.User.Controllers.JobApplicationController.GetJobApplications(System.String,System.String,System.String,System.Nullable{System.Int32})">
+            <summary>
+            Action gets the view containing list of applications matching filters defined as parametrs.
+            </summary>
+            <param name="sortOrder"></param>
+            <param name="currentFilter"></param>
+            <param name="searchString"></param>
+            <param name="page"></param>
+            <returns>Partial view with list of applications.</returns>
+        </member>
+        <member name="M:HRWebApplication.Areas.User.Controllers.JobApplicationController.SendNotifications(System.Int32)">
+            <summary>
+            Sends notification emails to all HR users who are members of specified company.
+            </summary>
+            <param name="companyId"></param>
+        </member>
+        <member name="M:HRWebApplication.Areas.User.Controllers.JobApplicationController.UploadCV(Microsoft.AspNetCore.Http.IFormFile,System.String)">
+            <summary>
+            Uploads file to Azure BlobStorage.
+            </summary>
+            <param name="formFile"></param>
+            <param name="trustedName"></param>
+        </member>
+        <member name="T:HRWebApplication.Areas.User.Controllers.JobOfferController">
+            <summary>
+            Job offer controller for standard user.
+            </summary>
+        </member>
+        <member name="M:HRWebApplication.Areas.User.Controllers.JobOfferController.#ctor(HRWebApplication.EntityFramework.DataContext)">
+            <summary>
+            JobOfferController constructor.
+            </summary>
+            <param name="context"></param>
+        </member>
+        <member name="M:HRWebApplication.Areas.User.Controllers.JobOfferController.GetJobOffers(System.String,System.String,System.String,System.Nullable{System.Int32})">
+            <summary>
+            Action gets the view containing list of job offers matching filters defined as parametrs.
+            </summary>
+            <param name="sortOrder"></param>
+            <param name="currentFilter"></param>
+            <param name="searchString"></param>
+            <param name="page"></param>
+            <returns></returns>
+        </member>
+        <member name="M:HRWebApplication.Areas.User.Controllers.JobOfferController.Index">
+            <summary>
+            Displays main view for paging jobs offers.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:HRWebApplication.Areas.User.Controllers.JobOfferController.Details(System.Nullable{System.Int32})">
+            <summary>
+            Gets page with detailed information about job offer with specified id.
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="T:HRWebApplication.Controllers.HomeController">
+            <summary>
+            Home controller for unauthenticated user.
+            </summary>
+        </member>
+        <member name="M:HRWebApplication.Controllers.HomeController.#ctor(Microsoft.Extensions.Logging.ILogger{HRWebApplication.Controllers.HomeController})">
+            <summary>
+            Home controller constructor.
+            </summary>
+            <param name="logger"></param>
+        </member>
+        <member name="M:HRWebApplication.Controllers.HomeController.Index">
+            <summary>
+            Action displaying main page of application.
+            </summary>
+            <returns>Main page view.</returns>
+        </member>
+        <member name="M:HRWebApplication.Controllers.HomeController.Privacy">
+            <summary>
+            Action displaying privacy page.
+            </summary>
+            <returns>Privacy view.</returns>
+        </member>
+        <member name="M:HRWebApplication.Controllers.HomeController.Error">
+            <summary>
+            Custom error page.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:HRWebApplication.Controllers.JobApplicationAPIController.GetJobApplications(System.Int32)">
+            <summary>
+            Gets list of job applications.
+            </summary>
+            <param name="offerId"></param>
+            <returns>List of applications for given offerId.</returns>
+        </member>
+        <member name="M:HRWebApplication.Controllers.JobApplicationAPIController.Edit(HRWebApplication.Models.JobApplication)">
+            <summary>
+            Updates job application.
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="T:HRWebApplication.Models.PaginationHelper">
+            <summary>
+            Helps to calculate correct indexes when pagination is used.
+            </summary>
+        </member>
+        <member name="M:HRWebApplication.Startup.ConfigureServices(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+            This method gets called by the runtime. Use this method to add services to the container.
+            </summary>
+            <param name="services"></param>
+        </member>
+        <member name="M:HRWebApplication.Startup.ConfigureDatabaseServices(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+            Configure database services.
+            </summary>
+            <param name="services"></param>
+        </member>
+        <member name="M:HRWebApplication.Startup.Configure(Microsoft.AspNetCore.Builder.IApplicationBuilder,Microsoft.AspNetCore.Hosting.IWebHostEnvironment,HRWebApplication.EntityFramework.DataContext)">
+            <summary>
+            This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+            </summary>
+        </member>
+        <member name="T:Web.Controllers.AuthController">
+            <summary>
+            Controller responsible for user authentication.
+            </summary>
+        </member>
+        <member name="M:Web.Controllers.AuthController.LogIn">
+            <summary>
+            Action called after log-in request - challange user using AzureADB2C.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Web.Controllers.AuthController.LogOut">
+            <summary>
+            Logout action.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Web.Controllers.AuthController.AccessDenied">
+            <summary>
+            Action called after user wasn't successfully authenticated.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Web.Controllers.AuthController.LogInSuccessAsync">
+            <summary>
+            Action called after succssful login.
+            </summary>
+            <returns>Redirect user to area matching user role.</returns>
+        </member>
+    </members>
+</doc>
